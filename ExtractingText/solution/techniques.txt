@@ -1,0 +1,116 @@
+
+List of available Technique
+    1) cv::blur(InputArray src, 
+                OutputArray dst,
+                Size ksize,
+                Point anchor = Point(-1, -1),
+                int borderType = BORDER_DEFAULT)
+        Blur an image using the normalized box filter.
+    
+    2) void cv::GaussianBlur(InputArray src,
+                                OutputArray dst,
+                                Size ksize,
+                                double sigmaX,
+                                double sigmaY = 0,
+                                int borderType = BORDER_DEFAULT)
+        Functiton: Blurs an image using Gaussian filer.
+    
+    3) void cv::medianBlur(InputArray src,
+                            OutputArray dst,
+                            int ksize)
+        Meaning: Blurs an image using the median filter.
+    
+    4) void cv::bilateralFilter(InputArray src,
+                                OutputArray dst,
+                                int d,
+                                double sigmaColor,
+                                double sigmaSpace,
+                                int borderType = BORDER_DEFAULT)
+        Meaning: Applies the bilateral filter to an image.
+    
+    5) cv::Mat cv::getStructuringElement(
+                        int shape,
+                        Size ksize,
+                        Point anchor = Point(-1, -1))
+        Meaning: Returns a structuring element of the specified size and shape for morphological operations.
+
+    6) void cv::erode(
+                InputArray src,
+                OutputArray dst,
+                InputArray kernel,
+                Point anchor = Point(-1, -1),
+                int iterations = 1,
+                int borderType = BORDER_CONSTANT,
+                const Scalar& borderValue = morphologyDefaultBorderValue() )
+        Meaning: Erodes an image by using a specific structuring element.
+
+    7) void cv::dilate(
+                InputArray src,
+                OutputArray dst,
+                InputArray kernel,
+                Point anchor = Point(-1, -1),
+                int iterations = 1,
+                int borderType = BORDER_CONSTANT,
+                const Scalar& borderValue = morphologyDefaultBorderValue() )
+        Meaning: dilates an image by using a specific strucuring element.
+
+    8) void cv::morphologyEx(
+                    InputArray src,
+                    OutputArray dst,
+                    int op,
+                    InputArray kernel,
+                    Point anchor = Point(-1, -1),
+                    int iterations = 1,
+                    int borderType = BORDER_CONSTANT,
+                    const Scalar& borderValue = morphologyDefaultBorderValue() )
+        Meaning: Performs advanced morphological transformations.
+    
+    9) void cv::adaptiveThreshold(
+                    InputArray src,
+                    OutputArray dst,
+                    double maxValue,
+                    int adaptiveMethod,
+                    int thresholdType,
+                    int blockSize,
+                    double C )
+        Meaning: Applies an adaptive threshold to an array.
+    
+    10) void cv::pyrUp(
+                        InputArray src,
+                        OutputArray dst,
+                        const Size& dstsize = Size(),
+                        int borderType = BORDER_DEFAULT
+                    )
+        Meaning: Upsamples an image and then blurs it.
+
+    11) void cv::pyrDown(
+                    InputArray src,
+                    OutputArray dst,
+                    const Size& dstsize = Size(),
+                    int borderType = BORDER_DEFAULT )
+        Meaning: Blurs an image downsamples it.
+    
+    12) void cv::cvtColor(
+                    InputArray src,
+                    OutputArray dst,
+                    int erode,
+                    int dstCn = 0
+                )
+        Meaning: Converts an image from one color space to another.
+    
+    13) double cv::threshold(
+                    InputArray src,
+                    OutputArray dst,
+                    double thresh,
+                    double maxval,
+                    int type
+                )
+        Meaning: Applies a fixed-level threshold to each array element.
+    
+    14) void cv::inRange(
+                    InputArray src,
+                    InputArray lowerb,
+                    InputArray upperb,
+                    OutputArray dst
+                )
+        Meaning: Checks if array elements lie between the elements of two other arrays.    
