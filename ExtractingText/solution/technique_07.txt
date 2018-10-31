@@ -1,0 +1,63 @@
+1) cv::moments
+    Syntax:
+        Moments cv::moments(
+            InputArray      array,
+            bool            binaryImage = false
+        )
+    Description: Calculates all of the moments up to the third order of a polygon or rasterized shape.
+
+2) cv::contourArea
+    Syntax:
+        double cv::contourArea(
+            InputArray      contour,
+            bool            oriented = false
+        )
+    Description: Calculates a contour area.
+
+3) cv::arcLength
+    Syntax:
+        double cv::arcLength(
+            InputArray      curve,
+            bool            closed
+        )
+    Description: Calculates a contour perimeter or a curve length.
+
+4) cv::pointPolygonTest
+    Syntax:
+        double cv::pointPolygonTest(
+            InputArray      contour,
+            Point2f         pt,
+            bool            measureDist
+        )
+    Description: Performs a point-in-contour test.
+
+5) cv::distanceTransform 
+    [1/2]
+        Syntax:
+            void cv::distanceTransform(
+                InputArray      src,
+                OutputArray     dst,
+                OutputArray     lables,
+                int             distanceType,
+                int             maskSize,
+                int             labelType = DIST_LABEL_CCOMP
+            )
+        Description: Calculates the distance to the closet zero pixel for each pixel of the source image.
+    [2/2]
+        Syntax:
+            void cv::distanceTransform(
+                InputArray      src,
+                OutputArray     dst,
+                int             distanceType,
+                int             maskSize,
+                int             dstType = CV_32F
+            )
+        Description: This is an overloaded member function, provided for convenience. It differs from the above function only in what argument(s) it accepts.
+
+6) cv::watershed
+    Syntax:
+        void cv::watershed(
+            InputArray          image,
+            InputOutputArray    markers
+        )
+    Description: Performs a marker-based image segmentation using the watershed algorithm.
