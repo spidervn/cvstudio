@@ -1,0 +1,145 @@
+1) cv::normalize
+	Syntax:
+		template<typename _Tp, int cn>
+		static Vec<_Tp, cn> cv::normalize(const Vec<_Tp, cn>& v)
+	Description: N/A
+
+2) cv::cvRound
+	[1/3]
+		Syntax:
+			int cvRound(double value)
+		Description:
+			Round floating-point number to the nearest integer.
+	[2/3]
+		Syntax:
+			int cvRound(float value)
+		Description:
+			This is an overloaded member function, provided for convenience. It differs from the above function only in what argument(s) it accepts.
+	[3/3]
+		Syntax;
+			int cvRound(int value)
+		Description:
+			This is an overloaded member function,provided for convenience. It differs from the above function only in what argument(s) it accepts.
+
+3) cv::compareHist
+	[1/2]
+		Syntax:
+			double cv::compareHist(
+				InputArray 	H1,
+				InputArray 	H2,
+				int 		method
+			)
+		Description: Compare two histograms.
+	[2/2]
+		Syntax:
+			double cv::compareHist(
+				const SparseMat& H1,
+				const SparseMat& H2,
+				int 	method
+			)
+		Description: This is an overloaded member function, provided for convenience. It differs from the above function only in what argument(s) it accepts.
+
+4) cv::mixChannels
+	[1/3]
+		Syntax:
+			void cv::mixChannels(
+				const Mat* 	src,
+				size_t 		nscrs,
+				Mat* 		dst,
+				size_t 		ndsts,
+				const int* 	fromTo,
+				size_t 		nparis
+			)
+		Description: Copies specified channels from input arrays to the specified channels of output arrays.
+
+	[2/3]
+		Syntax:
+			void cv::mixChannels(
+				InputArrayOfArrays 			src,
+				InputOutputArrayOfArrays 	dst,
+				const int*					fromTo,
+				size_t						npairs
+			)
+		Description: This is an overloaded member function, provided for convenience. It differs from the above function only in what argument(s) it accepts.
+
+	[3/3]
+		Syntax:
+			void cv::mixChannels(
+				InputArrayOfArrays 			src,
+				InputOutputArrayOfArrays 	dst,
+				const std:vector<int>& 		fromTo
+			)
+		Description: this is an overloaded member function, provided for convenience. It differs from the above function only in what argument(s) it accepts.
+
+5) cv::calcBackProject
+	[1/3]
+		Syntax:
+			void cv::calcBackProject(
+				const Mat* 		images,
+				int 			nimages,
+				const int* 		channels,
+				InputArray 		hist,
+				OutputArray 	backProject,
+				const float** 	ranges,
+				double 			scale = 1,
+				bool 			uniform = true
+			)
+		Description: Calculates the back projection of a histogram.
+	[2/3]
+		Syntax:
+			void cv::calcBackProject(
+				const Mat* 			images,
+				int 				nimages,
+				const int* 			channels,
+				const SparseMat& 	hist,
+				OutputArray 		backProject,
+				const float** 		ranges,
+				double 				scale = 1,
+				bool 				uniform = true
+			)
+		Description: This is an overloaded member function, provided for convenience. It differs from the above function only in what argument(s) it accepts.
+	[3/3]
+		Syntax:
+			void cv::calcBackProject(
+				InputArrayOfArrays 			images,
+				const std::vector<int>& 	channels,
+				InputArray 					hist,
+				OutputArray 				dst,
+				const std::vector<float>& 	ranges,
+				double 						scale
+			)
+		Description: This is an overloaded member function, provided for convenience. It differs from the above function only in what argument(s) it accepts.
+
+6) cv::matchTemplate
+	Syntax:
+		void cv::matchTemplate(
+			InputArray 		image,
+			InputArray 		templ,
+			OutputArray 	result,
+			int 			method,
+			InputArray 		mask = noArray()
+		)
+	Description: Compares a template agains overlapped image regions.
+
+7) cv::minMaxLoc
+	[1/2]
+		Syntax: 
+			void cv::minMaxLoc(
+				InputArray 		src,
+				double* 		minVal,
+				double* 		maxVal = 0,
+				Point* 			minLoc = 0,
+				Point* 			maxLoc = 0,
+				InputArray 		mask = noArray()
+			)
+		Description: Finds the global minimum and maximum in an array.
+	[2/2]
+		Syntax:
+			void cv:minMaxLoc(
+				const SparseMat& 		a,
+				double* 				minVal,
+				double*					maxVal,
+				int* 					minIdx = 0,
+				int* 					maxIdx = 0
+			)
+		Description: This is an overloaded member function, provided for convenience. It differs from the above function only in what argument(s) it accepts.
