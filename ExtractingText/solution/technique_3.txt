@@ -1,0 +1,95 @@
+
+1) cv::Laplacian
+    Syntax:
+        void cv::Laplacian(
+            InputArray      src,
+            OutputArray     dst,
+            int             ddepth,
+            int             ksize = 1,
+            double          scale = 1,
+            double          delta = 0,
+            int             borderType = BORDER_DEFAULT
+        )
+    Description: calculates the Laplacian of an image.
+2) cv::Canny[1/2]
+    Syntax:
+        void cv::Canny(
+            InputArray      image,
+            OutputArray     edges,
+            double          threshold1,
+            double          threshold2,
+            int             apertureSize = 3,
+            bool            L2gradient = false
+        )
+    Description: Finds edges in an image using the Canny algorithm.
+
+3) cv::Canny[2/2]
+    Syntax:
+        void cv::Canny(
+            InputArray      dx,
+            InputArray      dy,
+            OutputArray     edges,
+            double          threshold1,
+            double          threshold2,
+            bool            L2gradient = false
+        )
+    Description: This is an overloaded member function, provided for convenience. It differs from the above function only in what argument(s) it accepts.
+
+4) cv::Houghines
+    Syntax:
+        void cv::Houghines(
+            InputArray      image,
+            OutputArray     lines,
+            double          rho,
+            double          theta,
+            int             threshold,
+            double          srn = 0,
+            double          stn = 0,
+            double          min_theta = 0,
+            double          max_theta = CV_PI
+        )
+    Description: Find lines in a binary image using the standard Hough transform.
+
+5) cv::HoughLinesP
+    Syntax:
+        void cv::HoughLinesP(
+            InputArray      image,
+            OutputArray     lines,
+            double          rho,
+            double          theta,
+            int             threshold,
+            double          minLineLength = 0,
+            double          maxLineGap = 0
+        )
+    Description: Finds line segments in a binary image using the probabilistic Hough Transform.
+
+6) cv::HoughCircles
+    Syntax:
+        void cv::HoughCircles(
+            InputArray      image,
+            OutputArray     circles,
+            int             method,
+            double          dp,
+            double          minDist,
+            double          param1 = 100,
+            double          param2 = 100,
+            int             minRadius = 0,
+            int             maxRadius = 0
+        )
+    Description: Finds circles in a grayscale image using the Hough transform.
+
+7) cv::remap
+    Syntax:
+        void cv::remap(
+            InputArray      src,
+            OutputArray     dst,
+            InputArray      map1,
+            InputArray      map2,
+            int             interpolation,
+            int             borderMode = BORDER_CONSTANT,
+            const Scalar&   borderValue = Scalar()
+        )
+    Description: Applies a generic geometrical transformation to an image.
+
+
+    
