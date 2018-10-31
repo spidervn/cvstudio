@@ -90,6 +90,3 @@
             const Scalar&   borderValue = Scalar()
         )
     Description: Applies a generic geometrical transformation to an image.
-
-
-    

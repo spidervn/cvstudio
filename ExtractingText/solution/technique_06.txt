@@ -1,0 +1,79 @@
+1) cv::findContours
+    [1/2]
+        Syntax:
+            void cv::findContours(
+                InputOutputArray        image,
+                OutputArrayOfArrays     contours,
+                OutputArray             hierarchy,
+                int                     mode,
+                int                     method,
+                Point                   offset = Point()
+            )
+        Description: Finds contours in a binary image.
+    [2/2]
+        Syntax:
+            void cv::findContours(
+                InputOutputArray        image,
+                OutputArrayOfArrays     contours,
+                int                     mode,
+                int                     method,
+                Point                   offset = Point()
+            )
+        Description: This is an overloaded member function, provided for convenience. It differs from the above function only in what argument(s) it accepts.
+
+2) cv::drawContours
+    Syntax:
+        void cv::drawContours(
+            InputOutputArray        image,
+            InputArrayOfArrays      contours,
+            int                     contourIdx,
+            const Scalar&           color,
+            int                 thickness = 1,
+            int                 lineType = LINE_8,
+            InputArray          hierarchy = noArray(),
+            int                 maxLevel = INT_MAX,
+            Point               offset = Point()
+        )
+    Description:
+        Draw contours outlines or filled contours.
+
+3) cv::convexHull
+    Syntax:
+        void cv::convexHull(
+            InputArray          points,
+            OutputArray         hull,
+            bool                clockwise = false,
+            bool                returnPoints = true
+        )
+    Description: Finds the convex hull of a point set.
+
+4) cv::boundingRect
+    Syntax:
+        cv::Rect cv::boundingRect(
+            InputArray      points
+        )
+    Description: Calculates the up-right bounding rectangle of a point set.
+
+5) cv::minEnclosingCircle
+    Syntax:
+        void cv::minEnclosingCircle(
+            InputArray      points,
+            Point2f&        center,
+            float&          radius
+        )
+    Description: Finds a circle of the minimum area enclosing a 2D point set.
+
+6) cv::minAreaRect
+    Syntax:
+        RoratedRect cv::minAreaRect(
+            InputArray      points
+        )
+    Description: Find a rotated rectangle of the minimum area enclosing the input 2D point set.
+
+7) cv::fitEllipse
+    Syntax:
+        RitatedRect cv::fitEllipse(
+            InputArray  points
+        )
+    Description: Fits an ellipse around a set of 2D points.
+
