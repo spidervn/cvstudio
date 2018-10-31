@@ -1,0 +1,69 @@
+1) cv::getAffineTransform
+	Syntax:
+		cv::Mat cv::getAffineTransform(
+			const Point2f src[],
+			const Point2f dst[]
+		)
+	Description: Calculates an affine transform from three pairs of the corresponding points.
+
+2) cv::warpAffine
+	Syntax:
+		void cv::warpAffine(
+			InputArray		src,
+			OutputArray		dst,
+			InputArray 		M,
+			Size 			dsize,
+			int 			flags = INTER_LINEAR,
+			int 			borderMode = BORDER_CONSTANT,
+			const Scalar& 	borderValue = Scalar()
+		)
+	Description: Applies an affine transformation to an image.
+
+3) cv::getRotationMatrix2D
+	Syntax:
+		cv::Mat cv::getRotationMatrix2D(
+			Point2f 	center,
+			double 		angle,
+			double 		scale
+		)
+	Description: Calculates an affine matrix of 2D rotation.
+
+4) cv::equalizeHist
+	Syntax:
+		void cv::equalizeHist(
+			InputArray 		src,
+			OutputArray		dst
+		)
+	Description: Equalizes the histogram of a grayscale image.
+
+5) cv::split [1/2]
+	Syntax:
+		void cv::split(
+			const Mat& 		src,
+			Mat*  			mvbegin
+		)
+	Description: divides a multi-channel array into several single-channel arrays.
+
+6) cv::split [2/2]
+	Syntax:
+		void cv::split(
+			InputArray 				m,
+			OutputArrayOfArrays 	mv
+		)
+	Description: this is an overloaded member function, provided for convenience. It differs from the above function only in what argument(s) it accepts.
+
+7) cv::calcHist
+	Syntax:
+		void cv::calcHist(
+			const Mat* 		images,
+			int 			nimages,
+			const int* 		channels,
+			InputArray 		mask,
+			OutputArray 	hist,
+			int 			dims,
+			const int* 		histSize,
+			const float* 	ranges,
+			bool 			uniform = true,
+			bool 			accumulate = false
+		)
+	Description: calculates a histogram of a set of arrays.
