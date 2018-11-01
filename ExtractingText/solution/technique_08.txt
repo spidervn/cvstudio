@@ -1,0 +1,56 @@
+1) cv::copyMakeBorder
+	Syntax:
+		void cv::copyMakeBorder(
+			InputArray 			src,
+			OutputArray 		dst,
+			int 				top,
+			int 				bottom,
+			int 				left,
+			int 				right,
+			int 				borderType,
+			const Scalar& 		value = Scalar()
+		)
+	Description: Forms a border around an image.
+
+2) cv::merge
+	Syntax:
+		void cv::merge(
+			const Mat*			mv,
+			size_t 				count,
+			OutputArray			dst
+		)
+	Description: Creates one multi-channel array out of several single-channel ones.
+
+3) cv::dft
+	Syntax:
+		void cv::dft(
+			InputArray		src,
+			OutputArray		dst,
+			int 			flags = 0,
+			int 			nonezeroRows = 0
+		)
+	Description: Performs a forward or inverse Discrete Fourier transform of a 1D or 2D floating-point array.
+
+4) cv::getOptimalDFTSize
+	Syntax:
+		int cv::getOptimalDFTSize(
+			int vecsize
+		)
+	Description: Returns the optimal DFT size for a given vector size.
+
+5) cv::log
+	[1/2]
+		Syntax:
+			softload cv::log(const softload& a)
+		Description: Natural logarithm.
+	[2/2]
+		Syntax:
+			softdouble cv::log(const softdouble & a)
+
+6) cv::normalize
+	Syntax:
+		static Vec<_Tp, cn> cv::normalize(
+			const Vec<_Tp, cn> & v
+		)
+
+
