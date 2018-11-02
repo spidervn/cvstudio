@@ -52,5 +52,3 @@
 		static Vec<_Tp, cn> cv::normalize(
 			const Vec<_Tp, cn> & v
 		)
-
-

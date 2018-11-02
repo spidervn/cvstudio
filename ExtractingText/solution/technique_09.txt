@@ -1,0 +1,92 @@
+1) cv::findChessboardCorners
+    Syntax:
+        bool cv::findChessboardCorners(
+            InputArray          image,
+            Size                patternSize,
+            OutputArray         corners,
+            int                 flags = CALIB_CB_ADAPTIVE_THRESH + CALIB_CB_NORMALIZE_IMAGE
+        )
+    Description: Finds the positions of internal corners of the chessboard.
+
+2) cv::findCirclesGrid
+    [1/2]
+        Syntax:
+            bool cv::findCirclesGrid(
+                InputArray          image,
+                Size                patternSize,
+                OutputArray         centers,
+                int                 flags,
+                const Ptr<FeatureDetector>&     blobDetector,
+                CirclesGridFinderParameters     parameters
+            )
+        Description: Finds centers in the grid of circles.
+    [2/2]
+        Syntax:
+            bool cv::findCirclesGrid(
+                InputArray          image, 
+                Size                patternSize,
+                OutputArray         centers,
+                int                 flags = CALIB_CB_SYMMETRIC_GRID,
+                const Ptr<FeatureDetector>& blobDetector = SimpleBlobDetector::create()
+            )
+        Description: This is an overloaded member function, provided for convenience. It differs from the above function only in what argument(s) it accepts.
+
+3) cv::bitwise_not
+    Syntax:
+        void cv::bitwise_not(
+            InputArray      src,
+            OutputArray     dst,
+            InputArray      mask = noArray()
+        )
+    Description: Inverts every bit of an array.
+
+4) undistortImage
+    Syntax:
+        void cv::fisheye::undistortImage(
+            InputArray      distorted,
+            OutputArray     undistored,
+            InputArray      K,
+            InputArray      D,
+            InputArray      Knew = cv::noArray(),
+            const Size&     new_size = Size()
+        )
+    Description: Transforms an image to compensate for fisheye lens distortion.
+
+5) undistort
+    Syntax:
+        void cv::undistort(
+            InputArray      src,
+            OutputArray     dst,
+            InputArray      cameraMatrix,
+            InputArray      distCoeffs,
+            InputArray      newCameraMatrix = noArray()
+        )
+    Description: Transforms an image to compensate for lens distortion.
+
+6) cv::initUndistortRectifyMap
+    Syntax:
+        void cv::initUndistortRectifyMap(
+            InputArray      cameraMatrix,
+            InputArray      distCoeffs,
+            InputArray      R,
+            InputArray      newCameraMatrix,
+            Size            size,
+            int             m1type,
+            OutputArray     map1,
+            OutputArray     map2
+        )
+    Description: Computes the undistortion and retification transformation map.
+
+7) cv::estimateNewCameraMatrixForUndistortRectify
+    Syntax:
+        void cv::fisheye::estimateNewCameraMatrixForUndistortRectify(
+            InputArray          K,
+            InputArray          D,
+            const Size&         image_size,
+            InputArray          R,
+            OutputArray         P,
+            double              balance = 0.0,
+            const Size&         new_size = Size(),
+            double              for_scale = 1.0
+        )
+    Description: Estimates new camera matrix for undistortion or rectification.
