@@ -30,3 +30,17 @@
                 TermCriteria            criteria = TermCriteria(TermCriteria::COUNT + TermCriteria::EPS, 30, DBL_EPSILON)
             )
         Description: N/A 
+
+2) cv::projectPoints
+    Syntax:
+        void cv::projectPoints(
+            InputArray      objectPoints,
+            InputArray      rvec,
+            InputArray      tvec,
+            InputArray      cameraMatrix,
+            InputArray      distCoeffs,
+            OutputArray     imagePoints, 
+            OutputArray     jacobian = noArray(),
+            double          aspectRatio = 0
+        )
+    Description: Projects 3D points to an image plan.
