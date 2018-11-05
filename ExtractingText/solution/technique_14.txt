@@ -1,0 +1,62 @@
+1) cv::drawMatches
+    [1/2]
+        Syntax:
+            void cv::drawMatches(
+                InputArray                      img1,
+                const std::vector<KeyPoint>&    keypoints1,
+                const std::vector<DMatch>&      matches1to2,
+                InputArray                      img2,
+                InputOutputArray                outImg,
+                const Scalar&                   matchColor = Scalar::all(-1),
+                const Scalar&                   singlePointColor =  Scalar::all(-1),
+                const std::vector<char>&        matchesMask = std::vector<char>(),
+                int                             flags = DrawMatchesFlags::DEFAULT
+            )
+        Description: Draws the found matches of keywords from two images.
+    [2/2]
+        Syntax:
+            void cv::drawMatches(
+                InputArray                      img1,
+                const std::vector<KeyPoint>&    keypoints1,
+                InputArray                      img2,
+                const std::vector<KeyPoint>&    keypoints2,
+                const std::vector<std::vector<DMatch>>&     matches1to2,
+                InputOutputArray                            outImg,
+                const Scalar&                               matchColor = Scalar::all(-1),
+                const Scalar&                               singlePointColor = Scalar::all(-1),
+                const std::vector<std::vector<char>>&       matchesMask = std::vector<std::vector<char>>(),
+                int                                         flags = DrawMatchesFlags::DEFAULT
+            )
+        Description: This is an overloaded member function, provided for convenience. It differs from the above function only in what argument(s) it accepts.
+2) cv::FlannBasedMatcher
+    Syntax:
+        cv::FlannBasedMatchewr
+    Description: Falnn-based descriptor matcher.
+
+3) cv::findHomography
+    Syntax:
+        cv::Mat cv::findHomography(
+            InputArray      srcPoints, 
+            InputArray      dstPoints,
+            int             method = 0,
+            double          ransacReprojThreshold = 3,
+            OutputArray     mask = noArray(),
+            const int       maxIters = 2000,
+            const double    confidence = 0.995
+        )
+    Description: Finds a perspective transformation between two planes.
+
+4) cv::perspectiveTransform
+    Syntax:
+        void cv::perspectiveTransform(
+            InputArray      src,
+            OutputArray     dst,
+            InputArray      m
+        )
+    Description: Performs the perspective matrix transformation of vectors.
+
+5) cv::AKAZE
+    Syntax:
+        cv::AKAZE
+     Description: Class implementing the AKAZE keypoint detector and descriptor extractor, described in [5]
+     (Pablo F Alcantarilla, Jesus Neuvo, Adrien Bartoli. Fast explicit diffusion for accelerated features in nonlinear scale spaces.)

@@ -1,0 +1,52 @@
+1) cv::xfeatures2d::SURF
+    Syntax:
+        cv::xfeatures2d::SURF
+    Description: Class for extracting Speeded Up Robust Features from an image.
+
+2) cv::Feature2D::detect
+    Syntax:
+        virtual void cv::Feature2D::detect(
+            InputArray              image,
+            std::vector<KeyPoint>&  keypoints,
+            InputArray              mask = noArray()
+        )
+    Description: Detects keypoints in an image (first variant) or image set (second variant).
+
+3) cv::xfeatures2d::SURF::detect
+    Syntax:
+        virtual void cv::Feature2D::detect(
+            InputArray                  image,
+            std::vector<KeyPoint>&      keypoints,
+            InputArray                  mask = noArray()
+        )
+    Description: Detects keypoints in an image (first variant) or image set (second variant)
+
+4) cv::drawKeypoints
+    Syntax:
+        void cv::drawKeypoints(
+            InputArray                      image,
+            const std::vector<KeyPoint>&    keypoints,
+            InputOutputArray                outImage,
+            const Scalar&                   color = Scalar::all(-1),
+            int                             flags = DrawMatchesFlag::DEFAULT
+        )
+    Description: Draws keypoints.
+
+5) cv::xfeatures2d::SURF::compute
+    Syntax:
+        virtual void cv::Feature2D::compute(
+            InputArray                  image,
+            std::vector<KeyPoint>&      keypoints,
+            OutputArray                 descriptors
+        )
+    Description: Computes the descriptors for a set of keypoints detected in an image (first variant) or image set (second variant).
+
+6) DescriptorExtrator
+    Syntax:
+        typedef Feature2D cv::DescriptorExtrator
+    Description: Extractors of keypoint descriptors in OpenCV have wrappers with a common interface that enables you to easily switch between different algorithms solving the same problem.
+
+7) cv::DescriptorMatcher
+    Syntax:
+        cv::DescriptorMatcher
+    Description: Abstract base class for matching keypoint descriptors.

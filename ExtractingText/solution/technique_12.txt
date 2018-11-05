@@ -5,4 +5,68 @@
 		)
 	Description: Updates the predicted state from the measurement.
 
-2) 
+2) cv::cornerHaris
+	Syntax:
+		void cv::cornerHaris(
+			InputArray 		src,
+			OutputArray 	dst,
+			int 			blockSize,
+			int 			ksize,
+			double 			k,
+			int 			borderType = BORDER_DEFAULT
+		)
+	Description: Haris corner detector.
+
+3) cv::goodFeaturesToTrack
+	Syntax:
+		void cv::goodFeaturesToTrack(
+			InputArray 			image,
+			OutputArray 		corners,
+			int 				maxCorners,
+			double 				qualityLevel,
+			double 				minDistance,
+			InputArray 			mask = noArray(),
+			int 				blockSize = 3,
+			bool 				useHarrisDetector = false,
+			double 				k = 0.04
+		)
+	Description: Determines strong corners on an image.
+
+4) cv::cornerEigenValsAndVecs
+	Syntax:
+		void cv::cornerEigenValsAndVec(
+			InputArray			src,
+			OutputArray 		dst,
+			int					blockSize,
+			int 				ksize,
+			int 				borderType = BORDER_DEFAULT
+		)
+	Description: Calculates eigenvalues and eigenvectors of image blocks for corner detection.
+
+5) cv::cornerMinEigenVal 
+	Syntax:
+		void cv::cornerMinEigenVal(
+			InputArray 			src,
+			OutputArray 		dst,
+			int 				blockSize,
+			int 				ksize = 3,
+			int 				borderType = BORDER_DEFAULT
+		)
+	Description: Calculatess the minimal eigenvalue of gradient matrices for corner detection.
+
+6) cv::cornerSubPix
+	Syntax:
+		void cv::cornerSubPix(
+			InputArray 			image,
+			InputOutputArray 	corners,
+			Size				winSize,
+			Size 				zeroZone,
+			TermCriteria 		criteria
+		)
+	Description: Refines the corner locations.
+
+7) cv::FeatureDetector
+	Syntax:
+		typedef Feature2D cv::FeatureDetector
+	Description: Feature detectors in OpenCV have wrappers with a common interface that enables you to easily switch between different algorithms solving the same  problem.
+	All objects that implement keypoint detectors inherit the FeatureDetector interface.
