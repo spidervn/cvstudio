@@ -44,3 +44,37 @@
             double          aspectRatio = 0
         )
     Description: Projects 3D points to an image plan.
+
+3) cv::ORB
+    Description: Class implementing the ORB (oriented BRIEF) keypoint detector and descriptor extrator.
+
+4) cv::FAST
+    [1/2]
+        Syntax:
+            void cv::FAST(
+                InputArray              image,
+                std::vector<KeyPoint>&  keypoints,
+                int                     threshold,
+                bool                    normalSuppression = true
+            )
+        Description: This is an overloaded member function, provided for convenience. It differs from the above function only in what argument(s) it accepts.
+
+    [2/2]
+        Syntax:
+            void cv::FAST(
+                InputArray              image,
+                std::vector<KeyPoint>&  keypoints,
+                int                     threshold,
+                bool                    normaxSuppression,
+                int                     type
+            )
+        Description: Detects corners using the FAST algorithm.
+
+5) cv::xfeatures2d::BriefDescriptorExtrator
+    Description: Class for computing BRIEF descriptors described in [29].
+
+6) cv::FlannBasedMatcher
+    Description: Flann-based descriptor matcher.
+
+7) cv::flann::GenericIndex<Distance>
+    Desciption: The FLANN nearest neighbor index class. This class is templated with the type of elements for which the index is built.

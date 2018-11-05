@@ -1,0 +1,8 @@
+1) cv::KalmanFilter::correct
+	Syntax:
+		const cv::Mat& cv::KalmanFilter::correct(
+			const Mat& 		measurement
+		)
+	Description: Updates the predicted state from the measurement.
+
+2) 

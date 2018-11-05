@@ -1,0 +1,38 @@
+1) cv::solvePnpRansac
+	Syntax:
+		bool cv::solvePnPRansac(
+			InputArray			objectPoints, 
+			InputArray 			imagePoints,
+			InputArray 			cameraMatrix,
+			InputArray 			distCoeffs,
+			OutputArray 		rvec,
+			OutputArray 		tvec,
+			bool 				useExtrinsicGuess = false,
+			int 				iterationsCount = 100,
+			float 				reprojectionError = 8.0,
+			double 				confidence = 0.99,
+			OutputArray 		inliers = noArray(),
+			int 				flags = SOLVEPNP_ITERATIVE
+		)
+	Description: Finds an object pose from 3D-2D point correspondences using the RANSAC scheme.
+
+2) cv::BFMatcher
+	Description: Brute-force descriptor matcher.
+
+3) cv::KalmanFilter
+	Description: Kalman filter class.
+
+4) cv::KalmanFilter::processNoiseCov
+	Syntax:
+		cv::Mat cv::KalmanFilter::processNoiseCov
+	Description:
+		Process noise covariance matrix (Q)
+
+5) cv::KalmanFilter::measurementNoiseCov
+	Description: measurement noise covariance matrix (R).
+
+6) cv::KalmanFilter::errorCovPost
+	Description: posteriori error estimate covariance matrix (P(k)): P(k) = (I-K(k)*H)*P'(K)
+
+7) cv::KalmanFilter::predict
+	Description: Computes a predicted state.
