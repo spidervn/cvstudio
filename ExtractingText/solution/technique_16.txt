@@ -1,0 +1,19 @@
+1) decomposeHomographyMat
+    Syntax:
+        int cv::decomposeHomographyMat(
+            InputArray              H,
+            InputArray              K,
+            OutputArrayOfArrays     rotations,
+            OutputArrayOfArrays     translations,
+            OutputArrayOfArrays     normals
+        )
+    Description: Decompose a homography matrix to rotation(s), translation(s) and plane normal(s).
+
+2) cv::Rodrigues
+    Syntax:
+        void cv::Rodrigues(
+            InputArray      src,
+            OutputArray     dst,
+            OutputArray     jacobian = noArray()
+        )
+    Description: converts a rotation matrix to a rotation vector or vice versa.

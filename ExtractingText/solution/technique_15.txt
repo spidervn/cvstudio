@@ -1,0 +1,102 @@
+1) cv::Feature2D::detectAndCompute
+    Syntax:
+        virtual void cv::Feature2D::detectAndCompute(
+            InputArray              image,
+            InputArray              mask,
+            std::vector<KeyPoint>&  keypoints,
+            OutputArray             descriptors,
+            bool                    useProvidedKeypoints = false
+        )
+    Description: Detects keypoints and computes the descriptors.
+
+2) cv::TickMeter
+    Syntax:
+        class cv::TickMeter
+    Description: a Class to measure passing time.
+
+3) cv::hconcat
+    [1/3]
+        Syntax:
+            void cv::hconcat(
+                const Mat*      src,
+                size_t          nsrc,
+                OutputArray     dst
+            )
+        Description: Applies horizontal concatenation to given matrices.
+    [2/3]
+        Syntax:
+            void cv::hconcat(
+                InputArray      src1,
+                InputArray      src2,
+                OutputArray     dst
+            )
+        Description: This is an overloaded member function, provided for convenience. It differs from the above function only in what argument(s) it accepts.
+    [3/3]
+        Syntax:
+            void cv::hconcat(
+                InputArrayOfArrays      src,
+                OutputArray             dst
+            )
+        Description: This is an overloaded member function, provided for convenience. It differs from the above function only in what argument(s) it accepts.
+
+4) cv::DMatch
+    Syntax:
+        class cv::DMatch
+    Description: Class for matching keypoint descriptors.
+
+5) cv::vconcat
+    [1/3]
+        Syntax:
+            void cv::vconcat(
+                const Mat*      src,
+                size_t          nsrc,
+                OutputArray     dst
+            )
+        Description: Applies vertical concatenation to given matrices.
+    [2/3]
+        Syntax:
+            void cv::vconcat(
+                InputArray      src1,
+                InputArray      src2,
+                OutputArray     dst
+            )
+        Description: This is an overloaded member function, provided for convenience. It differs from the above function only in what argument(s) it accepts.
+    [3/3]
+        Syntax:
+            void cv::vconcat(
+                InputArrayOfArrays      src,
+                OutputArray             dst
+            )
+        Description: This is an overloaded member function, provided for convenience. It differs from the above function only in what argument(s) it accepts.
+
+6) cv::selectROI
+    [1/2]
+        Syntax:
+            Rect cv::selectROI(
+                const String&       windowName,
+                InputArray          img,
+                bool                showCrosshair = true,
+                bool                fromCenter = false
+            )
+        Description: Select ROI on the given image. Function creates a window and allows user to select a ROI using mouse. Controls: use space or enter to finish selection, use key c to cancel selection (function will return the zero cv::Rect)
+    [2/2]
+        Syntax:
+            Rect cv::selectROI(
+                InputArray          img,
+                bool                showCrosshair = true,
+                bool                fromCenter = false
+            )
+        Description: This is an overloaded member function, provided for convenience. It differs from the above function only in what argument(s) it accepts.
+
+7) cv::warpPerspective
+    Syntax: 
+        void cv::warpPerspective(
+            InputArray          src,
+            OutputArray         dst,
+            InputArray          M,
+            Size                dsize,
+            int                 FLAGS = INTER_LINEAR,
+            int                 borderMode = BORDER_CONSTANT,
+            const Scalar&       borderValue = Scalar()
+        )
+    Description: Applies a perspective transformation to an image.

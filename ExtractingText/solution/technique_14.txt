@@ -60,3 +60,35 @@
         cv::AKAZE
      Description: Class implementing the AKAZE keypoint detector and descriptor extractor, described in [5]
      (Pablo F Alcantarilla, Jesus Neuvo, Adrien Bartoli. Fast explicit diffusion for accelerated features in nonlinear scale spaces.)
+
+6) cv::DescriptorMatcher
+    Syntax:
+        class cv::DescriptorMatcher 
+    Description:
+        Abstract base class for matching keypoint descriptors.
+
+7) cv::fillPoly
+    [1/2]
+        Syntax:
+            void cv::fillPoly(
+                Mat&            img,
+                const Point**   pts,
+                const int**     npts,
+                int             ncontours,
+                const Scalar&   color,
+                int             lineType = LINE_8,
+                int             shift = 0,
+                Point           offset = Point()
+            )
+        Description: This is an overloaded member function, provided for convenience. It differs from the above function only in what argument(s) it accepts.
+    [2/2]
+        Syntax:
+            void cv::fillPoly(
+                InputOutputArray        img,
+                InputArrayOfArrays      pts,
+                const Scalar&           color,
+                int                     lineType = LINE_8,
+                int                     shift = 0,
+                Point                   offset = Point()
+            )
+        Description: Fill the area bounded by one or more polygons.
