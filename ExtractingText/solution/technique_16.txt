@@ -17,3 +17,34 @@
             OutputArray     jacobian = noArray()
         )
     Description: converts a rotation matrix to a rotation vector or vice versa.
+
+3) cv::BackgroundSubtractorMOG2
+    Syntax:
+        class cv::BackgroundSubtractorMOG2
+    Description:
+        Gaussian Mixture-based Background/Foreground Segmentation Algorithm.
+
+4) cv::CascadeClassifier
+    Syntax:
+        class cv::CascadeClassifier
+    Description: Cascade classifier class for object detection.
+
+5) cv::CascadeClassifier::load
+    Syntax:
+        bool cv::CascadeClassifier::load(const String& filename)
+    Description: Load a classifier from a file.
+
+6) detectMultiScale
+    Syntax:
+        void cv::CascadeClassifier::detectMultiScale(
+            InputArray              image,
+            std::vector<Rect>&      objects,
+            double                  scaleFactor = 1.1,
+            int                     minNeighbors = 3,
+            int                     flags = 0,
+            Size                    minSize = Size(),
+            Size                    maxSize = Size()
+        )
+    Description: detects objects of different sizes in the input image. The detected objects are returned as a list of rectangles.
+
+7) 
