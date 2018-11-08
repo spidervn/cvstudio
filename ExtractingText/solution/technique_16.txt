@@ -47,4 +47,18 @@
         )
     Description: detects objects of different sizes in the input image. The detected objects are returned as a list of rectangles.
 
-7) 
+7) readNet
+    Syntax:
+        [1/2]
+            cv::Net cv::dnn::readNet(
+                const String&  model,
+                const String&  config = "",
+                const String&  framework = ""
+            )
+        [2/2]
+            cv::Net cv::dnn::readNet(
+                const String& framework,
+                const std::vector<uchar>&   bufferModel,
+                const std::vector<uchar>&   bufferConfig = std::vector<uchar>()
+            )
+    Description: Read deep learning network represented in one of the supported formats.
