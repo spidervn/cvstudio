@@ -1,3 +1,96 @@
-1) 
+1) blobFromImage
+    Syntax:
+        [1/2]
+            Mat cv::dnn::blobFromImage(
+                InputArray      image,
+                double          scalefactor = 1.0,
+                const Size&     size = Size(),
+                const Scalar&   mean = Scalar(),
+                bool            swapRB = true,
+                bool            crop = true,
+                int             ddepth = CV_32F
+            )
+        [2/2]
+            void cv::dnn::blobFromImage(
+                InputArray      image,
+                OutputArray     blob,
+                double          scalefactor = 1.0,
+                const Size&     size = Size(),
+                const Scalar&   mean = Scalar(),
+                bool            swapRB = true,
+                bool            crop = true,
+                int             ddepth = CV_32F
+            )
+    Description: Creates 4-dimensional blob from image. Optionally resizes and crops image from center, subtract mean values, scales values by scalefactor, swap Blue and Red channels.
+2) forward
+    Syntax:
+        [1/4]
+            Mat cv::dnn::Net::forward(const String& outputName = String())
+        [2/4]
+            void cv::dnn::Net::forward(
+                OutputArrayOfArrays     outputBlobs,
+                const String&           outputName = String()
+            )
+        [3/4] 
+            void cv::dnn::Net::forward(
+                OutputArrayOfArrays         outputBlobs,
+                const std::vector<String>&  outBlobNames
+            )
+        [4/4]
+            void cv::dnn::Net::forward(
+                std::vector<std::vector< Mat> >&    outputBlobs,
+                const std::vector< String >&        outBlobNames
+            )
+    Description: Runs forward pass to compute output of layer with name outputName.
 
-2) 
+3) setHalideScheduler
+    Syntax:
+        void cv::dnn::Net::setHalideScheduler(
+            const String& scheduler
+        )
+    Description: Compile Halide layers.
+
+4) cv::dnn::Layer
+    Syntax:
+        class cv::dnn::Layer
+    Description: This interface class allows to build new Layers - are building blocks of networks.
+
+5) cv::dnn::LayerParams 
+    Syntax:
+        class cv::dnn::LayerParams
+    Description: This class provides all data needed to initialize layer.
+
+6) getMemoryShapes
+    Syntax:
+        virtual bool cv::dnn::Layer::getMemoryShapes(
+            const std::vector<MatShape>&    inputs,
+            const int                       requiredOutputs,
+            std::vector<MatShape>&          outputs, 
+            std::vector<MatShape>&          internals,
+        ) const
+    Description: N/A
+
+7) cv::ml::SVM::train
+    [1/3]
+        Syntax:
+            virtual bool cv::ml::StatModel::train(
+                const Ptr<TrainData>&   trainData,
+                int                     flags = 0
+            )
+        Description: Trains the statistical model.
+    [2/3]
+        Syntax:
+            virtual bool cv::ml::StatModel::train(
+                InputArray          samples,
+                int                 layout,
+                InputArray          responses
+            )
+        Description: Trains the statistical model.
+    [3/3]
+        Syntax:
+            template<typename _Tp>
+            static Ptr<_Tp> cv::ml::StatModel::train(
+                const Ptr<TrainData>&       data,
+                int                         flags = 0
+            )
+        Description: Create and train model with default parameters.

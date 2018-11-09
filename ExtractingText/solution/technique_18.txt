@@ -1,0 +1,8 @@
+1) predict
+    Syntax:
+        virtual float cv::ml::StatModel::predict(
+            InputArray      samples,
+            OutputArray     results = noArray(),
+            int             flags = 0
+        ) const
+    Description: Predicts response(s) for the provided sample(s)
