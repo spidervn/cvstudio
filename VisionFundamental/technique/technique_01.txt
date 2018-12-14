@@ -1,0 +1,8 @@
+1) 
+	Input Image --> Edge Image --> 2 1/2-D sketch --> 3-D Model
+
+	Input Image --> Primal Sketch --> 2 1/2-D sketch --> 3-D Model representation.
+
+2) David Mars book 
+
+3) 
