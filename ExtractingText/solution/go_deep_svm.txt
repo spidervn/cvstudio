@@ -1,0 +1,28 @@
+1) Supervisied Learning
+2) Notations:
+    x[i]: Input
+    y[i]: Output / (Target variables)
+    (x[i], y[i]): training example
+    {(x[i], y[i]) | i=1,..,m}: Training set.
+    X: space of input values (e.g: real, vector,...)
+    Y: space of output values.
+3) h: hypothesis function, is a good predictor.
+    h: X --> Y
+    [ Training set ] ---> [ Learning Algorithm ] ---> [ h ]
+4) Linear regression
+    Assume X is RxR => x = (x1,x2)
+    h_theta(x) = theta_0 + theta_1 * x1 + theta_2 * x2
+    <=>
+    h_theta(x) = vector(theta)^T * vector(x)
+5) Cost function:
+    J(theta) = 1/2 Sum(every i) (h_theta(x[i]) - y[i])^2
+6) Gradient descent - Least mean squares update rule - Widrow-Hoff learning rule.
+    Assume initial value of theta is theta.
+    We repeatedly performs the update:
+            theta_[j] = theta_[j] - alpha * d_J(theta)/d_theta_[j]
+        Where:
+            alpha: learning rate.
+    <=>
+        theta_[j] = theta_[j] + alpha * (y[i] - h_theta(x[i])) * x[i][j]
+7) Repeat until convergence:
+    theta_[j] = theta_[j] + alpha * (y[i] - h_theta(x[i])) * x[i][j]
