@@ -5,7 +5,8 @@ find_package( OpenCV REQUIRED )
 
 include_directories(src/)
 file(GLOB SOURCES "src/*.cpp" 
-                    "src/extract/*.cpp")
+                    "src/extract/*.cpp"
+                    "src/app/impl/application/*.cpp")
 
 add_executable( extract_text ${SOURCES} )
 target_link_libraries( extract_text ${OpenCV_LIBS} )
