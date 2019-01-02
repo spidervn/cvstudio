@@ -4,8 +4,15 @@
 #include "opencv2/imgcodecs.hpp"
 #include "opencv2/highgui.hpp"
 #include "app/impl/application/CSobelApp.h"
+<<<<<<< Updated upstream
 #include "app/impl/application/CRemappingApp.h"
 #include "app/impl/application/CAffineTransform.h"
+=======
+#include "app/impl/application/CCannyEdgeApp.h"
+#include "app/impl/application/CHitOrMissApp.h"
+#include "app/impl/application/CHoughLineApp.h"
+#include "app/impl/application/CHoughCircleApp.h"
+>>>>>>> Stashed changes
 
 using namespace cv;
 using namespace std;
