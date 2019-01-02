@@ -1,0 +1,30 @@
+
+1) cuda::multiply
+2) cuda::subtract
+3) cv::subtract
+    Syntax:
+        void cv::subtract(
+            InputArray src1,
+            InputArray src2,
+            OutputArray dst,
+            InputArray mask = noArray(),
+            int dtype = -1
+        )
+    Description: Calculates the per-element difference between two arrays of array and scalar.
+4) cuda::add
+5) cv::add
+	Syntax:
+		void cv::add(
+			InputArray src1,
+			InputArray src2,
+			OutputArray dst,
+			InputArray mask = noArray(),
+			int dtype = -1
+		)
+	Description: Calculates the per-element sum of two arrays or an array and a scalar.
+6) cuda::sum
+7) cv::sum
+	Syntax:
+		Scalar cv::sum(InputArray src)
+	Description: 
+		Calculates the sum of array elements.

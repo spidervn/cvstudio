@@ -1,0 +1,8 @@
+
+1) cv::cuda::GpuMat
+	Syntax:
+		class cv::cuda::GpuMat
+	Description: Base storage class for GPU memory with reference counting.
+
+
+

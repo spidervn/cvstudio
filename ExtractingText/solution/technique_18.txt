@@ -6,3 +6,53 @@
             int             flags = 0
         ) const
     Description: Predicts response(s) for the provided sample(s)
+
+2) PCA
+    Syntax:
+        class PCA
+    Description: Principal Component Analysis. The class is used to calculate a special basis for a set of vectors.
+
+3) Sticher
+    Syntax:
+        cv::Stitcher
+    Description: High level image stitcher. 
+
+4) Sticher::Mode
+    Syntax
+        enum cv::Stitcher::Mode
+    Description: 
+    Values:
+        PANORAMA: Mode for creating photo panoramas.
+        SCANS: Mode for composing scans.
+
+5) Stitch
+    Syntax:
+        Status cv::Stitcher::stitch(
+            InputArrayOfArrays image,
+            OutputArray pano
+        )
+    Description: Try to stitch the given images.
+
+6) CreateGaussianFilter
+    Syntax: 
+        Ptr<Filter> cv::cuda::createGaussianFilter(
+            int srcType, 
+            int dstType,
+            Size ksize,
+            double sigma1,
+            double sigma2 = 0,
+            int rowBorderMode = BORDER_DEFAULT,
+            int columnBorderMode = -1
+        )
+    Description: Creates a Gaussian filter.
+
+7) multiply
+    Syntax: 
+        void cv::multiply(
+            InputArray src1,
+            InputArray src2,
+            OutputArray dst,
+            double scale = 1,
+            int dtype = -1
+        )
+    Description: Calculates the per-element scaled producxt of two arrays.
