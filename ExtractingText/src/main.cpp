@@ -4,15 +4,10 @@
 #include "opencv2/imgcodecs.hpp"
 #include "opencv2/highgui.hpp"
 #include "app/impl/application/CSobelApp.h"
-<<<<<<< Updated upstream
 #include "app/impl/application/CRemappingApp.h"
 #include "app/impl/application/CAffineTransform.h"
-=======
-#include "app/impl/application/CCannyEdgeApp.h"
-#include "app/impl/application/CHitOrMissApp.h"
-#include "app/impl/application/CHoughLineApp.h"
-#include "app/impl/application/CHoughCircleApp.h"
->>>>>>> Stashed changes
+#include "app/impl/application/CLaplaceApp.h"
+
 
 using namespace cv;
 using namespace std;
@@ -29,6 +24,7 @@ int main(int argc, char const *argv[])
     // IApplication* p_App = new CSobelApp();
     // IApplication* p_App = new CRemappingApp();
     IApplication* p_App = new CAffineTransform();
+    // IApplication* p_App = new CLaplaceApp();
     int n_Ret = p_App->run(argc, argv);
     delete p_App;
 
