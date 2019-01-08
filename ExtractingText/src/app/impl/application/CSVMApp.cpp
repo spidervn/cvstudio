@@ -126,7 +126,73 @@ int CSVMApp::run2()
 int CSVMApp::run3()
 {
     // Generate random data
-    int NUM = 10;
+    int NUM = 3;
+    int MAX_WIDTH = 500;
+    int MAX_HEIGHT = 500;
+    float training[NUM][2];
+    int labels[NUM];
+
+    for (int i=0;i<NUM;i++)
+    {
+        training[i][0] = rand() % MAX_WIDTH;
+        training[i][1] = rand() % MAX_HEIGHT;
+
+        labels[i] = rand() % 2;
+    }
+
+    Mat mat_TrainData(NUM, 2, CV_32F, training);
+    Mat mat_Labels(NUM, 1, CV_32SC1, labels);
+    
+    Ptr<SVM> svm = SVM::create();
+    svm->setType(SVM::C_SVC);
+    svm->setKernel(SVM::LINEAR);
+    svm->setTermCriteria(TermCriteria(TermCriteria::MAX_ITER, 100, 1e-6));
+    svm->train(mat_TrainData, ROW_SAMPLE, mat_Labels);
+
+    Mat image = Mat::zeros( MAX_HEIGHT, MAX_WIDTH, CV_8UC3 );
+    Vec3b green(0,255,0), blue(255,0,0);
+
+    for(int i = 0; i < image.rows; i++)
+    {
+        for(int j = 0; j < image.cols; j++)
+        {
+            Mat sampleMat = (Mat_<float>(1,2) << j, i);
+            float response = svm->predict(sampleMat);
+
+            if (response == 1)
+                image.at<Vec3b>(i,j) = green;
+            else if (response == 0)
+                image.at<Vec3b>(i,j) = blue;
+        }
+    }
+
+    // Show the training data
+    int thickness = -1;
+
+    for (int i=0;i<NUM;i++)
+    {
+        if (labels[i] == 1)
+        {
+            circle( image, Point(training[i][0], training[i][1]), 5, Scalar(0,0,0), thickness);
+        }
+        else if (labels[i] == 0)
+        {
+            circle( image, Point(training[i][0], training[i][1]), 5, Scalar(255,255,255), thickness);
+        }
+    }
+
+    thickness = 2;
+    Mat sv = svm->getUncompressedSupportVectors();
+
+    for(int i = 0; i < sv.rows; i++)
+    {
+        /* code */
+        const float* v = sv.ptr<float>(i);
+        circle(image, Point((int) v[0], (int) v[1]), 6, Scalar(128, 128, 128), thickness);
+    }
+    imwrite("result.png", image);
+    imshow("SVM Simple Example", image);
+    waitKey();
 
     return 0;
 }

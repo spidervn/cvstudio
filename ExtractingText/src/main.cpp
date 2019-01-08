@@ -15,7 +15,8 @@ using namespace std;
 int main(int argc, char const *argv[])
 {
     printf("Extracting text data\r\n");
-    
+    srand(time(NULL));
+
     // if (argc <= 1)
     // {
     //     printf("Usage: %s <<image_file>>\r\n", argv[0]);
@@ -27,7 +28,7 @@ int main(int argc, char const *argv[])
     // IApplication* p_App = new CLaplaceApp();
     IApplication* p_App = new CSVMApp();
     // int n_Ret = p_App->run(argc, argv);
-    int n_Ret = ((CSVMApp*)p_App)->run2();
+    int n_Ret = ((CSVMApp*)p_App)->run3();
     delete p_App;
 
     return n_Ret;
