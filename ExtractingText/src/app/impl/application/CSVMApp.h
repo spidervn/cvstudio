@@ -11,6 +11,7 @@ public:
     int run(int argc, char const *argv[]);
     int run2();
     int run3();
+    int run4();
 };
 
 #endif // !EXTRACTTEXT_APP_INTERFACE_APPROACH_ITEMPLATEMATCHING_H_

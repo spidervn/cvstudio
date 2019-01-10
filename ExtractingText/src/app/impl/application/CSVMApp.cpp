@@ -4,6 +4,8 @@
 #include <opencv2/imgcodecs.hpp>
 #include <opencv2/highgui.hpp>
 #include <opencv2/ml.hpp>
+#include <app/impl/background/CMatrix.h>
+
 using namespace cv;
 using namespace cv::ml;
 
@@ -193,6 +195,28 @@ int CSVMApp::run3()
     imwrite("result.png", image);
     imshow("SVM Simple Example", image);
     waitKey();
+
+    return 0;
+}
+
+int CSVMApp::run4()
+{
+    Matrix<double> m1; // = new CMatrix();
+    Matrix<double> m2; // = new CMatrix();
+    Matrix<double> m3;
+    CMatrix ctrl;
+
+    m1.Rebuild(1,2);
+    m2.Rebuild(2,1);
+
+    m1.set(0,0,1);
+    m1.set(0,1,1);
+    m2.set(0,0,1);
+    m2.set(1,0,1);
+
+    ctrl.MatrixProduct(m1,m2,m3);
+
+    printf("Result(rows,cols)=(%d,%d); [%f,%f]\r\n", m3.rows(), m3.cols(), m3.get(0,0), m3.get(0,1));
 
     return 0;
 }

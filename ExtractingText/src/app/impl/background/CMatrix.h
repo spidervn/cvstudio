@@ -10,6 +10,14 @@ public:
     virtual ~CMatrix();
 
     double dotProduct(std::vector<double> p1, std::vector<double> p2, int n);
+
+    double dotProduct(std::vector<double> p1, 
+                                std::vector<double> p2,
+                                int n,
+                                int step_v1=1,
+                                int step_v2=1);
+
+    int  MatrixProduct(Matrix<double> m1, Matrix<double> m2, Matrix<double>& m_out);
 };
 
 #endif // !EXTRACTTEXT_APP_INTERFACE_APPROACH_ITEMPLATEMATCHING_H_
