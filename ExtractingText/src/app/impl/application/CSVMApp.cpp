@@ -217,6 +217,5 @@ int CSVMApp::run4()
     ctrl.MatrixProduct(m1,m2,m3);
 
     printf("Result(rows,cols)=(%d,%d); [%f,%f]\r\n", m3.rows(), m3.cols(), m3.get(0,0), m3.get(0,1));
-
     return 0;
 }
