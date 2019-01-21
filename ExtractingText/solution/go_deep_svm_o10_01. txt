@@ -1,0 +1,16 @@
+Go deep SVM
+
+O_#10(Locally weighted linear regression)
+  O(index) = 01
+  O(Paragraph) = 14
+  Para_$1
+    @01) Consider the problem of predicting y from x is R.
+    @02) The leftmost figure below shows the result of fitting a y = theta[0] + theta[1]x to a dataset.
+    @03) The data doesn't really lie on straight line => the fit is not very good.
+    @04) _ A Figure
+    @05) _ A Figure
+    @06) _ A Figure
+    @07) Instead, if we had added an extra feature x^2, & fit y = theta[0] + theta[1]x + theta[2]x^2.
+  Paragraph_$2
+   
+EN_#05)

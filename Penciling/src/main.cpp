@@ -29,7 +29,7 @@ int main(int argc, char const *argv[])
     img = imread(argv[1], IMREAD_COLOR);
 
     GaussianBlur(img, img_NoNoise, Size(3,3), 0, 0, BORDER_DEFAULT);
-    bilateralFilter(img, img_Bil, 30, 60, 60);
+    bilateralFilter(img, img_Bil, 40, 60, 60);
     cvtColor(img_NoNoise, imgGray, COLOR_BGR2GRAY);
     
     Sobel(imgGray, grad_x, ddepth, 1, 0, ksize, scale, delta, BORDER_DEFAULT);
