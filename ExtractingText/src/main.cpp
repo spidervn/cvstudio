@@ -28,7 +28,7 @@ int main(int argc, char const *argv[])
     // IApplication* p_App = new CLaplaceApp();
     IApplication* p_App = new CSVMApp();
     // int n_Ret = p_App->run(argc, argv);
-    int n_Ret = ((CSVMApp*)p_App)->run3();
+    int n_Ret = ((CSVMApp*)p_App)->run4();
     delete p_App;
 
     return n_Ret;
@@ -38,7 +38,6 @@ int main(int argc, char const *argv[])
     img = cv::imread(argv[1], IMREAD_COLOR);
     
     cvtColor(img, dst, COLOR_BGR2GRAY);
-
     cv::namedWindow("Win");
     cv::imshow("Win", dst);
 

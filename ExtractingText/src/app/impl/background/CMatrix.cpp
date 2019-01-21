@@ -23,7 +23,7 @@ double CMatrix::dotProduct(std::vector<double> p1,
                                 int step_v1,
                                 int step_v2)
 {
-
+    return 0;
 }
 
 int CMatrix::MatrixProduct(Matrix<double> m1, Matrix<double> m2, Matrix<double>& m_out)
