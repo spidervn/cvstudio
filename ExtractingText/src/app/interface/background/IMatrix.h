@@ -2,8 +2,8 @@
 #define EXTRACTTEXT_APP_INTERFACE_BACKGROUND_IMATRIX_H_
 
 #include <vector>
-#include <stdio.h>   
-#include <stdlib.h> 
+#include <stdio.h>
+#include <stdlib.h>
 
 template <typename T>
 class Matrix

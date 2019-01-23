@@ -1,0 +1,9 @@
+
+SVM = Support Vector Machine
+1/ What is a SVM?
+2/ How is the optimal hyperplane computed?
+3/ Explaination
+4/ Results.
+
+5/ 
+

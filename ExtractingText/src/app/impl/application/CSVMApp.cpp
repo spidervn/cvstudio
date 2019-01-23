@@ -127,6 +127,7 @@ int CSVMApp::run2()
 
 int CSVMApp::run3()
 {
+    // Gradient descent
     // Generate random data
     int NUM = 3;
     int MAX_WIDTH = 500;
