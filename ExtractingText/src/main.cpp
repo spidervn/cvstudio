@@ -8,6 +8,8 @@
 #include "app/impl/application/CAffineTransform.h"
 #include "app/impl/application/CLaplaceApp.h"
 #include "app/impl/application/CSVMApp.h"
+#include "app/impl/application/CFourierApp.h"
+#include "app/impl/application/CHistogramEqApp.h"
 
 using namespace cv;
 using namespace std;
@@ -26,9 +28,12 @@ int main(int argc, char const *argv[])
     // IApplication* p_App = new CRemappingApp();
     // IApplication* p_App = new CAffineTransform();
     // IApplication* p_App = new CLaplaceApp();
-    IApplication* p_App = new CSVMApp();
+    // IApplication* p_App = new CSVMApp();
     // int n_Ret = p_App->run(argc, argv);
-    int n_Ret = ((CSVMApp*)p_App)->run4();
+    // IApplication* p_App = new CFourierApp();
+    IApplication* p_App = new CHistogramEqApp();
+    int n_Ret;
+    n_Ret = p_App->run(argc, argv); // = ((CSVMApp*)p_App)->run4();
     delete p_App;
 
     return n_Ret;
@@ -40,7 +45,6 @@ int main(int argc, char const *argv[])
     cvtColor(img, dst, COLOR_BGR2GRAY);
     cv::namedWindow("Win");
     cv::imshow("Win", dst);
-
     waitKey(0);
     return 0;
 }

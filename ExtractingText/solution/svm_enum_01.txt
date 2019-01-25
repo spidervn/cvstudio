@@ -7,6 +7,9 @@
             int flags = 0
         )
     Description: Trains the statistical model.
+    Parameters:
+        trainData: training data that can be loaded from file using TrainData::loadFromCSV or created with TrainData::create.
+        flags: optional flags, depending on the model. Some of the models can be updated with the new training samples, not completely overwritten (such as NormalBayesClassifier or ANN_MLP).
 
     [2/3]
     Syntax: 
@@ -16,8 +19,30 @@
             InputArray  responses
         )
     Description: Trains the statistical model.
+    Parameters:
+        + samples: training samples
+        + layout: see ml::SampleTypes
+        + responses: vector of responses associated with the training samples.
 
     [3/3]
     Syntax:
-        
-    Description:
+        template<typename _Tp>
+        static Ptr<_Tp> cv::ml::StatModel::train(
+            const Ptr<TrainData>& data,
+            int flags = 0
+        )
+    Description: Create and train model with default parameters. 
+
+2) predict
+    Syntax:
+        virtual float cv::ml::StatModel::predict(
+            InputArray samples,
+            OutputArray results = noArray(),
+            int flags = 0
+        ) const
+    Description: Predicts response(s) for the provided sample(s)
+    Parameters: 
+        + samples: the input samples, floating-point matrix.
+        + results: the optinal output matrix of results.
+        + flags: the optional flags, model-dependent. See cv::ml::StatModel::Flags
+
