@@ -1,0 +1,23 @@
+
+1) cv::ml::StatModel::train
+    [1/3]
+    Syntax:
+        virtual bool cv::ml::StatModel::train(
+            const Ptr<TrainData>& trainData, 
+            int flags = 0
+        )
+    Description: Trains the statistical model.
+
+    [2/3]
+    Syntax: 
+        virtual bool cv::ml::StatModel::train(
+            InputArray  samples,
+            int         layout,
+            InputArray  responses
+        )
+    Description: Trains the statistical model.
+
+    [3/3]
+    Syntax:
+        
+    Description:
