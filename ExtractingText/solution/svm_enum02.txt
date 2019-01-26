@@ -30,4 +30,14 @@
       Description: Create and train model with default parameters
 
 2) predict
-  
+    [Syntax]
+        virtual float cv::ml::StatModel::predict(
+            InputArray samples,
+            OutputArray resuls = noArray(),
+            int flags = 0
+        ) const
+    [Description] Predict respons(s) fro the provided sample(s)
+    [Parameters] 
+        + samples: The input samples, floating-point matrix
+        + results: The optional output matrix of results.
+        + flags: The optional flags, model-dependent.
