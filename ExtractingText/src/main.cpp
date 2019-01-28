@@ -10,6 +10,7 @@
 #include "app/impl/application/CSVMApp.h"
 #include "app/impl/application/CFourierApp.h"
 #include "app/impl/application/CHistogramEqApp.h"
+#include "app/impl/application/CFeatureDetectApp.h"
 
 using namespace cv;
 using namespace std;
@@ -31,7 +32,8 @@ int main(int argc, char const *argv[])
     // IApplication* p_App = new CSVMApp();
     // int n_Ret = p_App->run(argc, argv);
     // IApplication* p_App = new CFourierApp();
-    IApplication* p_App = new CHistogramEqApp();
+    // IApplication* p_App = new CHistogramEqApp();
+    IApplication* p_App = new CFeatureDetectApp();
     int n_Ret;
     n_Ret = p_App->run(argc, argv); // = ((CSVMApp*)p_App)->run4();
     delete p_App;
