@@ -11,6 +11,8 @@
 #include "app/impl/application/CFourierApp.h"
 #include "app/impl/application/CHistogramEqApp.h"
 #include "app/impl/application/CFeatureDetectApp.h"
+#include "app/impl/application/CHarrisCornerApp.h"
+#include "app/impl/cv/CCVCore.h"
 
 using namespace cv;
 using namespace std;
@@ -33,13 +35,29 @@ int main(int argc, char const *argv[])
     // int n_Ret = p_App->run(argc, argv);
     // IApplication* p_App = new CFourierApp();
     // IApplication* p_App = new CHistogramEqApp();
-    IApplication* p_App = new CFeatureDetectApp();
+    // IApplication* p_App = new CFeatureDetectApp();
+
+    /*
+    IApplication* p_App = new CHarrisCornerApp();
     int n_Ret;
     n_Ret = p_App->run(argc, argv); // = ((CSVMApp*)p_App)->run4();
     delete p_App;
+    */
 
-    return n_Ret;
+    Mat img;
+    img = imread("/home/jcm/Pictures/opencv/donald-trump.jpg", IMREAD_COLOR);
 
+    // namedWindow("A", WINDOW_AUTOSIZE);
+    // imshow("A", img);
+    // waitKey();
+
+    ICVCore* pCv = new CCVCore();
+    pCv->HarrisCorner(img);
+    delete pCv;
+
+    return 0;
+
+    /*
     cv::Mat img;
     cv::Mat dst;
     img = cv::imread(argv[1], IMREAD_COLOR);
@@ -49,4 +67,5 @@ int main(int argc, char const *argv[])
     cv::imshow("Win", dst);
     waitKey(0);
     return 0;
+    */
 }
