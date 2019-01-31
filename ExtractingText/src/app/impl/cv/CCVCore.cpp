@@ -31,11 +31,11 @@ int CCVCore:: HarrisCorner(cv::Mat& img)
         int i = 0;
         for ( it = img.begin<Vec3b>(), end = img.end<Vec3b>(); it != end;)
         {
-            for (y=0;y<img.cols;y++)
+            for (x=0;x<img.cols;x++)
             {                
                 ++it;
             }
-            x++;
+            y++;
         }
         printf("done x=%d;y=%d\r\n", x, y);
     }
@@ -73,3 +73,4 @@ int CCVCore:: HarrisCorner(cv::Mat& img)
 
     return 0;
 }
+

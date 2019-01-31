@@ -11,6 +11,7 @@ public:
     CHarrisCornerApp();
     virtual ~CHarrisCornerApp();
     int run(int argc, char const *argv[]);
+    int run2(int argc, char const *argv[]);
 
 private:
     cv::Mat src;
