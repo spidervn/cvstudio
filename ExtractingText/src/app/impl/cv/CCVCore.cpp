@@ -11,8 +11,11 @@ CCVCore::CCVCore()
 CCVCore::~CCVCore()
 {}
 
-int CCVCore:: HarrisCorner(cv::Mat& img)
+int CCVCore::HarrisCorner(cv::Mat& img)
 {
+    /* 
+     * Implement
+     */
     int nNumChannel = img.channels();
     printf("NoChannels = %d\r\n", nNumChannel);
 
@@ -39,7 +42,6 @@ int CCVCore:: HarrisCorner(cv::Mat& img)
         }
         printf("done x=%d;y=%d\r\n", x, y);
     }
-
 
     // Scan every pixels
     /*

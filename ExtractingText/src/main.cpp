@@ -12,6 +12,7 @@
 #include "app/impl/application/CHistogramEqApp.h"
 #include "app/impl/application/CFeatureDetectApp.h"
 #include "app/impl/application/CHarrisCornerApp.h"
+#include "app/impl/application/CShiTomasiApp.h"
 #include "app/impl/cv/CCVCore.h"
 
 using namespace cv;
@@ -37,9 +38,11 @@ int main(int argc, char const *argv[])
     // IApplication* p_App = new CHistogramEqApp();
     // IApplication* p_App = new CFeatureDetectApp();
 
-    IApplication* p_App = new CHarrisCornerApp();
+    // IApplication* p_App = new CHarrisCornerApp();
+    IApplication* p_App = new CShiTomasiApp();
     int n_Ret;
-    n_Ret = ((CHarrisCornerApp*)p_App)->run2(argc, argv); // = ((CSVMApp*)p_App)->run4();
+    n_Ret = p_App->run(argc, argv);
+    
     delete p_App;
 
     // namedWindow("A", WINDOW_AUTOSIZE);
