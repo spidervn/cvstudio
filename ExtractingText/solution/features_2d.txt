@@ -33,5 +33,20 @@
         ksize: Aperture parameter for the Sobel operator.
         borderType: Pixel extrapolation method.
 
-3) cornerMinEigenVal
-    
+3) cornerSubPix
+    Syntax:
+        void cv::cornerSubPix(
+            InputArray          image,
+            InputOutputArray    corners,
+            Size                winSize,
+            Size                zeroZone,
+            TermCriteria        criteria
+        )
+    Description: Refines the corner locations.
+    Parameters:
+        + image: Input single-channel, 8-bit or float image. 
+        + corners: Initial coordinates of the input corners and refined coordinates provided for output. 
+        + winSize: Half of the side length of the search window. For example, if winSize=Size(5,5) , then a (5∗2+1)×(5∗2+1)=11×11 search window is used. 
+        + zeroZone: Half of the size of the dead region in the middle of the search zone over which the summation in the formula below is not done. It is used sometimes to avoid possible singularities of the autocorrelation matrix. The value of (-1,-1) indicates that there is no such a size. 
+        + criteria: Criteria for termination of the iterative process of corner refinement. That is, the process of corner position refinement stops either after criteria.maxCount iterations or when the corner position moves by less than criteria.epsilon on some iteration. 
+
