@@ -1,0 +1,37 @@
+
+1) cornerEigenValsAndVecs
+  Syntax:
+    void cornerEigenValsAndVecs(
+        InputArray src,
+        OutputArray dst,
+        int     blockSize,
+        int     ksize,
+        int     borderType = BORDER_DEFAULT
+    )
+  Description: calculates eigenvalues and eigenvectors of image blocks for corner detection.
+  Parameters: 
+    + src: Input single-channel 8-bit or floating-point image.
+    + dst: Image to store the results. It has the same size as src and the type  CV_32FC(6).
+    + blockSize: Neighborhood size (see details below). 
+    + ksize: Aperture parameter for the Sobel operator. 
+    + borderType: Pixel extrapolation method.
+
+2) cornerMinEigenVal
+    Syntax:
+        void cv::cornerMinEigenVal(
+            InputArray      src,
+            OutputArray     dst,
+            int     blockSize,
+            int     ksize = 3,
+            int     borderType = BORDER_DEFAULT 
+        )
+    Description: Calculates the minimal eigenvalue of gradient matrices for corner detection. 
+    Parameter:
+        src: Input single-channel 8-bit or floating-point image. 
+        dst: Image to store the minimal eigenvalues. It has the type CV_32FC1 and the same size as src . 
+        blockSize: Neighborhood size (see the details on cornerEigenValsAndVecs). 
+        ksize: Aperture parameter for the Sobel operator.
+        borderType: Pixel extrapolation method.
+
+3) cornerMinEigenVal
+    
