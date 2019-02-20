@@ -13,6 +13,7 @@
 #include "app/impl/application/CFeatureDetectApp.h"
 #include "app/impl/application/CHarrisCornerApp.h"
 #include "app/impl/application/CShiTomasiApp.h"
+#include "app/impl/application/COwnCornerDetectApp.h"
 #include "app/impl/cv/CCVCore.h"
 
 using namespace cv;
@@ -39,7 +40,8 @@ int main(int argc, char const *argv[])
     // IApplication* p_App = new CFeatureDetectApp();
 
     // IApplication* p_App = new CHarrisCornerApp();
-    IApplication* p_App = new CShiTomasiApp();
+    // IApplication* p_App = new CShiTomasiApp();
+    IApplication* p_App = new COwnCornerDetectApp();
     int n_Ret;
     n_Ret = p_App->run(argc, argv);
     
