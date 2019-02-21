@@ -8,8 +8,9 @@
 
 using namespace cv;
 using namespace cv::xfeatures2d;
-using std::cout;
-using std::endl;
+using namespace std;
+//using std::cout;
+//using std::endl;
 
 CFeatureDetectApp::CFeatureDetectApp()
 {}
