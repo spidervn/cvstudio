@@ -40,7 +40,6 @@ int main(int argc, char const *argv[])
     // IApplication* p_App = new CFourierApp();
     // IApplication* p_App = new CHistogramEqApp();
     // IApplication* p_App = new CFeatureDetectApp();
-
     // IApplication* p_App = new CHarrisCornerApp();
     // IApplication* p_App = new CShiTomasiApp();
     // IApplication* p_App = new COwnCornerDetectApp();
@@ -50,22 +49,5 @@ int main(int argc, char const *argv[])
     n_Ret = p_App->run(argc, argv);
     
     delete p_App;
-
-    // namedWindow("A", WINDOW_AUTOSIZE);
-    // imshow("A", img);
-    // waitKey();
-
     return 0;
-
-    /*
-    cv::Mat img;
-    cv::Mat dst;
-    img = cv::imread(argv[1], IMREAD_COLOR);
-    
-    cvtColor(img, dst, COLOR_BGR2GRAY);
-    cv::namedWindow("Win");
-    cv::imshow("Win", dst);
-    waitKey(0);
-    return 0;
-    */
 }
