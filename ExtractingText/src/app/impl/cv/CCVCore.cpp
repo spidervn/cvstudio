@@ -37,6 +37,8 @@ int CCVCore::HarrisCorner(cv::Mat& img)
             for (x=0;x<img.cols;x++)
             {                
                 ++it;
+                
+                
             }
             y++;
         }
@@ -76,3 +78,11 @@ int CCVCore::HarrisCorner(cv::Mat& img)
     return 0;
 }
 
+int CCVCore::multiplyKernel(cv::Mat img, Matrix<double>*  kernel, cv::Mat& dst)
+{
+    // 
+    // 
+    // 
+    double* p_Row = kernel->rows();
+    return 0;
+}

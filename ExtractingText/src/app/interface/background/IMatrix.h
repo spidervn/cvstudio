@@ -66,7 +66,6 @@ public:
     }
 
     int rows() { return m; }
-
     int cols() { return n; }
 
     T* rows(int row_idx) { return &_p_Data[row_idx * m]; }  // Start position of rows row_idx
