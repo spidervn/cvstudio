@@ -2,7 +2,7 @@
 #define EXTRACTTEXT_APP_INTERFACE_CV_ICVCORE_H_
 
 #include <opencv2/core.hpp>
-#include "interface/background/IMatrix.h"
+#include "app/interface/background/IMatrix.h"
 
 class ICVCore
 {

@@ -78,11 +78,38 @@ int CCVCore::HarrisCorner(cv::Mat& img)
     return 0;
 }
 
-int CCVCore::multiplyKernel(cv::Mat img, Matrix<double>*  kernel, cv::Mat& dst)
+int CCVCore::multiplyKernel(cv::Mat img, 
+                                    cv::Mat& dst,
+                                    Matrix<double>* kernel,
+                                    int anchor_x,
+                                    int anchor_y)
 {
     // 
     // 
     // 
-    double* p_Row = kernel->rows();
+    double* p_Row = kernel->rows(0);
+
+    if (anchor_x == -1)
+    {
+        anchor_x = kernel->cols() / 2;
+    }
+
+    if (anchor_y == -1)
+    {
+        anchor_y = kernel->rows() / 2;
+    }
+
+    /*
+    for(size_t i = 0; i < img.rows(); i++)
+    {
+        for(size_t i = 0; i < count; i++)
+        {
+            
+        }
+        
+    }
+    */
+    
+    
     return 0;
 }
