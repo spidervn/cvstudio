@@ -11,6 +11,8 @@ class IFormula
 public:
     virtual ~IFormula() {}
     virtual int construct(IVariable* p_Val) = 0;
+    virtual bool equals(IFormula* pFopposite) = 0;
+    
 };
 
 #endif

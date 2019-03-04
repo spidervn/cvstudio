@@ -35,10 +35,8 @@ int CCVCore::HarrisCorner(cv::Mat& img)
         for ( it = img.begin<Vec3b>(), end = img.end<Vec3b>(); it != end;)
         {
             for (x=0;x<img.cols;x++)
-            {                
+            {
                 ++it;
-                
-                
             }
             y++;
         }
@@ -47,32 +45,32 @@ int CCVCore::HarrisCorner(cv::Mat& img)
 
     // Scan every pixels
     /*
-    for (int i=0;i<img.rows;i++)
-    {
-        for (int j=0;j<img.cols;j++)
+        for (int i=0;i<img.rows;i++)
         {
-            switch (img.channels())
+            for (int j=0;j<img.cols;j++)
             {
-                case 1:
-                    {
-                        MatIterator_<uchar> it, end;
-                        for (it = img.begin<uchar>(), end = img.end<uchar>(); it != end; ++it)
+                switch (img.channels())
+                {
+                    case 1:
                         {
-                            *it; // Here
-                        }
-                    
-                    break;
-                case 3:
-                        MatIterator_<Vec3b> it, end;
-                        for ( it = img.begin<Vec3b>(), end = img.end<Vec3b>(); it != end; ++it)
-                        {
-                        }
-                    break;
-                default:
-                    break;
+                            MatIterator_<uchar> it, end;
+                            for (it = img.begin<uchar>(), end = img.end<uchar>(); it != end; ++it)
+                            {
+                                *it; // Here
+                            }
+                        
+                        break;
+                    case 3:
+                            MatIterator_<Vec3b> it, end;
+                            for ( it = img.begin<Vec3b>(), end = img.end<Vec3b>(); it != end; ++it)
+                            {
+                            }
+                        break;
+                    default:
+                        break;
+                }
             }
         }
-    }
     */
 
     return 0;
@@ -84,9 +82,6 @@ int CCVCore::multiplyKernel(cv::Mat img,
                                     int anchor_x,
                                     int anchor_y)
 {
-    // 
-    // 
-    // 
     double* p_Row = kernel->rows(0);
 
     if (anchor_x == -1)
@@ -106,10 +101,14 @@ int CCVCore::multiplyKernel(cv::Mat img,
         {
             
         }
-        
     }
     */
-    
-    
+
+    // 
+    // Window: (u,v).
+    // 
+
+
+
     return 0;
 }

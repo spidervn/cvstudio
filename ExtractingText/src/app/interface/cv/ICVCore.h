@@ -10,6 +10,12 @@ public:
     ~ICVCore() { }
 
     virtual int HarrisCorner(cv::Mat& img) = 0;
+    virtual int averageChange_ShiftingWindow(cv::Mat img,
+                                                int window_x,
+                                                int window_y,
+                                                int window_w,
+                                                int window_h,
+                                                double& E) = 0;
     virtual int multiplyKernel(cv::Mat img, 
                                     cv::Mat& dst,
                                     Matrix<double>* kernel,
