@@ -10,7 +10,7 @@ class IEquation
 {
 public:
     virtual ~IEquation() {}
-    virtual int construct(IFormula* pF1, IFormula* pF2) = 0;
+    virtual int define(IFormula* pF1, IFormula* pF2) = 0;
 };
 
 #endif
