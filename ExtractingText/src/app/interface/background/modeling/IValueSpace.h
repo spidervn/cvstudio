@@ -9,7 +9,8 @@ class IValueSpace
 {
 public:
     virtual ~IValueSpace() {}
-    virtual int construct(const char* name) = 0;
+    virtual int define(const char* name) = 0;
+    virtual std::string name() = 0;
 };
 
 #endif
