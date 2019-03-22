@@ -56,11 +56,7 @@ int COwnCornerDetectApp::run(int argc, char const *argv[])
     minMaxLoc(Mc, &myHarris_minVal, &myHarris_maxVal);
 
     namedWindow(HARRIS_WINDOW);
-<<<<<<< Updated upstream
     createTrackbar("Quality Level", HARRIS_WINDOW, &myHarris_qualityLevel, max_qualityLevel, OnTrackbarHarris, (void*)this);
-=======
-    createTrackbar("Quality Level", HARRIS_WINDOW, &myHarris_qualityLevel,  OnTrackbarHarris, (void*)this);
->>>>>>> Stashed changes
     OnTrackbarHarris(0, (void*)this);
 
     cornerMinEigenVal(src_gray, myShiTomasi_dst, blockSize, apertureSize);
@@ -122,7 +118,6 @@ void COwnCornerDetectApp::OnTrackbarHarris(int nData,void* pData)
         COwnCornerDetectApp* pApp = (COwnCornerDetectApp*)pData;
         pApp->myHarrisFunc(nData, NULL);
     }
-
 }
 
 void COwnCornerDetectApp::OnTrackbarShiTomasi(int nData,void* pData)

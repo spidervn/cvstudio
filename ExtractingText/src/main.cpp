@@ -16,6 +16,7 @@
 #include "app/impl/application/CShiTomasiApp.h"
 #include "app/impl/application/COwnCornerDetectApp.h"
 #include "app/impl/application/CCornerLocationSubpixelsApp.h"
+#include "app/impl/application/CImageSegmentationApp.h"
 #include "app/impl/cv/CCVCore.h"
 
 using namespace cv;
@@ -44,7 +45,8 @@ int main(int argc, char const *argv[])
     // IApplication* p_App = new CShiTomasiApp();
     // IApplication* p_App = new COwnCornerDetectApp();
     // IApplication* p_App = new CCornerLocationSubpixelsApp();
-    IApplication* p_App = new CFeatureDescApp();
+    // IApplication* p_App = new CFeatureDescApp();
+    IApplication* p_App = new CImageSegmentationApp();
     int n_Ret;
     n_Ret = p_App->run(argc, argv);
     
