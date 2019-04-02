@@ -56,9 +56,9 @@ int CImageSegmentationApp::run(int argc, char const *argv[])
     Mat imgResult;
 
     filter2D(src, imgLaplacian, CV_32F, kernel);
-    src.convertTo(imgResult, CV_8UC3);
-    imgResult = sharp - imgLaplacian;
+    src.convertTo(sharp, CV_32F);
 
+    imgResult = sharp - imgLaplacian;
     //Black to gray scale
     imgResult.convertTo(imgResult, CV_8UC3);
     imgLaplacian.convertTo(imgLaplacian, CV_8UC3);
@@ -75,7 +75,9 @@ int CImageSegmentationApp::run(int argc, char const *argv[])
     distanceTransform(bw, dist, DIST_L2, 3);
 
     // Normalize the distance image for range = {0.0, 1.0}
-    normalize(dist, dist, 0.4, 1.0, THRESH_BINARY);
+    normalize(dist, dist, 0, 1.0, NORM_MINMAX);
+    imshow("Distance transform image", dist);
+    threshold(dist, dist, 0.4, 1.0, THRESH_BINARY);
 
     // Dilate a bit the dist-image
     Mat kernel1 = Mat::ones(3, 3, CV_8U);
@@ -138,5 +140,9 @@ int CImageSegmentationApp::run(int argc, char const *argv[])
         }
     }
 
+    // Visualize the final results
+    imshow("Final result", dst);
+
+    waitKey();
     return 0;
 }
