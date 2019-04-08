@@ -7,5 +7,25 @@
             => 
             Convert into grayscale image.
     1.3) Convert into grayscale image.
-    1.4) 
 
+2. Image segmentation approach
+    List of unit-works:
+    - distanceTransform: calculates the distance to the closet zero pixel for each pixel of the source image. The function cv::distanceTransform calculates the approximate or precise distance from every binary image pixel to the nearest zero pixel. For zero image pixels, the distance will obviously be zero.
+        Interface[1]: 
+            void cv::distanceTransform(
+                    InputArray src, 
+                    OutputArray dst, 
+                    OutputArray labels, 
+                    int distanceType, 
+                    int maskSize, 
+                    int labelType = DIST_LABEL_CCOMP)
+        Interface[2]:
+            void cv::distanceTransform(
+                    InputArray src,
+                    OutputArray dst,
+                    int distanceType,
+                    int maskSize,
+                    int dstType = CV_32F)        
+    - watershed: 
+    
+3. 
