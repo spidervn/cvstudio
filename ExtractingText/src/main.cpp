@@ -17,6 +17,7 @@
 #include "app/impl/application/COwnCornerDetectApp.h"
 #include "app/impl/application/CCornerLocationSubpixelsApp.h"
 #include "app/impl/application/CImageSegmentationApp.h"
+#include "app/examples/background/CDistanceTransformTest.h"
 #include "app/impl/cv/CCVCore.h"
 
 using namespace cv;
@@ -47,9 +48,11 @@ int main(int argc, char const *argv[])
     // IApplication* p_App = new CCornerLocationSubpixelsApp();
     // IApplication* p_App = new CFeatureDescApp();
     IApplication* p_App = new CImageSegmentationApp();
+    CDistanceTransformTest tt;
     int n_Ret;
-    n_Ret = p_App->run(argc, argv);
-    
+    // n_Ret = p_App->run(argc, argv);
+    tt.test_1D();
+
     delete p_App;
     return 0;
 }

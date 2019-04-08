@@ -1,4 +1,6 @@
 #include "CDistanceTransformTest.h"
+#include <stdio.h>
+#include <stdlib.h>
 
 CDistanceTransformTest::CDistanceTransformTest(/* args */)
 {
@@ -15,6 +17,7 @@ void CDistanceTransformTest::test_1D()
     int n = 10;
     double v[100];
     double z[100];
+    double df[100];     /* Distance transform */
     double s;
     
     k = 0;              /* Index of rightmost parabola in lower envelop */
@@ -42,8 +45,22 @@ void CDistanceTransformTest::test_1D()
     k = 0;
     for (q=0;q<n;q++)
     {
-        
+        while (z[k+1] < q)
+        {
+            k = k + 1;
+        }
+        // End of this 
+        // z[k+1] >= q
+
+        df[q] = (q - v[k])*(q - v[k]) + function_f(v[k]);
     }
+
+    printf("Result:\r\n");
+    for (int i=0;i<n;i++)
+    {
+        printf("%f,", df[i]);
+    }
+    printf("\r\n");
 }
 
 double CDistanceTransformTest::function_f(double a)
