@@ -22,6 +22,7 @@ public:
                                     int anchor_x = -1,
                                     int anchor_y = -1) = 0;
 
+
 };
 
 #endif // !EXTRACTTEXT_APP_INTERFACE_CV_ICVCORE_H_
