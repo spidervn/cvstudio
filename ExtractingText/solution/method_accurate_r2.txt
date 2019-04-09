@@ -1,0 +1,54 @@
+Method accuraty - r2
+Level-01 (17)
+    Introduction
+    Core functionality
+    Image processing 
+    High level GUI & Media
+    Image input & output 
+
+    Video input & output
+    Camera calibration & 3D reconstruction
+    2D features framework (feature2d module)
+    Video analysis (video module)
+    Object detection
+
+    Deep neural networks (dnn)
+    Machine learning (ml)
+    Computional photography (photo)
+    Images stitching (stitching)
+    CPU accelarated CV (cuda module)
+
+    OpenCV iOS 
+    OpenCV Viz
+
+Introduction(21)
+Core functionality (core)(11)
+    Mat the Basic Image container 
+    How to scan images, lookup tables and time measurement with OpenCV
+    Mask operations on matrices
+    Operations with images
+    Adding (blending) two images using OpenCV
+
+    Changing the contrast and brightnes of an image!
+    Discrete Fourier Transform
+    File Input and Output using XML & YAML files.
+    Interoperability with OpenCV 1
+    Intel(R) IPP asynchronous C/C++ library in OpenCV 
+
+    How to use the OpenCV parallel_for_ to parallelize your code
+Image processing (29?)
+    Basic drawing
+    Random generator and text with OpenCV
+    Smoothing images
+    Eroding & dilating
+    More morphology transformations 
+
+    Hit or miss
+    Extract horizontal & vertical lines by using morphological operations
+    Image pyramids 
+    Basic thresholding operations
+    Thresholding operations using inRange 
+
+    Making your own linear filters
+    Adding borders to your images
+
