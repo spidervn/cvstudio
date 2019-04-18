@@ -27,19 +27,26 @@ void CDistanceTransformTest::test_1D()
 
     for (q=1; q<n; q++)
     {
-        s = ((function_f(q) + q*q) - (function_f(v[k]) + v[k]*v[k]))/(2*q - 2*v[k]);
+        bool bDone = false;
+        do 
+        {
+            s = ((function_f(q) + q*q) - (function_f(v[k]) + v[k]*v[k]))/(2*q - 2*v[k]);
 
-        if (s <= z[k])
-        {
-            k = k - 1;       
-        }
-        else
-        {
-            k = k + 1;
-            v[k] = q;
-            z[k] = s;
-            z[k+1] = 999999;
-        }
+            if (s <= z[k])
+            {
+                k = k - 1;       
+            }
+            else 
+            {
+                bDone = true;
+            }
+        } while (!bDone);
+
+        k = k + 1;
+        v[k] = q;
+        z[k] = s;
+        z[k+1] = 999999;
+
     }
 
     k = 0;
@@ -59,6 +66,39 @@ void CDistanceTransformTest::test_1D()
     for (int i=0;i<n;i++)
     {
         printf("%f,", df[i]);
+    }
+    printf("\r\n");
+}
+
+void CDistanceTransformTest::bruteForce()
+{
+    int n = 10;
+    double df[100];
+
+    for (int i=0;i<n;i++)
+    {
+        double min = 999999;
+
+        for (int q = 0; q<n;q++)
+        {
+            if (q != i)
+            {
+                double d = (q - i) * (q-i) + function_f(q);
+
+                if (min > d)
+                {
+                    min = d;
+                }
+            }
+
+            df[q] = min;
+        }
+    }
+
+    printf("BruteForce for finding DF: ");
+    for (int i=0;i<n;i++)
+    {
+        printf("(%d,%f); ", i, df[i]);
     }
     printf("\r\n");
 }

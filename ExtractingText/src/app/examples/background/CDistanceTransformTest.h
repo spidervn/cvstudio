@@ -10,6 +10,7 @@ public:
     ~CDistanceTransformTest();
 
     void test_1D();
+    void bruteForce();
 
     double function_f(double a);
 };
