@@ -15,7 +15,7 @@ void CDistanceTransformTest::test_1D()
     int k;
     int q;
     int n = 10;
-    double v[100];
+    int v[100];
     double z[100];
     double df[100];     /* Distance transform */
     double s;
@@ -25,16 +25,55 @@ void CDistanceTransformTest::test_1D()
     z[0] = -999999;     
     z[1] = 999999;      /* Locations of boundaries between parabolas */
 
+    printf("Start Examine DF1D:\r\n");
+    printf("Step-Init(k=%d)\r\n:", k);
+    printf("\tV=");
+    for (int j=0;j<=k;j++)
+    {
+        printf("%d, ", v[j]);
+    }
+    printf("\r\n");
+    printf("\tZ=");
+    for (int j=0;j<=k+1;j++)
+    {
+        printf("%0.2f, ", z[j]);
+    }
+    printf("------\r\n");
+    getchar();
+
     for (q=1; q<n; q++)
     {
+        printf("Step-Examine q=%d\r\n:", q);
+        
+
+
         bool bDone = false;
         do 
         {
             s = ((function_f(q) + q*q) - (function_f(v[k]) + v[k]*v[k]))/(2*q - 2*v[k]);
+            printf("\tParabol(root-%d) x Parabol(root-%d) at x = %0.2f\r\n", q, v[k], s);
+
 
             if (s <= z[k])
             {
-                k = k - 1;       
+
+                printf("\t%0.2f <= %0.2f (s<=z[%d]) => Reduce k=%d\r\n", s, z[k], k, k-1);
+
+                k = k - 1;
+
+                printf("\tV=");
+                for (int j=0;j<=k;j++)
+                {
+                    printf("%d, ", v[j]);
+                }
+                printf("\r\n");
+                printf("\tZ=");
+                for (int j=0;j<=k+1;j++)
+                {
+                    printf("%0.2f, ", z[j]);
+                }
+                printf("------\r\n");
+                getchar();
             }
             else 
             {
@@ -42,10 +81,26 @@ void CDistanceTransformTest::test_1D()
             }
         } while (!bDone);
 
+        printf("\t%0.2f > %0.2f (s>z[%d]) => Update k=%d\r\n", s, z[k], k, k+1);
+
         k = k + 1;
         v[k] = q;
         z[k] = s;
         z[k+1] = 999999;
+
+        printf("\tV=");
+        for (int j=0;j<=k;j++)
+        {
+            printf("%d, ", v[j]);
+        }
+        printf("\r\n");
+        printf("\tZ=");
+        for (int j=0;j<=k+1;j++)
+        {
+            printf("%0.2f, ", z[j]);
+        }
+        printf("------\r\n");
+        getchar();
 
     }
 
@@ -66,6 +121,12 @@ void CDistanceTransformTest::test_1D()
     for (int i=0;i<n;i++)
     {
         printf("%f,", df[i]);
+    }
+    printf("\r\n");
+    printf("V[i]=\r\n");
+    for (int i=0; i<n; i++)
+    {
+        printf("%d, ", v[i]);
     }
     printf("\r\n");
 }
@@ -113,5 +174,6 @@ double CDistanceTransformTest::function_f(double a)
         45, 55, 1, 9, 0
     };
     int i = a;
+    int n = sizeof(arr)/sizeof(arr[0]);
     return arr[i];
 }
