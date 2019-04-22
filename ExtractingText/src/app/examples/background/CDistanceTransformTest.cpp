@@ -2,6 +2,8 @@
 #include <stdio.h>
 #include <stdlib.h>
 
+#define STEP_ANALYZE
+
 CDistanceTransformTest::CDistanceTransformTest(/* args */)
 {
 }
@@ -25,6 +27,7 @@ void CDistanceTransformTest::test_1D()
     z[0] = -999999;     
     z[1] = 999999;      /* Locations of boundaries between parabolas */
 
+    #ifdef STEP_ANALYZE
     printf("Start Examine DF1D:\r\n");
     printf("Step-Init(k=%d)\r\n:", k);
     printf("\tV=");
@@ -40,10 +43,13 @@ void CDistanceTransformTest::test_1D()
     }
     printf("------\r\n");
     getchar();
+    #endif
 
     for (q=1; q<n; q++)
     {
+        #ifdef STEP_ANALYZE
         printf("Step-Examine q=%d\r\n:", q);
+        #endif
         
 
 
@@ -51,16 +57,21 @@ void CDistanceTransformTest::test_1D()
         do 
         {
             s = ((function_f(q) + q*q) - (function_f(v[k]) + v[k]*v[k]))/(2*q - 2*v[k]);
+
+            #ifdef STEP_ANALYZE
             printf("\tParabol(root-%d) x Parabol(root-%d) at x = %0.2f\r\n", q, v[k], s);
+            #endif
 
 
             if (s <= z[k])
             {
-
+                #ifdef STEP_ANALYZE
                 printf("\t%0.2f <= %0.2f (s<=z[%d]) => Reduce k=%d\r\n", s, z[k], k, k-1);
+                #endif
 
                 k = k - 1;
 
+                #ifdef STEP_ANALYZE
                 printf("\tV=");
                 for (int j=0;j<=k;j++)
                 {
@@ -74,6 +85,7 @@ void CDistanceTransformTest::test_1D()
                 }
                 printf("------\r\n");
                 getchar();
+                #endif
             }
             else 
             {
@@ -81,13 +93,16 @@ void CDistanceTransformTest::test_1D()
             }
         } while (!bDone);
 
+        #ifdef STEP_ANALYZE
         printf("\t%0.2f > %0.2f (s>z[%d]) => Update k=%d\r\n", s, z[k], k, k+1);
+        #endif
 
         k = k + 1;
         v[k] = q;
         z[k] = s;
         z[k+1] = 999999;
 
+        #ifdef STEP_ANALYZE
         printf("\tV=");
         for (int j=0;j<=k;j++)
         {
@@ -101,9 +116,13 @@ void CDistanceTransformTest::test_1D()
         }
         printf("------\r\n");
         getchar();
+        #endif
 
     }
 
+    #ifdef STEP_ANALYZE
+    printf("Start-Computing result:\r\n");
+    #endif
     k = 0;
     for (q=0;q<n;q++)
     {
@@ -114,8 +133,16 @@ void CDistanceTransformTest::test_1D()
         // End of this 
         // z[k+1] >= q
 
+        #ifdef STEP_ANALYZE
+        printf("\tFor (q=%d), k=%d, z[k](%0.2f) <= q < z[k+1](%0.2f)\r\n", q, k, z[k], z[k+1]);
+        #endif
+
         df[q] = (q - v[k])*(q - v[k]) + function_f(v[k]);
     }
+
+    #ifdef STEP_ANALYZE
+    printf("\r\n");
+    #endif
 
     printf("Result:\r\n");
     for (int i=0;i<n;i++)
