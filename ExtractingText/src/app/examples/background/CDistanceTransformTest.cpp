@@ -81,7 +81,7 @@ void CDistanceTransformTest::bruteForce()
 
         for (int q = 0; q<n;q++)
         {
-            if (q != i)
+            // if (q != i)
             {
                 double d = (q - i) * (q-i) + function_f(q);
 
@@ -91,8 +91,9 @@ void CDistanceTransformTest::bruteForce()
                 }
             }
 
-            df[q] = min;
         }
+
+        df[i] = min;
     }
 
     printf("BruteForce for finding DF: ");
@@ -105,5 +106,12 @@ void CDistanceTransformTest::bruteForce()
 
 double CDistanceTransformTest::function_f(double a)
 {
-    return a + 1;
+    double arr[] = 
+    {
+        100, 7, 8, 67, 100,
+        7, 4, 87, 22, 23,
+        45, 55, 1, 9, 0
+    };
+    int i = a;
+    return arr[i];
 }
