@@ -21,6 +21,7 @@ public:
                                     int anchor_y = -1);
 
     int distanceTransform(cv::Mat img, cv::Mat& dst);
+    int distanceTransform_Rotate(cv::Mat img, cv::Mat& dst);
 };
 
 #endif // !EXTRACTTEXT_APP_IMPL_CV_CCVCORE_H_
