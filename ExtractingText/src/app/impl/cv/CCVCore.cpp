@@ -112,3 +112,37 @@ int CCVCore::multiplyKernel(cv::Mat img,
 
     return 0;
 }
+
+
+int CCVCore::distanceTransform(cv::Mat img, cv::Mat& dst)
+{
+    // Calculating 1DF 
+    // calculating 1df
+
+    // df(x,y) = min{xp} ((x-xp)^2 + df_{xp}(y))
+    //
+    // Build a lookup matrix df_{xp}(y)
+
+
+    int m = img.rows;
+    int n = img.cols;
+    // Columns index by 
+    double df[2000][2000];
+
+    // Calculate DF for every columns
+    for (int x=0; x<n; x++)
+    {
+        // 
+    }
+
+    // 
+    // Calculate Distance-transform for each row
+    // 
+
+    for (int x=0; x<n; x++)
+    {
+        for (int y=0; y<m; ++y)
+        {
+        }
+    }
+}

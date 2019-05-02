@@ -22,6 +22,7 @@ public:
                                     int anchor_x = -1,
                                     int anchor_y = -1) = 0;
 
+    virtual int distanceTransform(cv::Mat img, cv::Mat& dst) = 0;
 
 };
 

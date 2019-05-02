@@ -19,6 +19,8 @@ public:
                                     Matrix<double>* kernel,
                                     int anchor_x = -1,
                                     int anchor_y = -1);
+
+    int distanceTransform(cv::Mat img, cv::Mat& dst);
 };
 
 #endif // !EXTRACTTEXT_APP_IMPL_CV_CCVCORE_H_
