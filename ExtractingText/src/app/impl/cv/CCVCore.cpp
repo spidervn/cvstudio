@@ -16,6 +16,16 @@ CCVCore::CCVCore()
 CCVCore::~CCVCore()
 {}
 
+int CCVCore::averageChange_ShiftingWindow(cv::Mat img,
+                                                int window_x,
+                                                int window_y,
+                                                int window_w,
+                                                int window_h,
+                                                double& E)
+{
+    return 0;
+}                                                
+
 int CCVCore::HarrisCorner(cv::Mat& img)
 {
     /* 
@@ -129,27 +139,33 @@ int CCVCore::distanceTransform(cv::Mat img, cv::Mat& dst)
         //
         // Build a lookup matrix df_{xp}(y)
         // 
-
         int m = img.rows;
         int n = img.cols;
 
+        dst = img.clone();
+
         // Columns index by 
         double** df;
+        double** df2;
         double* z;
         int* v;
         double MAX_INFINITE = 9999999;
-        // df = (double**) malloc(sizeof(double*) * m * n);
-        // z = (double*) malloc(sizeof(double) * ());
+
+        printf("HERE\r\n");
+
         VMALLOC_2D(df, double, m, n);
+        VMALLOC_2D(df2, double, m, n);
         VMALLOC(v, int, m+1);
         VMALLOC(z, double, m+1);
 
+        printf("MALLOCDONE\r\n");
+
         // 
         // Calculate DF for every columns
-        //  df[a][column_x] = 
         // 
         for (int x=0; x<n; ++x)
         {
+            printf("CALC DF-col[%d]\r\n",x);
             int k = 0;
             double s;
             v[k] = 0;
@@ -163,7 +179,7 @@ int CCVCore::distanceTransform(cv::Mat img, cv::Mat& dst)
                 {
                     double f_q = img.at<uchar>(q, x);
                     double f_vk = img.at<uchar>(v[k], x);
-                    s = (  f_q * f_q + q*q - f_vk * f_vk - v[k]*v[k])/(2*q - 2*v[k]);
+                    s = (f_q * f_q + q*q - f_vk * f_vk - v[k]*v[k])/(2*q - 2*v[k]);
 
                     if (z[k] <= s)
                     {
@@ -185,35 +201,89 @@ int CCVCore::distanceTransform(cv::Mat img, cv::Mat& dst)
             k = 0;
             for (int q = 0; q<m; q++)
             {
-                
+                while (z[k + 1] < q)
+                {
+                    k = k + 1;
+                }
+                df[q][x] = (q - v[k])*(q - v[k]) + img.at<char>(q, x);
             }
-
         }
 
+        // 
+        // Calculate DF for 
         // 
         // Calculate Distance-transform for each row
+        //      df(x,y) = min{xp} ((x-xp)^2 + df_{xp}(y))
+        //      df(x,y) = min{xp} ((x - xp)^2 + df{xp}(y) )
+        //              = min{a} ((x-a)^2 + G(a))
         // 
-
-        for (int x=0; x<n; x++)
+        //  Y = constant 
+        //  H(x) = df(x,y)
+        //  G(x) = DF_project_on(x)(y)
+        //  => H(x) = min(a) ((a-x)^2 + G(a)) = DF_official(x in Row, G_y)
+        //      
+        //  df(x,y) = min{xp}()
+        //      df(x,y) = min{xp}()
+        // 
+        for (int y = 0; y<m; ++y)
         {
-            for (int y=0; y<m; ++y)
-            {
+            printf("CALCDF2[row=%d]\r\n",y);
+            int k = 0;
+            double s;
+            v[k] = 0;
+            z[k] = 0;
+            z[k+1] = MAX_INFINITE;
 
+            for (int qx=0; qx < n; qx++)
+            {
+                double f_qx;
+                double f_vk;
+
+                do
+                {
+                    f_qx = df[y][qx];
+                    f_vk = df[y][v[k]];
+                    s = (f_qx + qx*qx - f_vk - v[k]*v[k])/(2*qx - 2*v[k]);
+
+                    if (s <= z[k])
+                    {
+                        k = k - 1;
+                        continue;
+                    }
+
+                } 
+                while (s <= z[k]);
+
+                k = k + 1;
+                z[k] = s;
+                z[k+1] = MAX_INFINITE;
+                v[k] = qx;
+            }
+
+            k = 0;
+            for (int qx = 0; qx < n; qx++)
+            {
+                while (z[k +1] < qx)
+                {
+                    k = k + 1;
+                }
+
+                df2[y][qx] = ((qx - v[k])*(qx - v[k]) + df[y][v[k]]);
             }
         }
 
-        // 
-        // 
-        /*
-        for (int y=0; y<m; ++y)
+        for (int y = 0; y<m; ++y)
         {
-            free(df[y]);
+            for (int x = 0; x<n; ++x)
+            {
+                dst.at<char>(y,x) = (char)df2[y][x];
+            }
         }
-        free(df);
-        */
-    VFREE_2D(df, double, m, n);
-    VFREE(v);
-    VFREE(z);
+
+        VFREE_2D(df, double, m, n);
+        VFREE_2D(df2, double, m, n);
+        VFREE(v);
+        VFREE(z);
     }
 }
 

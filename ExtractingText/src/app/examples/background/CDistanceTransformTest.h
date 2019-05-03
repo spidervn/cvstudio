@@ -9,6 +9,7 @@ public:
     CDistanceTransformTest(/* args */);
     ~CDistanceTransformTest();
 
+    void test_2D(const char* szFile);
     void test_1D();
     void bruteForce();
 

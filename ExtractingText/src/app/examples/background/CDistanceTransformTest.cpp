@@ -1,6 +1,14 @@
 #include "CDistanceTransformTest.h"
 #include <stdio.h>
 #include <stdlib.h>
+#include <opencv2/core.hpp>
+#include <opencv2/imgproc.hpp>
+#include <opencv2/highgui.hpp>
+#include <iostream>
+#include "app/impl/cv/CCVCore.h"
+
+using namespace std;
+using namespace cv;
 
 #define STEP_ANALYZE
 
@@ -156,6 +164,39 @@ void CDistanceTransformTest::test_1D()
         printf("%d, ", v[i]);
     }
     printf("\r\n");
+}
+
+void CDistanceTransformTest::test_2D(const char* szFile)
+{
+    Mat img;
+    Mat img_gray;
+    Mat img_dst;
+
+    const char* szSource = "Source window";
+    const char* szDst = "Distance transform";
+    const char* szGray = "Gray img";
+
+    img = imread(szFile, IMREAD_COLOR);
+
+    if (img.empty())
+    {
+        printf("ERRRRRRRRRRRRRRRRRRRRRRRRR\r\n");
+    }
+    cvtColor(img, img_gray, COLOR_BGR2GRAY);
+
+    ICVCore* p = new CCVCore();
+    p->distanceTransform(img_gray, img_dst);
+
+    namedWindow(szSource, WINDOW_AUTOSIZE);
+    namedWindow(szDst, WINDOW_AUTOSIZE);
+    namedWindow(szGray, WINDOW_AUTOSIZE);
+
+    imshow(szSource, img);
+    imshow(szGray, img_gray);
+    imshow(szDst, img_dst);
+
+    waitKey();
+    delete p;
 }
 
 void CDistanceTransformTest::bruteForce()

@@ -51,7 +51,10 @@ int main(int argc, char const *argv[])
     CDistanceTransformTest tt;
     int n_Ret;
     // n_Ret = p_App->run(argc, argv);
-    tt.test_1D();
+    //tt.test_1D();
+    //tt.bruteForce();
+
+    tt.test_2D("/home/jcm/Pictures/opencv/donald-trump.jpg");
 
     delete p_App;
     return 0;
