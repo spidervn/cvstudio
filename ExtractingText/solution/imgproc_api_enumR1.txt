@@ -3,7 +3,37 @@ Image processing
 Needed Image processing 
 1. Syntax: cv::Point 
    Description: It represents a 2D point, specified by its image coordinates x and y.
+
 2. Syntax: cv::Scalar
    Description: Represents a 4-element vector.
    The type Scalar is widely used in OpenCV for passing pixel values.
-3. 
+
+3. cv::RNG
+    Syntax: cv::RNG
+    Description: get a random number from a uniform distribution.
+
+4. cv::blur
+    Syntax: cv::blur
+    Description: Blurs an image using the normalized box filter. 
+
+5. cv::GaussianBlur
+    Syntax:  cv::GaussianBlur
+    I/O: void cv::GaussianBlur (
+                InputArray      src,
+                OutputArray     dst, 
+                Size    ksize, 
+                double      sigmaX, 
+                double      sigmaY = 0, 
+                int     borderType = BORDER_DEFAULT 
+        )
+    Description: Blurs an image using a Gaussian filter.
+
+6. void cv::medianBlur
+    Syntax: void cv::medianBlur(
+                InputArray      src,
+                OutputArray     dst,
+                int     ksize 
+            )
+    Description: Blurs an image using the median filter. 
+
+7. 
