@@ -1,0 +1,9 @@
+Image processing 
+
+Needed Image processing 
+1. Syntax: cv::Point 
+   Description: It represents a 2D point, specified by its image coordinates x and y.
+2. Syntax: cv::Scalar
+   Description: Represents a 4-element vector.
+   The type Scalar is widely used in OpenCV for passing pixel values.
+3. 
