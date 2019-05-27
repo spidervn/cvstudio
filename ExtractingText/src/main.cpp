@@ -17,6 +17,7 @@
 #include "app/impl/application/COwnCornerDetectApp.h"
 #include "app/impl/application/CCornerLocationSubpixelsApp.h"
 #include "app/impl/application/CImageSegmentationApp.h"
+#include "app/impl/application/CImgResizingApp.h"
 #include "app/examples/background/CDistanceTransformTest.h"
 #include "app/impl/cv/CCVCore.h"
 
@@ -47,14 +48,15 @@ int main(int argc, char const *argv[])
     // IApplication* p_App = new COwnCornerDetectApp();
     // IApplication* p_App = new CCornerLocationSubpixelsApp();
     // IApplication* p_App = new CFeatureDescApp();
-    IApplication* p_App = new CImageSegmentationApp();
-    CDistanceTransformTest tt;
-    int n_Ret;
-    // n_Ret = p_App->run(argc, argv);
+    // IApplication* p_App = new CImageSegmentationApp();
+    IApplication* p_App = new CImgResizingApp();
+    int n_Ret = p_App->run(argc, argv);
+
+    // CDistanceTransformTest tt;
+    // int n_Ret;
     //tt.test_1D();
     //tt.bruteForce();
-
-    tt.test_2D("/home/jcm/Pictures/opencv/donald-trump.jpg");
+    // tt.test_2D("/home/jcm/Pictures/opencv/donald-trump.jpg");
 
     delete p_App;
     return 0;
