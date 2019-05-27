@@ -15,10 +15,6 @@ CImgResizingApp::~CImgResizingApp()
 
 int CImgResizingApp::run(int argc, char const *argv[])
 {
-    printf("Test\r\n");
-    printf("Worked\r\n");
-
-
     if (argc < 2)
     {
         printf("%s <<image_file>>\r\n", argv[0]);
