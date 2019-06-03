@@ -291,3 +291,68 @@ int CCVCore::distanceTransform_Rotate(cv::Mat img, cv::Mat& dst)
 {
     return 0;
 }
+
+int CCVCore::sobel(cv::Mat img, cv::Mat&dst)
+{
+    cv::Mat sobelX  = (cv::Mat_<double>(3, 3) << -1, 0, 1, -2, 0, 2, -1, 0, 1);
+    cv::Mat sobelY  = (cv::Mat_<double>(3, 3) << -1, -2, -1, 0, 0, 0, 1, 2, 1);
+    cv::Mat gx;
+    cv::Mat gy;
+
+    cv::filter2D(img, gx, -1, sobelX);
+    cv::filter2D(img, gy, -1, sobelY);
+
+    dst.create(img.size(), img.type());
+    double dx;
+    double dy;
+    double val;
+    double val0;
+    double val1;
+    double val2;
+
+    if (img.channels() == 1)
+    {
+        for (int x = 0; x < img.cols; x++)
+        {
+            for (int y = 0; y<img.rows; ++y)
+            {
+                dx = sobelX.at<uchar>(y,x);
+                dy = sobelY.at<uchar>(y,x);
+
+                val = sqrt(dx*dx + dy*dy);
+                dst.at<uchar>(y,x) = val;
+            }
+        }
+    }
+    else if (img.channels() == 3)
+    {
+        Mat_<Vec3b> _sobelX = sobelX;
+        Mat_<Vec3b> _sobelY = sobelY;
+        Mat_<Vec3b> _dst = dst;
+
+         for (int x = 0; x < img.cols; x++)
+        {
+            for (int y = 0; y<img.rows; ++y)
+            {
+                dx = _sobelX(y,x)[0];
+                dy = _sobelY(y,x)[0];
+                val0 = sqrt(dx*dx + dy*dy);
+
+                dx = _sobelX(y,x)[1];
+                dy = _sobelY(y,x)[1];
+                val1 = sqrt(dx*dx + dy*dy);
+
+                dx = _sobelX(y,x)[2];
+                dy = _sobelY(y,x)[2];
+                val2 = sqrt(dx*dx + dy*dy);
+
+                _dst(y,x)[0] = val0;
+                _dst(y,x)[1] = val1;
+                _dst(y,x)[2] = val2;
+                
+            }
+        }
+    }
+
+    return 0;
+}

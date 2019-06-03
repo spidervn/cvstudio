@@ -24,6 +24,9 @@ public:
 
     virtual int distanceTransform(cv::Mat img, cv::Mat& dst) = 0;
 
+
+    virtual int sobel(cv::Mat img, cv::Mat&dst) = 0;
+
 };
 
 #endif // !EXTRACTTEXT_APP_INTERFACE_CV_ICVCORE_H_
