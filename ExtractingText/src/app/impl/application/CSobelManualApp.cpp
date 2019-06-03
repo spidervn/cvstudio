@@ -39,7 +39,9 @@ int CSobelManualApp::run(int argc, char const *argv[])
         const char* szSource = "Source";
         const char* szSobel = "Sobel";
 
+        printf("Before sobel\r\n");
         p->sobel(img, dst);
+        printf("Done sobel\r\n");
 
         namedWindow(szSource, WINDOW_AUTOSIZE);
         namedWindow(szSobel, WINDOW_AUTOSIZE);

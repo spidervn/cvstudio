@@ -299,10 +299,15 @@ int CCVCore::sobel(cv::Mat img, cv::Mat&dst)
     cv::Mat gx;
     cv::Mat gy;
 
+    dst.create(img.size(), img.type());
+    gx.create(img.size(), img.type());
+    gy.create(img.size(), img.type());
+
+    printf("Before filter\r\n");
     cv::filter2D(img, gx, -1, sobelX);
     cv::filter2D(img, gy, -1, sobelY);
+    printf("After filter\r\n");
 
-    dst.create(img.size(), img.type());
     double dx;
     double dy;
     double val;
@@ -316,8 +321,8 @@ int CCVCore::sobel(cv::Mat img, cv::Mat&dst)
         {
             for (int y = 0; y<img.rows; ++y)
             {
-                dx = sobelX.at<uchar>(y,x);
-                dy = sobelY.at<uchar>(y,x);
+                dx = gx.at<uchar>(y,x);
+                dy = gy.at<uchar>(y,x);
 
                 val = sqrt(dx*dx + dy*dy);
                 dst.at<uchar>(y,x) = val;
@@ -326,24 +331,24 @@ int CCVCore::sobel(cv::Mat img, cv::Mat&dst)
     }
     else if (img.channels() == 3)
     {
-        Mat_<Vec3b> _sobelX = sobelX;
-        Mat_<Vec3b> _sobelY = sobelY;
+        Mat_<Vec3b> _gx = gx;
+        Mat_<Vec3b> _gy = gy;
         Mat_<Vec3b> _dst = dst;
 
          for (int x = 0; x < img.cols; x++)
         {
             for (int y = 0; y<img.rows; ++y)
             {
-                dx = _sobelX(y,x)[0];
-                dy = _sobelY(y,x)[0];
+                dx = _gx(y,x)[0];
+                dy = _gy(y,x)[0];
                 val0 = sqrt(dx*dx + dy*dy);
 
-                dx = _sobelX(y,x)[1];
-                dy = _sobelY(y,x)[1];
+                dx = _gx(y,x)[1];
+                dy = _gy(y,x)[1];
                 val1 = sqrt(dx*dx + dy*dy);
 
-                dx = _sobelX(y,x)[2];
-                dy = _sobelY(y,x)[2];
+                dx = _gx(y,x)[2];
+                dy = _gy(y,x)[2];
                 val2 = sqrt(dx*dx + dy*dy);
 
                 _dst(y,x)[0] = val0;
