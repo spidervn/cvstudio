@@ -1,7 +1,8 @@
-#include "CExtractText.h"
+#include "CExtractTextApp.h"
 
 #include <opencv2/imgproc.hpp>
 #include <opencv2/core.hpp>
+#include <opencv2/highgui.hpp>
 
 using namespace std;
 using namespace cv;
@@ -32,7 +33,7 @@ int CExtractTextApp::run(int argc, char const *argv[])
     cvtColor(img, img_gray, COLOR_BGR2GRAY);
     img_inv = 255 - img_gray;
 
-    threshold(img_gray, dst, 100, 255, THRESH_TOZERO);
+    threshold(img_inv, dst, 190, 255, THRESH_TOZERO);
 
     const char* szInvert = "Invert color";
     const char* szThreshold = "Thresholding";
