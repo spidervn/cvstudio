@@ -10,6 +10,7 @@ public:
     ~ICVCore() { }
 
     virtual int HarrisCorner(cv::Mat& img) = 0;
+
     virtual int averageChange_ShiftingWindow(cv::Mat img,
                                                 int window_x,
                                                 int window_y,
@@ -23,7 +24,6 @@ public:
                                     int anchor_y = -1) = 0;
 
     virtual int distanceTransform(cv::Mat img, cv::Mat& dst) = 0;
-
 
     virtual int sobel(cv::Mat img, cv::Mat&dst) = 0;
 

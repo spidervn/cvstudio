@@ -24,6 +24,9 @@ int CExtractTextApp::run(int argc, char const *argv[])
     //  2- Then extract every characters 
     //  3- Apply image segmentations
 
+    // 
+    // Extract every characters
+    // Extract every characters
     
 
     cv::Mat img;
@@ -53,6 +56,41 @@ int CExtractTextApp::run(int argc, char const *argv[])
     imshow(szInvert, img_inv);
     imshow(szThreshold, dst);
     imshow(szDF, df);
+
+
+    //
+    // Finding the connected components
+    // 
+    cv::Mat img_font = imread("/home/jcm/Pictures/opencv/abyssinica_font.png", IMREAD_COLOR);
+    cv::Mat img_font_gray;
+    cv::Mat img_connected;
+
+    if (img_font.empty())
+    {
+        printf("READ FAILED\r\n");
+    }
+
+    if (img_font.channels() > 1)
+    {
+        cvtColor(img_font, img_font_gray, COLOR_BGR2GRAY);
+    }
+    else
+    {
+        img_font_gray = img_font;
+    }
+    
+    int n = connectedComponents(img_font_gray, img_connected);
+    printf("Return = %d\r\n", n);
+    printf("Connected size=(%d,%d)\r\n", img_connected.cols, img_connected.rows);
+    const char* szImgGray = "Font gray";
+    const char* szConnected = "Connected components";
+
+    namedWindow(szImgGray, WINDOW_AUTOSIZE);
+    namedWindow(szConnected, WINDOW_AUTOSIZE);
+    imshow(szImgGray, img_font_gray);
+    imshow(szConnected, img_connected);
+
+
 
     waitKey();
     return 0;
