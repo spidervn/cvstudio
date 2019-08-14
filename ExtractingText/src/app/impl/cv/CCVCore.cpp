@@ -335,7 +335,7 @@ int CCVCore::sobel(cv::Mat img, cv::Mat&dst)
         Mat_<Vec3b> _gy = gy;
         Mat_<Vec3b> _dst = dst;
 
-         for (int x = 0; x < img.cols; x++)
+        for (int x = 0; x < img.cols; x++)
         {
             for (int y = 0; y<img.rows; ++y)
             {
@@ -358,6 +358,60 @@ int CCVCore::sobel(cv::Mat img, cv::Mat&dst)
             }
         }
     }
+
+    return 0;
+}
+
+int CCVCore::gaussianPyramid(cv::Mat img, cv::Mat& dst)
+{
+    cv::Mat gaussKernel = (cv::Mat_<double>(4, 4) << 1, 4, 6, 4, 1,
+                                                        4, 16, 24, 16, 4,
+                                                        6, 24, 36, 24, 6,
+                                                        4, 16, 24, 16, 4,
+                                                        1, 4, 6, 4, 1)/16;
+    cv::Mat gaussImg;
+    gaussImg.create(img.size(), img.type());
+
+    cv::filter2D(img, gaussImg, img.depth(), gaussKernel);
+    
+    // Remove even column & rows
+    // X = 1 -> N
+    // Y = 1 -> M
+    int m = img.rows();
+    int n = img.cols();
+    
+    // 
+    // Remove columns 2,4,6,... (one index)
+    // Remove rows 2,4,6,...    (one index)
+    //
+    //  
+    // 0 => 0
+    // 1 => 1
+    // 2 => 1
+    // 3 => 1,3
+
+    // 
+    // If (n is odd ) => [ 1, 2, 3 ] => n / 2 + 1
+    // If (n is even ) => [ 1, 2, 3, 4 ] => n/2
+    // 
+    // => newN = ceil(n/2)
+    // 
+    int newW = ceil(n/2);
+    int newH = ceil(m/2);
+    dst.create(
+        cv::Size(newW, newH),
+        img.type()
+    );
+
+    for (int y=0; y < newH; ++y)
+    {
+        for (int x=0; x<newW; ++x)
+        {
+
+        }
+    }
+
+
 
     return 0;
 }

@@ -36,4 +36,23 @@ Needed Image processing
             )
     Description: Blurs an image using the median filter. 
 
-7. 
+7. bilateralFilter
+    Syntax: void cv::bilateralFilter
+    I/O: void cv::bilateralFilter(
+                InputArray      src,
+                OutputArray     dst,
+                int     d, 
+                double      sigmaColor, 
+                double      sigmaSpace, 
+                int     borderType = BORDER_DEFAULT 
+            )
+    Description: Applies the bilateral filter to an image.
+
+8. erode
+    Syntax: 
+        void cv::erode(
+            
+        )
+    Description:
+
+9. 

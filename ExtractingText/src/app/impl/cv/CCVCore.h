@@ -30,6 +30,8 @@ public:
     int distanceTransform_Rotate(cv::Mat img, cv::Mat& dst);
 
     int sobel(cv::Mat img, cv::Mat&dst);
+
+    int gaussianPyramid(cv::Mat img, cv::Mat& dst);
 };
 
 #endif // !EXTRACTTEXT_APP_IMPL_CV_CCVCORE_H_

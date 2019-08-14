@@ -3,6 +3,7 @@
 
 #include <opencv2/core.hpp>
 #include "app/interface/background/IMatrix.h"
+#include <memory>
 
 class ICVCore
 {
@@ -24,9 +25,11 @@ public:
 
     virtual int distanceTransform(cv::Mat img, cv::Mat& dst) = 0;
 
-
     virtual int sobel(cv::Mat img, cv::Mat&dst) = 0;
 
+    virtual int gaussianPyramid(cv::Mat img, cv::Mat& dst) = 0;
 };
+
+typedef std::shared_ptr<ICVCore> ICVCorePtr;
 
 #endif // !EXTRACTTEXT_APP_INTERFACE_CV_ICVCORE_H_
