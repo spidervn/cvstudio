@@ -11,6 +11,7 @@ public:
     ~ICVCore() { }
 
     virtual int HarrisCorner(cv::Mat& img) = 0;
+
     virtual int averageChange_ShiftingWindow(cv::Mat img,
                                                 int window_x,
                                                 int window_y,
