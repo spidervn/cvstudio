@@ -377,8 +377,8 @@ int CCVCore::gaussianPyramid(cv::Mat img, cv::Mat& dst)
     // Remove even column & rows
     // X = 1 -> N
     // Y = 1 -> M
-    int m = img.rows();
-    int n = img.cols();
+    int m = img.rows;
+    int n = img.cols;
     
     // 
     // Remove columns 2,4,6,... (one index)

@@ -52,10 +52,10 @@ int main(int argc, char const *argv[])
     // IApplication* p_App = new COwnCornerDetectApp();
     // IApplication* p_App = new CCornerLocationSubpixelsApp();
     // IApplication* p_App = new CFeatureDescApp();
-    IApplication* p_App = new CImageSegmentationApp();
+    // IApplication* p_App = new CImageSegmentationApp();
     // IApplication* p_App = new CImgResizingApp();
     // IApplication* p_App = new CSobelManualApp();
-    // IApplication* p_App = new CExtractTextApp();
+    IApplication* p_App = new CExtractTextApp();
 
     int n_Ret = p_App->run(argc, argv);
 

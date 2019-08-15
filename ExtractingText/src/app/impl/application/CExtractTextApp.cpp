@@ -72,13 +72,14 @@ int CExtractTextApp::run(int argc, char const *argv[])
 
     if (img_font.channels() > 1)
     {
-        cvtColor(img_font, img_font_gray, COLOR_BGR2GRAY);
+        // cvtColor(img_font, img_font_gray, COLOR_BGR2GRAY);
     }
     else
     {
         img_font_gray = img_font;
     }
     
+    /*
     int n = connectedComponents(img_font_gray, img_connected);
     printf("Return = %d\r\n", n);
     printf("Connected size=(%d,%d)\r\n", img_connected.cols, img_connected.rows);
@@ -89,8 +90,21 @@ int CExtractTextApp::run(int argc, char const *argv[])
     namedWindow(szConnected, WINDOW_AUTOSIZE);
     imshow(szImgGray, img_font_gray);
     imshow(szConnected, img_connected);
+    */
 
+    // Dump 
+    printf("aaaaaaaaaaaaaaaaaaaaa\r\n");
+    cv::Mat img2 =  imread("/home/jcm/Pictures/opencv/bitstream_vera_sans_font_lowercase.png", IMREAD_COLOR);
+    int step = img2.cols / 26;
 
+    for (int ch = 0; ch < 25; ++ch)
+    {
+        cv::Mat imgChar = img2(cv::Rect( ch * step, 0, step, img2.rows));
+        std::string file = "/home/jcm/Pictures/opencv/letters/char_"  + (char)(ch + 'a');
+        file += ".png";
+
+        imwrite(file, imgChar);
+    }
 
     waitKey();
     return 0;
