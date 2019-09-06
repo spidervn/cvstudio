@@ -364,14 +364,16 @@ int CCVCore::sobel(cv::Mat img, cv::Mat&dst)
 
 int CCVCore::gaussianPyramid(cv::Mat img, cv::Mat& dst)
 {
+    // PryDown
     cv::Mat gaussKernel = (cv::Mat_<double>(4, 4) << 1, 4, 6, 4, 1,
                                                         4, 16, 24, 16, 4,
                                                         6, 24, 36, 24, 6,
                                                         4, 16, 24, 16, 4,
                                                         1, 4, 6, 4, 1)/16;
     cv::Mat gaussImg;
-    gaussImg.create(img.size(), img.type());
+    cv::Mat dstStep1; // Intermediate matrix
 
+    gaussImg.create(img.size(), img.type());
     cv::filter2D(img, gaussImg, img.depth(), gaussKernel);
     
     // Remove even column & rows
@@ -379,7 +381,7 @@ int CCVCore::gaussianPyramid(cv::Mat img, cv::Mat& dst)
     // Y = 1 -> M
     int m = img.rows;
     int n = img.cols;
-    
+
     // 
     // Remove columns 2,4,6,... (one index)
     // Remove rows 2,4,6,...    (one index)
@@ -389,29 +391,57 @@ int CCVCore::gaussianPyramid(cv::Mat img, cv::Mat& dst)
     // 1 => 1
     // 2 => 1
     // 3 => 1,3
-
+    // 
     // 
     // If (n is odd ) => [ 1, 2, 3 ] => n / 2 + 1
     // If (n is even ) => [ 1, 2, 3, 4 ] => n/2
     // 
     // => newN = ceil(n/2)
-    // 
+    //
     int newW = ceil(n/2);
     int newH = ceil(m/2);
+
+    dstStep1.create(cv::Size(n, newH), img.type());
     dst.create(
         cv::Size(newW, newH),
         img.type()
     );
+    
+    unsigned char* pOrigin = img.data;
+    unsigned char* pStep1 = dstStep1.data;
+    unsigned char* pDst = dst.data;
+    int rowsize = n * img.channels();
 
+    // Step-01
+    // Copy every even rows
+    for (int row=0; row < newH; ++row)
+    {
+        memcpy(pStep1 + rowsize * row  , pOrigin + rowsize * (2*row + 1), rowsize);
+    }
+
+    // 
+    // Step02 => copy columns data
+    //      From pStep1 to pOrigin
+    // 
+    for (int col=0; col < newH; ++col)
+    {
+        memcpy(pStep1 + rowsize + row, pOrigin );
+    }
+
+    // 
+    // @Dummy code
+    // Remove columns here!
+    // And removing rows here!
+    // 
+    
     for (int y=0; y < newH; ++y)
     {
-        for (int x=0; x<newW; ++x)
+        for (int x=0; x < newW; ++x)
         {
 
         }
     }
 
-
-
     return 0;
 }
+
