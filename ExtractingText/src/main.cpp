@@ -22,7 +22,9 @@
 #include "app/impl/application/CSobelManualApp.h"
 #include "app/impl/application/CExtractTextApp.h"
 #include "app/impl/application/CBanknoteStainedApp.h"
+#include "app/impl/application/CPyramidManualApp.h"
 #include "app/examples/background/CDistanceTransformTest.h"
+
 #include "app/impl/cv/CCVCore.h"
 
 using namespace cv;
@@ -55,7 +57,8 @@ int main(int argc, char const *argv[])
     // IApplication* p_App = new CImageSegmentationApp();
     // IApplication* p_App = new CImgResizingApp();
     // IApplication* p_App = new CSobelManualApp();
-    IApplication* p_App = new CExtractTextApp();
+    // IApplication* p_App = new CExtractTextApp();
+    IApplication* p_App = new CPyramidManualApp();
 
     int n_Ret = p_App->run(argc, argv);
 

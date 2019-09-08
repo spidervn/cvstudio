@@ -365,13 +365,15 @@ int CCVCore::sobel(cv::Mat img, cv::Mat&dst)
 int CCVCore::gaussianPyramid(cv::Mat img, cv::Mat& dst)
 {
     // PryDown
-    cv::Mat gaussKernel = (cv::Mat_<double>(4, 4) << 1, 4, 6, 4, 1,
+    cv::Mat gaussKernel = (cv::Mat_<double>(5,5) << 1, 4, 6, 4, 1,
                                                         4, 16, 24, 16, 4,
                                                         6, 24, 36, 24, 6,
                                                         4, 16, 24, 16, 4,
-                                                        1, 4, 6, 4, 1)/16;
+                                                        1, 4, 6, 4, 1)/256;
     cv::Mat gaussImg;
     cv::Mat dstStep1; // Intermediate matrix
+    cv::Mat dstStep1_90;
+    cv::Mat dstStep2_90;
 
     gaussImg.create(img.size(), img.type());
     cv::filter2D(img, gaussImg, img.depth(), gaussKernel);
@@ -402,12 +404,13 @@ int CCVCore::gaussianPyramid(cv::Mat img, cv::Mat& dst)
     int newH = ceil(m/2);
 
     dstStep1.create(cv::Size(n, newH), img.type());
+    dstStep2_90.create(cv::Size(newH, newW), img.type());
     dst.create(
         cv::Size(newW, newH),
         img.type()
     );
     
-    unsigned char* pOrigin = img.data;
+    unsigned char* pOrigin = gaussImg.data;
     unsigned char* pStep1 = dstStep1.data;
     unsigned char* pDst = dst.data;
     int rowsize = n * img.channels();
@@ -423,24 +426,22 @@ int CCVCore::gaussianPyramid(cv::Mat img, cv::Mat& dst)
     // Step02 => copy columns data
     //      From pStep1 to pOrigin
     // 
-    for (int col=0; col < newH; ++col)
-    {
-        memcpy(pStep1 + rowsize + row, pOrigin );
-    }
-
-    // 
-    // @Dummy code
-    // Remove columns here!
-    // And removing rows here!
-    // 
+    cv::rotate(dstStep1, dstStep1_90, ROTATE_90_CLOCKWISE);
     
-    for (int y=0; y < newH; ++y)
-    {
-        for (int x=0; x < newW; ++x)
-        {
+    unsigned char* pStep1_90;
+    unsigned char* pStep2_90;
 
-        }
+    pStep1_90 = dstStep1_90.data;
+    pStep2_90 = dstStep2_90.data;
+
+    rowsize = dstStep2_90.cols *  img.channels();
+    // Copy every-line
+    for (int y=0; y< dstStep2_90.rows; ++y)
+    {
+        memcpy(pStep2_90 + rowsize * y, pStep1_90 + rowsize*(2*y+1), rowsize);
     }
+
+    cv::rotate(dstStep2_90, dst, ROTATE_90_COUNTERCLOCKWISE);
 
     return 0;
 }

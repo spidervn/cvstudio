@@ -3,6 +3,9 @@
 #include <opencv2/core.hpp>
 #include <opencv2/imgproc.hpp>
 #include <opencv2/highgui.hpp>
+#include <iostream>
+#include <stdlib.h>
+#include <stdio.h>
 #include <memory>
 
 using namespace std;
@@ -19,7 +22,8 @@ CSobelManualApp::~CSobelManualApp()
 
 int CSobelManualApp::run(int argc, char const *argv[])
 {
-    shared_ptr<ICVCore> p = make_shared<CCVCore>();
+    //shared_ptr<ICVCore> p = make_shared<CCVCore>();
+    ICVCore* p = new CCVCore();
 
     if (argc < 2)
     {
@@ -51,5 +55,6 @@ int CSobelManualApp::run(int argc, char const *argv[])
 
         waitKey();
     }
+    delete p;
     return 0;
 }

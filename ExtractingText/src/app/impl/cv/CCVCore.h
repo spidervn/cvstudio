@@ -6,6 +6,7 @@
 #include <vector>
 
 typedef std::vector<double> VECTOR;
+#define CCVCorePtrNew std::make_shared<CCVCore>()
 
 class CCVCore : public ICVCore
 {
