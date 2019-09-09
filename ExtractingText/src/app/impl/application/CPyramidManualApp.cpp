@@ -14,7 +14,8 @@ CPyramidManualApp::~CPyramidManualApp()
 
 int CPyramidManualApp::run(int argc, char const *argv[])
 {
-    ICVCore* ccp = new CCVCore();
+    //ICVCore* ccp = new CCVCore();
+    ICVCorePtr ccp = std::make_shared<CCVCore>();
 
     if (argc < 2)
     {
@@ -25,12 +26,17 @@ int CPyramidManualApp::run(int argc, char const *argv[])
     cv::Mat imgGauss;
     cv::Mat dst;
     cv::Mat dst2;
+    cv::Mat dstUp;
+    cv::Mat dstCvUp;
+
     img = imread(argv[1], IMREAD_COLOR);
     
     if (img.empty())
     {
         return -1;
     }
+
+    cv::cvtColor(img, imgGauss, COLOR_BGR2HSV);
 
     cv::Mat gaussKernel = (cv::Mat_<double>(5, 5) << 1, 4, 6, 4, 1,
                                                         4, 16, 24, 16, 4,
@@ -39,29 +45,38 @@ int CPyramidManualApp::run(int argc, char const *argv[])
                                                         1, 4, 6, 4, 1);
 
     gaussKernel = gaussKernel / 266; //(32 + 128 + 96);
-
     
     cv::filter2D(img, imgGauss, img.depth(), gaussKernel);
 
     ccp->gaussianPyramid(img, dst);
+    ccp->gaussianPyramidUp(img, dstUp);
+
     pyrDown(img, dst2);
+    pyrUp(img, dstCvUp);
 
     const char* szSource = "Source";
     const char* szGauss = "Gauss";
     const char* szManual = "Manual Pyramid";
+    const char* szManualUp = "Manual Pyramid Up";
     const char* szCvPyramid = "CV Pyramid";
+    const char* szCvPyramidUp = "CV Pyramid Up";
 
     namedWindow(szSource, WINDOW_AUTOSIZE);
     namedWindow(szGauss, WINDOW_AUTOSIZE);
     namedWindow(szManual, WINDOW_AUTOSIZE);
+    namedWindow(szManualUp, WINDOW_AUTOSIZE);
     namedWindow(szCvPyramid, WINDOW_AUTOSIZE);
+    namedWindow(szCvPyramidUp, WINDOW_AUTOSIZE);
+
     imshow(szSource, img);
     imshow(szGauss, imgGauss);
     imshow(szManual, dst);
+    imshow(szManualUp, dstUp);
     imshow(szCvPyramid, dst2);
+    imshow(szCvPyramidUp, dstCvUp);
 
     waitKey();
 
-    delete ccp;
+    // delete ccp;
     return 0;
 }

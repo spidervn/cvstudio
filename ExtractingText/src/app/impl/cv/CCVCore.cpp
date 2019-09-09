@@ -446,3 +446,79 @@ int CCVCore::gaussianPyramid(cv::Mat img, cv::Mat& dst)
     return 0;
 }
 
+int CCVCore::gaussianPyramidUp(cv::Mat img, cv::Mat& dst)
+{
+    // Origin size
+    int orgRows = img.rows;
+    int orgCols = img.cols;
+
+    /* 
+     * 1- imgExt2 = new double-size Img 
+     */
+    
+    /* 
+     * Construct <=> 
+     * <=> How do you add Even rows & columns.
+     */
+
+    cv::Mat gaussKernel = (cv::Mat_<double>(5,5) << 1, 4, 6, 4, 1,
+                                                        4, 16, 24, 16, 4,
+                                                        6, 24, 36, 24, 6,
+                                                        4, 16, 24, 16, 4,
+                                                        1, 4, 6, 4, 1) / 64;
+    
+    cv::Mat img2;
+    img2.create(cv::Size(2*orgCols, 2*orgRows), img.type());
+    
+    // Dummy code
+    if (img.channels() == 1)
+    {
+        for (int y=0; y<orgRows;++y)
+        {
+            for (int x=0; x<orgCols; ++x)
+            {
+                int twoY = 2*y;
+                int twoX = 2*x;
+                img2.at<uchar>(twoY, twoX) = img.at<uchar>(y,x);
+                img2.at<uchar>(twoY + 1, twoX) = 0;
+                img2.at<uchar>(twoY + 1, twoX + 1) = 0;
+                img2.at<uchar>(twoY, twoX + 1) = 0;
+            }
+        }
+    }
+    else if (img.channels() == 3)
+    {
+        Mat_<Vec3b> _I = img;
+        Mat_<Vec3b> _I2 = img2;
+
+        for (int y=0; y<orgRows;++y)
+        {
+            for (int x=0; x<orgCols; ++x)
+            {
+                int twoY = 2*y;
+                int twoX = 2*x;
+
+                _I2(twoY, twoX)[0] = _I(y,x)[0];
+                _I2(twoY, twoX)[1] = _I(y,x)[1];
+                _I2(twoY, twoX)[2] = _I(y,x)[2];
+
+                _I2(twoY + 1, twoX)[0] = 0;
+                _I2(twoY + 1, twoX)[1] = 0;
+                _I2(twoY + 1, twoX)[2] = 0;
+
+                _I2(twoY, twoX + 1)[0] = 0;
+                _I2(twoY, twoX + 1)[1] = 0;
+                _I2(twoY, twoX + 1)[2] = 0;
+
+                _I2(twoY + 1, twoX + 1)[0] = 0;
+                _I2(twoY + 1, twoX + 1)[1] = 0;
+                _I2(twoY + 1, twoX + 1)[2] = 0;
+            }
+        }
+    }
+    
+    // Filled with Zero 
+    cv::filter2D(img2, dst, img.depth(), gaussKernel);
+
+    return 0;
+}

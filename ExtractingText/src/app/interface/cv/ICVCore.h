@@ -29,8 +29,10 @@ public:
     virtual int sobel(cv::Mat img, cv::Mat&dst) = 0;
 
     virtual int gaussianPyramid(cv::Mat img, cv::Mat& dst) = 0;
+
+    virtual int gaussianPyramidUp(cv::Mat img, cv::Mat& dst) = 0;
 };
 
-// typedef std::shared_ptr<ICVCore> ICVCorePtr;
+typedef std::shared_ptr<ICVCore> ICVCorePtr;
 
 #endif // !EXTRACTTEXT_APP_INTERFACE_CV_ICVCORE_H_
