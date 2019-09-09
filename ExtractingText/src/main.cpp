@@ -56,10 +56,9 @@ int main(int argc, char const *argv[])
     // IApplication* p_App = new CFeatureDescApp();
     // IApplication* p_App = new CImageSegmentationApp();
     // IApplication* p_App = new CImgResizingApp();
-    // IApplication* p_App = new CSobelManualApp();
+    IApplication* p_App = new CSobelManualApp();
     // IApplication* p_App = new CExtractTextApp();
-    IApplication* p_App = new CPyramidManualApp();
-
+    // IApplication* p_App = new CPyramidManualApp();
     int n_Ret = p_App->run(argc, argv);
 
     // CDistanceTransformTest tt;
@@ -67,7 +66,6 @@ int main(int argc, char const *argv[])
     //tt.test_1D();
     //tt.bruteForce();
     // tt.test_2D("/home/jcm/Pictures/opencv/donald-trump.jpg");
-
     delete p_App;
     return 0;
 }
