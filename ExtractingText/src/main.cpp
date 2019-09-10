@@ -23,6 +23,8 @@
 #include "app/impl/application/CExtractTextApp.h"
 #include "app/impl/application/CBanknoteStainedApp.h"
 #include "app/impl/application/CPyramidManualApp.h"
+#include "app/impl/application/CColorizeApp.h"
+#include "app/impl/application/CPoultryMonitorApp.h"
 #include "app/examples/background/CDistanceTransformTest.h"
 
 #include "app/impl/cv/CCVCore.h"
@@ -56,9 +58,11 @@ int main(int argc, char const *argv[])
     // IApplication* p_App = new CFeatureDescApp();
     // IApplication* p_App = new CImageSegmentationApp();
     // IApplication* p_App = new CImgResizingApp();
-    IApplication* p_App = new CSobelManualApp();
+    // IApplication* p_App = new CSobelManualApp();
     // IApplication* p_App = new CExtractTextApp();
     // IApplication* p_App = new CPyramidManualApp();
+    // IApplication* p_App = new CColorizeApp();
+    IApplication* p_App = new CPoultryMonitorApp();
     int n_Ret = p_App->run(argc, argv);
 
     // CDistanceTransformTest tt;
