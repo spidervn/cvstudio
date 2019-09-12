@@ -31,9 +31,7 @@ public:
     int distanceTransform_Rotate(cv::Mat img, cv::Mat& dst);
 
     int sobel(cv::Mat img, cv::Mat&dst);
-
     int gaussianPyramid(cv::Mat img, cv::Mat& dst);
-
     int gaussianPyramidUp(cv::Mat img, cv::Mat& dst);
 };
 
