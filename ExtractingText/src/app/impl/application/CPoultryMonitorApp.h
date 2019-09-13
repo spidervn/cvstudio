@@ -3,7 +3,6 @@
 
 #include <app/interface/IApplication.h>
 
-
 class CPoultryMonitorApp: public IApplication
 {
 public:
@@ -13,6 +12,9 @@ public:
     int run(int argc, char const *argv[]);
     int run_watershed(const char* szFile);
     int run_paper(const char* szFile);
+    int run_video(const char* szFile);
+
+    int run_extract(const char* szFile);
 };
 
 #endif
