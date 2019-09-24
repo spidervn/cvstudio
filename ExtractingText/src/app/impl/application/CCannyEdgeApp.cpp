@@ -39,7 +39,7 @@ int CCannyEdgeApp::run(int argc, char const *argv[])
     if( src.empty() )
     {
         std::cout << "Could not open or find the image!\n" << std::endl;
-        std::cout << "Usage: " << argv[0] << " <Input image>" << std::endl;
+        std::cout << "Usage: canny_edge <Input image>" << std::endl;
         return -1;
     }
     dst.create( src.size(), src.type() );

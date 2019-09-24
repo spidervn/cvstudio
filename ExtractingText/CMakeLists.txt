@@ -16,11 +16,13 @@ project( extract_text  )
 find_package( OpenCV REQUIRED )
 
 include_directories(src/)
+include_directories(src/libs)
 file(GLOB SOURCES "src/*.cpp" 
                     "src/extract/*.cpp"
                     "src/app/impl/application/*.cpp"
                     "src/app/impl/background/*.cpp"
                     "src/app/impl/cv/*.cpp"
+                    "src/app/impl/general/*.cpp"
                     "src/app/examples/background/*.cpp")
 
 add_executable( extract_text ${SOURCES} )

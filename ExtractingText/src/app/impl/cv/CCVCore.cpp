@@ -454,11 +454,10 @@ int CCVCore::gaussianPyramidUp(cv::Mat img, cv::Mat& dst)
 
     /* 
      * 1- imgExt2 = new double-size Img 
-     */
-    
-    /* 
+     * 
      * Construct <=> 
      * <=> How do you add Even rows & columns.
+     * 
      */
 
     cv::Mat gaussKernel = (cv::Mat_<double>(5,5) << 1, 4, 6, 4, 1,
@@ -519,6 +518,22 @@ int CCVCore::gaussianPyramidUp(cv::Mat img, cv::Mat& dst)
     
     // Filled with Zero 
     cv::filter2D(img2, dst, img.depth(), gaussKernel);
+
+    return 0;
+}
+
+int CCVCore::canny(cv::Mat img, cv::Mat& dst)
+{
+    /* 
+     * Steps 
+     *  1- Gaussian 
+     *  2- Find the intensity gradients
+     *  3- Apply non-maximum 
+     *  4- Apply double threshold 
+     *  5- Track edge by hyteresis
+     */
+    //1- Gaussian
+    // 
 
     return 0;
 }

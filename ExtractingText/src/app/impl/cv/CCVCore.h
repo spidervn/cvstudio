@@ -33,6 +33,8 @@ public:
     int sobel(cv::Mat img, cv::Mat&dst);
     int gaussianPyramid(cv::Mat img, cv::Mat& dst);
     int gaussianPyramidUp(cv::Mat img, cv::Mat& dst);
+
+    int canny(cv::Mat img, cv::Mat& dst);
 };
 
 #endif // !EXTRACTTEXT_APP_IMPL_CV_CCVCORE_H_

@@ -11,6 +11,7 @@
 #include "app/impl/application/CSVMApp.h"
 #include "app/impl/application/CFourierApp.h"
 #include "app/impl/application/CHistogramEqApp.h"
+#include "app/impl/application/CHistogramCalcApp.h"
 #include "app/impl/application/CFeatureDetectApp.h"
 #include "app/impl/application/CFeatureDescApp.h"
 #include "app/impl/application/CHarrisCornerApp.h"
@@ -25,6 +26,11 @@
 #include "app/impl/application/CPyramidManualApp.h"
 #include "app/impl/application/CColorizeApp.h"
 #include "app/impl/application/CPoultryMonitorApp.h"
+#include "app/impl/application/CTemplateMatchingApp.h"
+#include "app/impl/application/CCannyEdgeApp.h"
+#include "app/impl/application/CHitOrMissApp.h"
+#include "app/impl/application/CBackprojectApp.h"
+#include "app/impl/application/CBackprojectApp2.h"
 #include "app/examples/background/CDistanceTransformTest.h"
 
 #include "app/impl/cv/CCVCore.h"
@@ -50,6 +56,7 @@ int main(int argc, char const *argv[])
     // int n_Ret = p_App->run(argc, argv);
     // IApplication* p_App = new CFourierApp();
     // IApplication* p_App = new CHistogramEqApp();
+    // IApplication* p_App = new CHistogramCalcApp();
     // IApplication* p_App = new CFeatureDetectApp();
     // IApplication* p_App = new CHarrisCornerApp();
     // IApplication* p_App = new CShiTomasiApp();
@@ -62,7 +69,12 @@ int main(int argc, char const *argv[])
     // IApplication* p_App = new CExtractTextApp();
     // IApplication* p_App = new CPyramidManualApp();
     // IApplication* p_App = new CColorizeApp();
-    IApplication* p_App = new CPoultryMonitorApp();
+    // IApplication* p_App = new CPoultryMonitorApp();
+    // IApplication* p_App = new CTemplateMatchingApp();
+    // IApplication* p_App = new CCannyEdgeApp();
+    // IApplication* p_App = new CHitOrMissApp();
+    // IApplication* p_App = new CBackprojectApp();
+    IApplication* p_App = new CBackprojectApp2();
     int n_Ret = p_App->run(argc, argv);
 
     // CDistanceTransformTest tt;

@@ -31,6 +31,8 @@ public:
     virtual int gaussianPyramid(cv::Mat img, cv::Mat& dst) = 0;
 
     virtual int gaussianPyramidUp(cv::Mat img, cv::Mat& dst) = 0;
+
+    virtual int canny(cv::Mat img, cv::Mat& dst) = 0;
 };
 
 typedef std::shared_ptr<ICVCore> ICVCorePtr;
