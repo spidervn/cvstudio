@@ -33,6 +33,12 @@ public:
     virtual int gaussianPyramidUp(cv::Mat img, cv::Mat& dst) = 0;
 
     virtual int canny(cv::Mat img, cv::Mat& dst) = 0;
+
+    virtual int bucketingColor(cv::Mat img, int range, cv::Mat& dst) = 0;
+
+    virtual int nextRNG() = 0;
+
+    virtual int lehmerRNG(int p, int n, int seed, std::vector<int>& v) = 0;
 };
 
 typedef std::shared_ptr<ICVCore> ICVCorePtr;

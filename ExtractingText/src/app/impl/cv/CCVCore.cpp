@@ -537,3 +537,73 @@ int CCVCore::canny(cv::Mat img, cv::Mat& dst)
 
     return 0;
 }
+
+int CCVCore::bucketingColor(cv::Mat img, int range, cv::Mat& dst)
+{
+    int nchnn = img.channels();
+    dst.create(img.size(), img.type());
+
+    if (nchnn == 1)
+    {
+        for (int y=0; y<img.rows; ++y)
+        {
+            for (int x=0; x<img.cols;++x)
+            {
+                uchar u = img.at<uchar>(y,x);
+                uchar u_new = (u / range) * range;
+                dst.at<uchar>(y,x) = u_new;
+            }
+        }
+    }
+    else if (nchnn == 3)
+    {
+        Mat_<Vec3b> I_ = img;
+        Mat_<Vec3b> I2_ = dst;
+        for (int y=0; y<img.rows; ++y)
+        {
+            for (int x=0; x<img.cols;++x)
+            {
+                uchar u0, u1, u2;
+                uchar u0n, u1n, u2n;
+
+                u0 = I_(y,x)[0];
+                u1 = I_(y,x)[1];
+                u2 = I_(y,x)[2];
+
+                u0n = (u0 / range ) * range;
+                u1n = (u1 / range ) * range;
+                u2n = (u2 / range ) * range;
+
+                I2_(y,x)[0] = u0n;
+                I2_(y,x)[1] = u1n;
+                I2_(y,x)[2] = u2n;
+            }
+        }
+    }
+    else
+    {
+        return -1;
+    }
+    
+    return 0;
+}
+
+int CCVCore::nextRNG()
+{
+    return 0;
+}
+
+int CCVCore::lehmerRNG(int p, int n, int seed, std::vector<int>& v)
+{
+    int b = 10;
+    v.clear();
+    v.push_back(seed);
+
+    for (int i=1; i<n; ++i)
+    {
+        int nNW = (b * v[v.size()-1]) % p;
+        v.push_back(nNW);
+    }
+
+    return 0;
+}

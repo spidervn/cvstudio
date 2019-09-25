@@ -9,6 +9,7 @@
 #include <vector>
 #include <queue>
 #include "app/impl/general/CFileUtil.h"
+#include "app/impl/cv/CCVCore.h"
 #include "inih-master/INIReader.h"
 
 using namespace cv;
@@ -605,6 +606,7 @@ int CPoultryMonitorApp::run(int argc, char const *argv[])
     // return run_watershed(argv[1]);
     //
     //return run_contours(argv[1], atoi(argv[2]));
+    return run_video(argv[1], argv[2]);
     return run_morph(argv[1]);
     return run_video_seg(argv[1], argv[2]);
     return run_video(argv[1], argv[2]);
@@ -898,6 +900,8 @@ int CPoultryMonitorApp::run_video(const char* szFile, const char* szIni)
                     (int) video.get(CAP_PROP_FRAME_WIDTH), 
                     (int) video.get(CAP_PROP_FRAME_HEIGHT),
                     (int) video.get(CAP_PROP_FRAME_COUNT));
+
+    
     Mat frame;
     Mat frameHSV;
     Mat frameIR;
@@ -909,10 +913,16 @@ int CPoultryMonitorApp::run_video(const char* szFile, const char* szIni)
     // video.set(CV_CAP_PROP_POS_FRAMES, 11090-1);
     namedWindow("Video", WINDOW_AUTOSIZE);
     namedWindow("IR", WINDOW_AUTOSIZE);
+    namedWindow("Video-chick", WINDOW_AUTOSIZE);
+
+    ICVCorePtr ccp = CCVCorePtrNew;
 
     int index=0;
     for (;;)
     {
+        Mat frameBuck;
+        Mat frameFilter;
+        Mat frameChicken;
         video >> frame;
         if (frame.empty())
         {
@@ -939,6 +949,12 @@ int CPoultryMonitorApp::run_video(const char* szFile, const char* szIni)
         */
 
         rectangle(frameIR, cv::Rect(100, 100, 300, 250), Scalar(0,255,255), 2);
+
+        ccp->bucketingColor(frame, 50, frameBuck);
+        inRange(frameBuck, Scalar(140,140,140), Scalar(210,210,210), frameFilter);
+
+
+        frame.copyTo(frameChicken, frameFilter);
         // sprintf(tmp, "frame_%d.jpg", i);
         // cv::String file = tmp;
         // printf("%s\r\n", file.c_str());
@@ -946,6 +962,7 @@ int CPoultryMonitorApp::run_video(const char* szFile, const char* szIni)
         // imwrite(file, frame, compression_params);
         imshow("IR", frameIR);
         imshow("Video", frameHSV);
+        imshow("Video-chick", frameChicken);
 
         char c = (char)waitKey(25);
         if (c == 27) break;
@@ -1009,11 +1026,17 @@ int CPoultryMonitorApp::run_contours(const char* szFile, int thresh)
 int CPoultryMonitorApp::run_morph(const char* szFile)
 {
     Mat src = imread(szFile, IMREAD_COLOR);
+    Mat src_gray;
     Mat dst;
+    Mat src_bucket;
     Mat dst_Rng;
+    Mat dst_Filter;
+    Mat dst_FilterMorph;
+    Mat dst_Subtract;
     Mat elem;
 
     elem = getStructuringElement(MORPH_RECT, Size(3,3));
+    cvtColor(src, src_gray, COLOR_BGR2GRAY);
     morphologyEx(src, dst, MORPH_GRADIENT, elem);
 
     inRange(src, Scalar(190, 190, 190), Scalar(255,255,255), dst_Rng);
@@ -1023,7 +1046,32 @@ int CPoultryMonitorApp::run_morph(const char* szFile)
     imshow("thresholding", dst_Rng);
 
     imwrite("threshold.png", dst_Rng);
+
+    ICVCorePtr ccp = CCVCorePtrNew;
+
+    ccp->bucketingColor(src, 30, dst_Rng);
+    imshow("Bucket", dst_Rng);
+    imwrite("bucket.png", dst_Rng);
     // imwrite("gradient.png", dst);
+    // 140; 140; 140    // Xa'm
+    // 210; 210; 140    // vang nhat
+    // 210; 210; 210;   // Trang
+    // 210; 140; 140;   // Hong nhat
+
+    
+    inRange(dst_Rng, Scalar(140,140,140), Scalar(210,210,210), dst_Filter);
+    imshow("Filter-before Morph", dst_Filter);  
+    int morph_size = 1;
+    morphologyEx(dst_Filter, dst_FilterMorph, MORPH_OPEN,
+                        getStructuringElement( MORPH_RECT, Size( 2*morph_size + 1, 2*morph_size+1 ), Point( morph_size, morph_size )));
+    morphologyEx(dst_FilterMorph, dst_FilterMorph, MORPH_CLOSE,
+                        getStructuringElement( MORPH_RECT, Size( 2*morph_size + 1, 2*morph_size+1 ), Point( morph_size, morph_size )));
+
+    imshow("Filter", dst_FilterMorph);  
+
+    //cv::bitwise_and(src_gray, dst_Filter, dst_Subtract);
+    src.copyTo(dst_Subtract, dst_Filter);    
+    imshow("Background-sub", dst_Subtract);
 
     waitKey();
     return 0;

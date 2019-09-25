@@ -4,6 +4,7 @@
 #include "opencv2/imgproc.hpp"
 #include "opencv2/imgcodecs.hpp"
 #include "opencv2/highgui.hpp"
+#include "app/impl/general/CConsole.h"
 #include "app/impl/application/CSobelApp.h"
 #include "app/impl/application/CRemappingApp.h"
 #include "app/impl/application/CAffineTransform.h"
@@ -31,6 +32,7 @@
 #include "app/impl/application/CHitOrMissApp.h"
 #include "app/impl/application/CBackprojectApp.h"
 #include "app/impl/application/CBackprojectApp2.h"
+#include "app/impl/application/CAnisotropicSegmentation.h"
 #include "app/examples/background/CDistanceTransformTest.h"
 
 #include "app/impl/cv/CCVCore.h"
@@ -69,14 +71,21 @@ int main(int argc, char const *argv[])
     // IApplication* p_App = new CExtractTextApp();
     // IApplication* p_App = new CPyramidManualApp();
     // IApplication* p_App = new CColorizeApp();
-    // IApplication* p_App = new CPoultryMonitorApp();
+    IApplication* p_App = new CPoultryMonitorApp();
     // IApplication* p_App = new CTemplateMatchingApp();
     // IApplication* p_App = new CCannyEdgeApp();
     // IApplication* p_App = new CHitOrMissApp();
     // IApplication* p_App = new CBackprojectApp();
-    IApplication* p_App = new CBackprojectApp2();
-    int n_Ret = p_App->run(argc, argv);
+    // IApplication* p_App = new CBackprojectApp2();
+    // IApplication* p_App = new CAnisotropicSegmentation();
+    // int n_Ret = p_App->run(argc, argv);
 
+    int p = 6089;
+    std::vector<int> v;
+    ICVCorePtr ccp = CCVCorePtrNew;
+    ccp->lehmerRNG(p, 100, 7, v);
+
+    CConsole::print<int>(v);
     // CDistanceTransformTest tt;
     // int n_Ret;
     //tt.test_1D();

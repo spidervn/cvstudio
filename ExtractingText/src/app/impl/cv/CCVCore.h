@@ -35,6 +35,10 @@ public:
     int gaussianPyramidUp(cv::Mat img, cv::Mat& dst);
 
     int canny(cv::Mat img, cv::Mat& dst);
+    int bucketingColor(cv::Mat img, int range, cv::Mat& dst);
+
+    int nextRNG();
+    int lehmerRNG(int p, int n, int seed, std::vector<int>& v);
 };
 
 #endif // !EXTRACTTEXT_APP_IMPL_CV_CCVCORE_H_
