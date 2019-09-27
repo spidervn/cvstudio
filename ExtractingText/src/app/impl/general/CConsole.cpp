@@ -1,7 +1,6 @@
 #include "CConsole.h"
 
 #include <iostream>
-
 using namespace std;
 
 CConsole::CConsole(/* args */)

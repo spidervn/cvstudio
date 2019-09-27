@@ -27,7 +27,7 @@ int CHistogramEqApp::run(int argc, char const *argv[])
     Mat src = imread(argv[1], IMREAD_COLOR);
     Mat dst;
 
-    // cvtColor(src, src, COLOR_BGR2GRAY);
+    cvtColor(src, src, COLOR_BGR2GRAY);
     equalizeHist(src, dst);
 
     imshow("Source image", src);

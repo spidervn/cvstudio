@@ -58,6 +58,8 @@ int CBackprojectApp2::run(int argc, char const *argv[])
     imshow("src-hue", hsv);
     imshow("test-img", imgTHsv);
     imshow("BackProject", bprj);
+
+    imwrite("backprojection.png", bprj);
     waitKey();
     return 0;
 }

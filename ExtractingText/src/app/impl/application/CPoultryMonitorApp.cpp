@@ -11,7 +11,7 @@
 #include "app/impl/general/CFileUtil.h"
 #include "app/impl/cv/CCVCore.h"
 #include "inih-master/INIReader.h"
-
+#include <sys/stat.h>
 using namespace cv;
 using namespace std;
 
@@ -586,6 +586,102 @@ public:
         printf("Behavior detected = %s\r\n", str(behavior).c_str());
         return 0;
     }
+
+    static int getRectOfBroiler(Mat frame, vector<Rect>& v)
+    {
+        v.clear();
+
+        /*
+         * 1- Find every connected components 
+         * 2- Then choose rects whose similar to Square (ratio~ 3/4 -> 4.3) and ( threshold_low <= area < threshold_hig)
+         */
+        int area_low = 450;
+        int area_hig = 1325;
+        int threshval = 150;
+        Mat bw = threshval < 128 ? (frame < threshval) : (frame > threshval);
+    
+        Mat labelImage(frame.size(), CV_32S);
+        int nLabels = connectedComponents(bw, labelImage, 8);
+        std::vector<Vec3b> colors(nLabels);
+        std::vector<Rect> rect(nLabels);
+
+        colors[0] = Vec3b(0, 0, 0);//background
+        rect[0] = cv::Rect(-1,-1,-1,-1);
+        for(int label = 1; label < nLabels; ++label){
+            colors[label] = Vec3b( (rand()&255), (rand()&255), (rand()&255) );
+            rect[label] = cv::Rect(-1,-1,-1,-1);
+        }
+
+        Mat dst(frame.size(), CV_8UC3);
+        for(int r = 0; r < dst.rows; ++r) {
+            for(int c = 0; c < dst.cols; ++c) {
+                int label = labelImage.at<int>(r, c);
+                Vec3b &pixel = dst.at<Vec3b>(r, c);
+                pixel = colors[label];
+
+                //
+                // Trick: use width & height to store (right, bottom)
+                //
+                if (rect[label].x == -1)
+                {
+                    rect[label].x = c;
+                }
+                else if (c < rect[label].x)
+                {
+                    rect[label].x = c;
+                }
+                if (rect[label].width == -1)
+                {
+                    rect[label].width = c;
+                }
+                else if (rect[label].width < c)
+                {
+                    rect[label].width = c;
+                }            
+
+                if (rect[label].y == -1)
+                {
+                    rect[label].y = r;
+                }
+                else if (r < rect[label].y)
+                {
+                    rect[label].y = r;
+                }
+
+                if (rect[label].height == -1)
+                {
+                    rect[label].height = r;                
+                }
+                else if ( rect[label].height < r)
+                {
+                    rect[label].height = r;
+                }
+            }
+        }
+
+        for (int label=1; label < nLabels; ++label)
+        {
+            // Un-trick
+            rect[label].width = rect[label].width - rect[label].x;
+            rect[label].height = rect[label].height - rect[label].y;
+
+            if (rect[label].width > 0)
+            {
+                double ratio = (double)rect[label].height / (double)rect[label].width;
+                int area = rect[label].width * rect[label].width;
+
+                if (ratio >= 0.35 && ratio <= 1.9 && area >= area_low && area <= area_hig)
+                {
+                    // cv::rectangle(dst, v[label], );
+                    v.push_back(rect[label]);
+                }
+            }
+        }
+
+        // imshow("ConnectedComponents", dst);
+
+        return 0;
+    }
 };
 
 CPoultryMonitorApp::CPoultryMonitorApp()
@@ -879,6 +975,8 @@ int CPoultryMonitorApp::run_video(const char* szFile, const char* szIni)
     int hig_h;
     int hig_s;
     int hig_v;
+    int video_w;
+    int video_h;
 
     low_h = ini.GetInteger("hsv", "low_h", -1);
     low_s = ini.GetInteger("hsv", "low_s", -1);
@@ -889,6 +987,8 @@ int CPoultryMonitorApp::run_video(const char* szFile, const char* szIni)
 
     VideoCapture video(szFile);
     printf("A1\r\n");
+    video_w = video.get(CAP_PROP_FRAME_WIDTH);
+    video_h = video.get(CAP_PROP_FRAME_HEIGHT);
 
     if (!video.isOpened())
     {
@@ -905,6 +1005,8 @@ int CPoultryMonitorApp::run_video(const char* szFile, const char* szIni)
     Mat frame;
     Mat frameHSV;
     Mat frameIR;
+    VideoWriter videoOut;
+    int ex = static_cast<int>(video.get(CAP_PROP_FOURCC)); 
     vector<int> compression_params;
     compression_params.push_back( CV_IMWRITE_JPEG_QUALITY );
     compression_params.push_back( 100 );
@@ -914,24 +1016,45 @@ int CPoultryMonitorApp::run_video(const char* szFile, const char* szIni)
     namedWindow("Video", WINDOW_AUTOSIZE);
     namedWindow("IR", WINDOW_AUTOSIZE);
     namedWindow("Video-chick", WINDOW_AUTOSIZE);
+    namedWindow("ConnectedComponents");
 
     ICVCorePtr ccp = CCVCorePtrNew;
-
     int index=0;
+    vector<Mat> vBlock;
+    vector<Rect> vRect;
+
+    videoOut.open("background_subtract.avi", 
+                    ex, 
+                    video.get(CAP_PROP_FPS),
+                    Size(video_w, video_h),
+                    true);
+    int frameIdx = 0;   // Frame index
     for (;;)
     {
+        char szFolder[255];
+        frameIdx++;
+        sprintf(szFolder, "store/frames%d", frameIdx);
+        mkdir(szFolder, S_IRWXU | S_IRWXG | S_IROTH | S_IXOTH);
+
         Mat frameBuck;
         Mat frameFilter;
         Mat frameChicken;
+        Mat frameChickenGray;
         video >> frame;
         if (frame.empty())
         {
+            if (vBlock.size() > 0)
+            {
+                // Process a block of 30 frames here
+            }
+
             break;
         }
 
         cvtColor(frame, frameHSV, COLOR_BGR2HSV);
         char tmp[255];
         char tmp2[255];
+        char tmp3[255];
 
         inRange(frameHSV, Scalar(low_h, low_s, low_v), Scalar(hig_h, hig_s, hig_v), frameIR);
 
@@ -953,11 +1076,25 @@ int CPoultryMonitorApp::run_video(const char* szFile, const char* szIni)
         ccp->bucketingColor(frame, 50, frameBuck);
         inRange(frameBuck, Scalar(140,140,140), Scalar(210,210,210), frameFilter);
 
-
         frame.copyTo(frameChicken, frameFilter);
+        cvtColor(frameChicken, frameChickenGray, COLOR_BGR2GRAY);
+
         // sprintf(tmp, "frame_%d.jpg", i);
         // cv::String file = tmp;
         // printf("%s\r\n", file.c_str());
+
+        CIdentityBroilerBehavior::getRectOfBroiler(frameChickenGray, vRect);
+        char szFile[255];
+
+        for (int i=0; i<vRect.size(); ++i)
+        {
+            rectangle(frameHSV, vRect[i], Scalar(0,255,255));
+
+            Mat imgChick = frame(vRect[i]);
+            sprintf(szFile, "store/frames%d/chick_%d.png", frameIdx, i);
+            printf("File Save=%s\r\n", szFile);
+            imwrite(szFile, imgChick);
+        }
 
         // imwrite(file, frame, compression_params);
         imshow("IR", frameIR);
@@ -971,9 +1108,19 @@ int CPoultryMonitorApp::run_video(const char* szFile, const char* szIni)
         {
             sprintf(tmp, "frame_%d.png", index);
             sprintf(tmp2, "frame_hsv_%d.png", index);
+            sprintf(tmp3, "frame_bgsub_%d.png", index);
+
             imwrite(tmp, frame, compression_params);
             imwrite(tmp2, frameHSV, compression_params);
+            imwrite(tmp3, frameChicken, compression_params);
         }
+
+        if (vBlock.size() == 30)
+        {
+            // Process a block of 30 frames here
+        }
+
+        videoOut << frameChicken;
     }
 
     printf("Finish");
@@ -1058,7 +1205,6 @@ int CPoultryMonitorApp::run_morph(const char* szFile)
     // 210; 210; 210;   // Trang
     // 210; 140; 140;   // Hong nhat
 
-    
     inRange(dst_Rng, Scalar(140,140,140), Scalar(210,210,210), dst_Filter);
     imshow("Filter-before Morph", dst_Filter);  
     int morph_size = 1;
@@ -1072,6 +1218,11 @@ int CPoultryMonitorApp::run_morph(const char* szFile)
     //cv::bitwise_and(src_gray, dst_Filter, dst_Subtract);
     src.copyTo(dst_Subtract, dst_Filter);    
     imshow("Background-sub", dst_Subtract);
+
+    // 
+    // Higher contrast
+    // 
+    
 
     waitKey();
     return 0;
