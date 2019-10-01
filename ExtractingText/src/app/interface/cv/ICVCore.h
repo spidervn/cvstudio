@@ -4,6 +4,7 @@
 #include <opencv2/core.hpp>
 #include "app/interface/background/IMatrix.h"
 #include <memory>
+#include <vector>
 
 class ICVCore
 {
@@ -25,6 +26,8 @@ public:
                                     int anchor_y = -1) = 0;
 
     virtual int distanceTransform(cv::Mat img, cv::Mat& dst) = 0;
+
+    virtual int contourRect(const std::vector<cv::Point>& v, cv::Rect& r) = 0;
 
     virtual int sobel(cv::Mat img, cv::Mat&dst) = 0;
 

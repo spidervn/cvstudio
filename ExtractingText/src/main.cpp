@@ -27,6 +27,7 @@
 #include "app/impl/application/CPyramidManualApp.h"
 #include "app/impl/application/CColorizeApp.h"
 #include "app/impl/application/CPoultryMonitorApp.h"
+#include "app/impl/application/poultry/CPinaclePoutryApp.h"
 #include "app/impl/application/CTemplateMatchingApp.h"
 #include "app/impl/application/CCannyEdgeApp.h"
 #include "app/impl/application/CHitOrMissApp.h"
@@ -34,6 +35,9 @@
 #include "app/impl/application/CBackprojectApp2.h"
 #include "app/impl/application/CAnisotropicSegmentation.h"
 #include "app/impl/application/CContrastApp.h"
+#include "app/impl/application/CHoughLineApp.h"
+#include "app/impl/application/CHoughCircleApp.h"
+#include "app/impl/application/CContoursApp.h"
 #include "app/examples/background/CDistanceTransformTest.h"
 
 #include "app/impl/cv/CCVCore.h"
@@ -72,15 +76,19 @@ int main(int argc, char const *argv[])
     // IApplication* p_App = new CExtractTextApp();
     // IApplication* p_App = new CPyramidManualApp();
     // IApplication* p_App = new CColorizeApp();
-    IApplication* p_App = new CPoultryMonitorApp();
+    // IApplication* p_App = new CPoultryMonitorApp();
+    // IApplication* p_App = new CPinaclePoutryApp();
     // IApplication* p_App = new CTemplateMatchingApp();
-    // IApplication* p_App = new CCannyEdgeApp();
+    IApplication* p_App = new CCannyEdgeApp();
     // IApplication* p_App = new CHitOrMissApp();
     // IApplication* p_App = new CBackprojectApp();
     // IApplication* p_App = new CBackprojectApp2();
     // IApplication* p_App = new CAnisotropicSegmentation();
     // IApplication* p_App = new CContrastApp();
-    int n_Ret = p_App->run(argc, argv);
+    // IApplication* p_App = new CHoughLineApp();
+    // IApplication* p_App = new CHoughCircleApp();
+    // IApplication* p_App = new CContoursApp();
+    int n_Ret = p_App->run(argc, argv);    
 
     /*
     int p = 6089;

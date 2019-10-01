@@ -292,6 +292,56 @@ int CCVCore::distanceTransform_Rotate(cv::Mat img, cv::Mat& dst)
     return 0;
 }
 
+int CCVCore::contourRect(const std::vector<cv::Point>& v, cv::Rect& r)
+{
+    r = Rect(-1,-1,-1,-1);
+    
+    //
+    // Trick: use width & height to store (right, bottom)
+    //
+    for (int i=0; i<v.size(); ++i)
+    {
+        if (r.x == -1)
+        {
+            r.x = v[i].x;
+        }
+        else if (v[i].x < r.x)
+        {
+            r.x = v[i].x;
+        }
+        if (r.width == -1)
+        {
+            r.width = v[i].x;
+        }
+        else if (r.width < v[i].x)
+        {
+            r.width = v[i].x;
+        }            
+
+        if (r.y == -1)
+        {
+            r.y = v[i].y;
+        }
+        else if (v[i].y < r.y)
+        {
+            r.y = v[i].y;
+        }
+
+        if (r.height == -1)
+        {
+            r.height = v[i].y;                
+        }
+        else if ( r.height < v[i].y)
+        {
+            r.height = v[i].y;
+        }
+    }
+
+    // Un-trick
+    r.width = r.width - r.x;
+    r.height = r.height - r.y;
+}
+
 int CCVCore::sobel(cv::Mat img, cv::Mat&dst)
 {
     cv::Mat sobelX  = (cv::Mat_<double>(3, 3) << -1, 0, 1, -2, 0, 2, -1, 0, 1);

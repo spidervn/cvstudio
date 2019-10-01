@@ -20,6 +20,7 @@ include_directories(src/libs)
 file(GLOB SOURCES "src/*.cpp" 
                     "src/extract/*.cpp"
                     "src/app/impl/application/*.cpp"
+                    "src/app/impl/application/poultry/*.cpp"
                     "src/app/impl/background/*.cpp"
                     "src/app/impl/cv/*.cpp"
                     "src/app/impl/general/*.cpp"

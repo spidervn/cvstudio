@@ -29,6 +29,7 @@ public:
 
     int distanceTransform(cv::Mat img, cv::Mat& dst);
     int distanceTransform_Rotate(cv::Mat img, cv::Mat& dst);
+    int contourRect(const std::vector<cv::Point>& v, cv::Rect& r);
 
     int sobel(cv::Mat img, cv::Mat&dst);
     int gaussianPyramid(cv::Mat img, cv::Mat& dst);

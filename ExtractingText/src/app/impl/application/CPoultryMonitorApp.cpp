@@ -595,8 +595,8 @@ public:
          * 1- Find every connected components 
          * 2- Then choose rects whose similar to Square (ratio~ 3/4 -> 4.3) and ( threshold_low <= area < threshold_hig)
          */
-        int area_low = 450;
-        int area_hig = 1325;
+        int area_low = 70*70; //450;
+        int area_hig = 90*90; //1325;
         int threshval = 150;
         Mat bw = threshval < 128 ? (frame < threshval) : (frame > threshval);
     
@@ -1196,7 +1196,7 @@ int CPoultryMonitorApp::run_morph(const char* szFile)
 
     ICVCorePtr ccp = CCVCorePtrNew;
 
-    ccp->bucketingColor(src, 30, dst_Rng);
+    ccp->bucketingColor(src, 50, dst_Rng);
     imshow("Bucket", dst_Rng);
     imwrite("bucket.png", dst_Rng);
     // imwrite("gradient.png", dst);
