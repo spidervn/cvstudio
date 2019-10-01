@@ -60,6 +60,7 @@ int CPinaclePoutryApp::run(int argc, char const *argv[])
     ICVCorePtr ccp = CCVCorePtrNew;
     VideoCapture video(argv[1]);
     INIReader ini(argv[2]);
+    VideoWriter videoOut;
 
     if (ini.ParseError() != 0)
     {
@@ -91,15 +92,25 @@ int CPinaclePoutryApp::run(int argc, char const *argv[])
         return -1;
     }
 
+
     Mat frame;
     Mat frameHSL;
     Mat frameBuck;
     Mat frameBuck1;
     Mat frameCanny;
+    RNG rng(12345);
 
     namedWindow(szWin, WINDOW_AUTOSIZE);
     namedWindow(szHSL, WINDOW_AUTOSIZE);
 
+    int ex = static_cast<int>(video.get(CAP_PROP_FOURCC));
+    videoOut.open("out_pinnacle.avi", 
+                    ex, 
+                    video.get(CAP_PROP_FPS),
+                    Size(video_w, video_h),
+                    true);
+
+    vector<Rect> vRc;
     int frameIdx = 0;
     for (;;)
     {
@@ -115,37 +126,68 @@ int CPinaclePoutryApp::run(int argc, char const *argv[])
         cvtColor(frame, frameHSL, COLOR_BGR2HLS);
         cvtColor(frameBuck, frameBuck1, COLOR_BGR2GRAY);
 
-        Canny(frameBuck1,  frameCanny, canny_thresh, canny_thresh * 2);
-        findContours(frameCanny, contours, hierarchy, RETR_TREE, CHAIN_APPROX_SIMPLE);
+        Mat drawing = Mat::zeros( frame.size(), CV_8UC3 );
 
-        if (frameIdx < 10)
+        if (frameIdx % 15 == 1)
         {
-            char szTmp[255];
-            sprintf(szTmp, "bucket_%d.png", frameIdx);
-            imwrite(szTmp, frameBuck);
-        }
+            Canny(frameBuck1,  frameCanny, canny_thresh, canny_thresh * 2);
+            findContours(frameCanny, contours, hierarchy, RETR_TREE, CHAIN_APPROX_SIMPLE);
 
-        for (int i=0; i<contours.size(); ++i)
-        {
-            cv::Rect rc;    // bound rect
-            ccp->contourRect(contours[i], rc);
-
-            if (rc.width > 0)
+            if (frameIdx < 10)
             {
-                double ratio = (double)rc.height / (double)rc.width;
-                int area = rc.width * rc.width;
+                char szTmp[255];
+                sprintf(szTmp, "bucket_%d.png", frameIdx);
+                imwrite(szTmp, frameBuck);
+            }
 
-                if (ratio >= broiler_rate_low && ratio <= broiler_rate_hig && area >= broiler_low && area <= broiler_hig)
+            vRc.clear();
+            for (int i=0; i<contours.size(); ++i)
+            {
+                cv::Rect rc;    // bound rect
+                ccp->contourRect(contours[i], rc);
+
+                if (rc.width > 0)
                 {
-                    rectangle(frame, rc, Scalar(255,255,0));
-                    rectangle(frameBuck, rc, Scalar(255,255,0));
+                    double ratio = (double)rc.height / (double)rc.width;
+                    int area = rc.width * rc.width;
+
+                    if (ratio >= broiler_rate_low && ratio <= broiler_rate_hig && area >= broiler_low && area <= broiler_hig)
+                    {
+                        rectangle(frame, rc, Scalar(255,255,0));
+                        rectangle(frameBuck, rc, Scalar(255,255,0));
+
+                        vRc.push_back(rc);
+                    }
                 }
             }
+
+            for (int i=0; i<contours.size(); ++i)
+            {
+                Scalar color = Scalar( rng.uniform(0, 256), rng.uniform(0,256), rng.uniform(0,256) );
+                drawContours( drawing, contours, (int)i, color, 2, LINE_8, hierarchy, 0 );
+            }
         }
+        else
+        {
+            for (int i=0; i<vRc.size();++i)
+            {
+                rectangle(frame, vRc[i], Scalar(255,255,0));
+                rectangle(frameBuck, vRc[i], Scalar(255,255,0));
+            }
+
+            for (int i=0; i<contours.size(); ++i)
+            {
+                Scalar color = Scalar( rng.uniform(0, 256), rng.uniform(0,256), rng.uniform(0,256) );
+                drawContours( drawing, contours, (int)i, color, 2, LINE_8, hierarchy, 0 );
+            }
+        }
+
+        videoOut << frame;
 
         imshow(szHSL, frameHSL);
         imshow(szWin, frame);
         imshow(szBuckwet, frameBuck);
+        imshow("contours", drawing);
 
         char c = (char)waitKey(25);
         if (c == 27) break;

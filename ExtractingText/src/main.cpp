@@ -77,9 +77,9 @@ int main(int argc, char const *argv[])
     // IApplication* p_App = new CPyramidManualApp();
     // IApplication* p_App = new CColorizeApp();
     // IApplication* p_App = new CPoultryMonitorApp();
-    // IApplication* p_App = new CPinaclePoutryApp();
+    IApplication* p_App = new CPinaclePoutryApp();
     // IApplication* p_App = new CTemplateMatchingApp();
-    IApplication* p_App = new CCannyEdgeApp();
+    // IApplication* p_App = new CCannyEdgeApp();
     // IApplication* p_App = new CHitOrMissApp();
     // IApplication* p_App = new CBackprojectApp();
     // IApplication* p_App = new CBackprojectApp2();
@@ -88,7 +88,7 @@ int main(int argc, char const *argv[])
     // IApplication* p_App = new CHoughLineApp();
     // IApplication* p_App = new CHoughCircleApp();
     // IApplication* p_App = new CContoursApp();
-    int n_Ret = p_App->run(argc, argv);    
+    int n_Ret = p_App->run(argc, argv);
 
     /*
     int p = 6089;
