@@ -76,8 +76,8 @@ int main(int argc, char const *argv[])
     // IApplication* p_App = new CExtractTextApp();
     // IApplication* p_App = new CPyramidManualApp();
     // IApplication* p_App = new CColorizeApp();
-    // IApplication* p_App = new CPoultryMonitorApp();
-    IApplication* p_App = new CPinaclePoutryApp();
+    IApplication* p_App = new CPoultryMonitorApp();
+    // IApplication* p_App = new CPinaclePoutryApp();
     // IApplication* p_App = new CTemplateMatchingApp();
     // IApplication* p_App = new CCannyEdgeApp();
     // IApplication* p_App = new CHitOrMissApp();

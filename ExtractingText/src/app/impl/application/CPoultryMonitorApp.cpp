@@ -6,6 +6,7 @@
 #include <chrono>
 #include <iostream>
 #include <fstream>
+#include <map>
 #include <vector>
 #include <queue>
 #include "app/impl/general/CFileUtil.h"
@@ -702,16 +703,16 @@ int CPoultryMonitorApp::run(int argc, char const *argv[])
     // return run_watershed(argv[1]);
     //
     //return run_contours(argv[1], atoi(argv[2]));
-    return run_video(argv[1], argv[2]);
-    return run_morph(argv[1]);
     return run_video_seg(argv[1], argv[2]);
-    return run_video(argv[1], argv[2]);
+    return run_morph(argv[1]);
     return examine_watershed(argv[1], argv[2]);
+    return run_segmentation2(argv[1], argv[2]);
+    return run_video(argv[1], argv[2]);
+    return run_video(argv[1], argv[2]);
     PoultryBehavior bh;
     //return CIdentityBroilerBehavior::run(argv[1], bh);
     //return run_contours(argv[1], atoi(argv[2]));
     //return run_morph(argv[1]);
-    // return run_segmentation2(argv[1], argv[2]);
     return run_watershed(argv[1]);
     return run_extract(argv[1]);
     return run_video(argv[1], argv[2]);
@@ -1500,6 +1501,11 @@ int CPoultryMonitorApp::run_video_seg(const char* szFile, const char* szFolderTe
     vector<string> vFile;
     vector<Mat> vTemp;
     vector<Mat> vResTmpl;
+    vector<Mat> vMask;      // Mask
+    
+    // Find Mask and Template
+
+
     bool use_mask = false;
     bool accept_mask;
     int match_method = TM_SQDIFF;
@@ -1556,41 +1562,61 @@ int CPoultryMonitorApp::run_video_seg(const char* szFile, const char* szFolderTe
                     Size(video_w, video_h),
                     true);
     
+    vector<Rect> vRc;
     int index=0;
     for (;;)
     {
         video >> frame;
+        index++;
+
+        if (frame.empty())
+        {
+            break;
+        }
 
         // Template matching here
-        for (int i=0; i<vTemp.size(); ++i)
+        if (index % 10 == 1)
         {
-            accept_mask = (TM_SQDIFF == match_method || match_method == TM_CCORR_NORMED);
-            if (use_mask && accept_mask)
+            vRc.clear();
+            for (int i=0; i<vTemp.size(); ++i)
             {
-                matchTemplate( frame, vTemp[i], vResTmpl[i], match_method, mask);
-            }
-            else
-            {
-                matchTemplate( frame, vTemp[i], vResTmpl[i], match_method);
-            }
+                accept_mask = (TM_SQDIFF == match_method || match_method == TM_CCORR_NORMED);
+                if (use_mask && accept_mask)
+                {
+                    matchTemplate( frame, vTemp[i], vResTmpl[i], match_method, mask);
+                }
+                else
+                {
+                    matchTemplate( frame, vTemp[i], vResTmpl[i], match_method);
+                }
 
-            normalize(vResTmpl[i], vResTmpl[i], 0, 1, NORM_MINMAX, -1, Mat());
-            minMaxLoc(vResTmpl[i], &minVal, &maxVal, &minLoc, &maxLoc, Mat());
+                normalize(vResTmpl[i], vResTmpl[i], 0, 1, NORM_MINMAX, -1, Mat());
+                minMaxLoc(vResTmpl[i], &minVal, &maxVal, &minLoc, &maxLoc, Mat());
 
-            if( match_method  == TM_SQDIFF || match_method == TM_SQDIFF_NORMED )
-            { 
-                matchLoc = minLoc; 
+                if( match_method  == TM_SQDIFF || match_method == TM_SQDIFF_NORMED )
+                { 
+                    matchLoc = minLoc; 
+                }
+                else
+                { 
+                    matchLoc = maxLoc; 
+                }  
+
+                vRc.push_back(Rect(matchLoc.x, matchLoc.y, vTemp[i].cols, vTemp[i].rows));
+                
+                /*
+                rectangle(frame, matchLoc, 
+                                Point(matchLoc.x + vTemp[i].cols, matchLoc.y + vTemp[i].rows),
+                                Scalar(0, 255, 255),
+                                // Scalar(0, (18 + i * 73) % 255, (65 + i * 39) % 255),
+                                2, 8, 0);
+                */
             }
-            else
-            { 
-                matchLoc = maxLoc; 
-            }  
+        }
         
-            rectangle(frame, matchLoc, 
-                            Point(matchLoc.x + vTemp[i].cols, matchLoc.y + vTemp[i].rows),
-                            Scalar(0, 255, 255),
-                            // Scalar(0, (18 + i * 73) % 255, (65 + i * 39) % 255),
-                            2, 8, 0);
+        for (int i=0;i<vRc.size();++i)
+        {
+            rectangle(frame, vRc[i], Scalar(0, 255, 255), 2, 8, 0);
         }
         
         imshow("Video", frame);

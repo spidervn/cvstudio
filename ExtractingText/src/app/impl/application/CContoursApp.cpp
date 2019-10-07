@@ -25,17 +25,21 @@ int CContoursApp::run(int argc, char const *argv[])
       cout << "Usage: " << argv[0] << " <Input image>" << endl;
       return -1;
     }
+    
     printf("xxx\r\n");
     cvtColor( src, src_gray, COLOR_BGR2GRAY );
-    blur( src_gray, src_gray, Size(3,3) );
+    blur( src_gray, src_gray, Size(3,3));
+    
     const char* source_window = "Source";
+    const int max_thresh = 255;
+
     namedWindow( source_window );
     imshow( source_window, src );
-    const int max_thresh = 255;
+
     createTrackbar( "Canny thresh:", source_window, &thresh, max_thresh, Callback, (void*)this);
     Callback( 0, (void*)this);
-
     waitKey();
+    
     return 0;
 }
 
