@@ -14,7 +14,7 @@ public:
     ~CParametricTemplateVectorApp();
 
     int ringProjectionTransform(int m, int n, cv::Mat t, std::vector<double>& v);    
-    int ringProjectionTransform(int dimension, cv::Mat pre_ring_orderMatrix, cv::Mat t, std::vector<double>& v);
+    int ringProjectionTransform(int dimension, const cv::Mat& pre_ring_orderMatrix, const cv::Mat& t, std::vector<double>& v);
     int RPT_ring_order_matrix(int m, int n , cv::Mat& masked);
     double NC_double(int N, const std::vector<double>& v1, const std::vector<double>& v2);
 

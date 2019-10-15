@@ -62,20 +62,18 @@ int CParametricTemplateVectorApp::ringProjectionTransform(int m, int n, cv::Mat 
     return 0;
 }
 
-int CParametricTemplateVectorApp::ringProjectionTransform(int dimension, cv::Mat pre_ring_orderMatrix, cv::Mat t, std::vector<double>& v)
+int CParametricTemplateVectorApp::ringProjectionTransform(int dimension, const cv::Mat& pre_ring_orderMatrix, const cv::Mat& t, std::vector<double>& v)
 {
     // 
     // Ring projection transform
     //
     int nR = dimension;
     std::vector<int> vcount;        // Count number of pixel for each radius r
-    vcount.reserve(nR+1);
-    v.reserve(nR+1);
 
-    for (int i=0; i<nR+1; ++i)
+    for (int i=0; i<nR; ++i)
     {
-        v[i] = 0;
-        vcount[i] = 0;
+        v.push_back(0);
+        vcount.push_back(0);
     }
 
     printf("(dfsfdsds) nR=%d; Pre(%3d,%3d); T(%d,%d)\r\n", nR, 
@@ -87,26 +85,24 @@ int CParametricTemplateVectorApp::ringProjectionTransform(int dimension, cv::Mat
         for (int x=0; x < pre_ring_orderMatrix.cols; ++x)
         {
             int r = pre_ring_orderMatrix.at<int>(y,x);
-            printf("(%3d,%3d) ",y,x);
+            //printf("(%3d,%3d) ",y,x);
             v[r] += t.at<uchar>(y,x);
             vcount[r] += 1;
         }
 
         // if (y < 10)
         {
-            printf("\r\n");
+            //printf("\r\n");
         }
     }
 
-    printf("Now\r\n");
-    for (int i=0; i<nR+1; ++i)
+    for (int i=0; i<nR; ++i)
     {
         if (vcount[i] > 0)
         {
             v[i] = v[i] / vcount[i];
         }
     }
-    printf("Now\r\n");
     return 0;
 }
 
@@ -202,7 +198,6 @@ int CParametricTemplateVectorApp::run(int argc, char const *argv[])
     H.create( n , n , CV_32FC1);
     w.create( n , 1, CV_32FC1);
     G.create( n , 1, CV_32FC1);
-    vecP.reserve(R);
 
     for (int i=0; i<n; ++i)
     {
@@ -217,8 +212,17 @@ int CParametricTemplateVectorApp::run(int argc, char const *argv[])
 
     for (int i=0; i<n; ++i)
     {
+        vecP.push_back(std::vector<double>({}));        
+    }
+
+    for (int i=0; i<n; ++i)
+    {
         ringProjectionTransform(R, vRingOrder[i], vTp[i], vecP[i]);
-        printf("xxxx\r\n");
+    }
+
+    for (int i=0; i<n; ++i)
+    {
+        printf("Vec[%d].size=%d\r\n", i, vecP[i].size());
     }
     
     printf("ok2\r\n");
@@ -294,7 +298,6 @@ int CParametricTemplateVectorApp::run(int argc, char const *argv[])
 
     const char* szSource = "Source";
     const char* szRes = "Result";
-
     normalize(res, res_norm, 0, 1, NORM_MINMAX, -1, Mat());
 
     imshow(szSource, src);
