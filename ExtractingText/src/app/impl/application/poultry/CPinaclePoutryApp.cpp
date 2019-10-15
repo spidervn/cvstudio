@@ -191,7 +191,6 @@ int CPinaclePoutryApp::run(int argc, char const *argv[])
 
         char c = (char)waitKey(25);
         if (c == 27) break;
-
     }
     
     return 0;

@@ -11,4 +11,4 @@ public:
 
 typedef std::shared_ptr<IApplication> IApplicationPtr;
 
-#endif // !EXTRACTTEXT_APP_INTERFACE_APPROACH_ITEMPLATEMATCHING_H_
+#endif // 
