@@ -156,6 +156,7 @@ double CParametricTemplateVectorApp::NC_double(int R, const std::vector<double>&
 {
     double d1 = 0;
     double d2 = 0; 
+    double dRet = 0;
 
     double dotPr = 0;
     double sumV1 = 0;
@@ -186,16 +187,16 @@ double CParametricTemplateVectorApp::NC_double(int R, const std::vector<double>&
         printf("Zero DIVISION\r\n");
     }
 
-    return d1/d2;
+    dRet = d1 / d2;
+    return dRet;
 }
 
 int CParametricTemplateVectorApp::run(int argc, char const *argv[])
 {
     printf("OK\r\n");
-    int numScale = 3;
-    int n = numScale;
     int R;
-    vector<double> vratio({ 1, 0.5, 0.3});          // Test Ratio
+    // vector<double> vratio({ 1, 0.5, 0.3});          // Test Ratio
+    vector<double> vratio({ 1, 0.25 });          // Test Ratio
     vector<double> ptv;                             // Parametric template vector
     vector<Mat> vTp;                                // Templates
     vector<vector<double>> vecP;
@@ -210,13 +211,25 @@ int CParametricTemplateVectorApp::run(int argc, char const *argv[])
     cv::Mat G;
     cv::Mat src;
     cv::Mat res;                                // Template matching result
-    cv::Mat res_norm;
     cv::Mat subImg;
+    cv::Mat res_norm;    
+    cv::Mat res_scale;
 
+    int numScale = vratio.size();
+    int n = numScale;
+
+    /*
     vTp.push_back( imread("g_google_templ.png", IMREAD_GRAYSCALE));
     vTp.push_back( imread("g_google_templ_50percent.png", IMREAD_GRAYSCALE));
     vTp.push_back( imread("g_google_templ_30percent.png", IMREAD_GRAYSCALE));
     src = imread("google_multi_300.png", IMREAD_GRAYSCALE);
+    */
+
+    vTp.push_back( imread("type03_middle_template.png", IMREAD_GRAYSCALE));
+    vTp.push_back( imread("type03_middle_template_half.png", IMREAD_GRAYSCALE));
+    src = imread("frame_pinnacle_type3_007_00.png", IMREAD_GRAYSCALE);
+
+    
 
     // 
     // cv::Mat src_10_100 = src(cv::Rect(10,100,60,50));
@@ -226,6 +239,18 @@ int CParametricTemplateVectorApp::run(int argc, char const *argv[])
     //
     // return 0;
     // 
+
+    /* 
+     *
+     *  Optimal matching 
+     *  1. Construct the template Pt0, Pt1, ..., PtN
+     *  2. Transform the set of templates Pt0, Pt1, ..., PtN => 1D ring projection.
+     *  3. Calculate the correlation matrix H by using Eq (11)
+     *  4. Move template step-by-step
+     *  5. Calculate the correlation vector G & w according to Eqs(12) and (9)
+     *  6. Reconstruct PTV Ptp by Eq(7) find NC<Ptp, PO>
+     *  7. Repeat 4->6
+     */
 
     int width = vTp[0].cols;
     int height = vTp[0].rows;
@@ -253,12 +278,11 @@ int CParametricTemplateVectorApp::run(int argc, char const *argv[])
         RPT_ring_order_matrix(vTp[i].rows, vTp[i].cols, &mRing, vCountInRing[i]);
         vRingOrder.push_back(mRing);
 
+        // printf("Ring Order(%d) \r\n", i);
+        // cout << mRing << endl;
 
-        printf("Ring Order(%d) \r\n", i);
-        cout << mRing << endl;
-
-        printf("vCountInRing\r\n");
-        CConsole::print(vCountInRing[i]);
+        // printf("vCountInRing\r\n");
+        // CConsole::print(vCountInRing[i]);
     }
 
     printf("OK R=%d; (w,h) = (%d,%d)\r\n", R, width, height);
@@ -268,14 +292,13 @@ int CParametricTemplateVectorApp::run(int argc, char const *argv[])
         vecP.push_back(std::vector<double>({}));        
     }
 
+    //@@ 1) Construct the template Pt0, Pt1, ..., PtN
     for (int i=0; i<n; ++i)
     {
         ringProjectionTransform(R, &vRingOrder[i], vCountInRing[i], vTp[i], vecP[i]);
-    }
 
-    for (int i=0; i<n; ++i)
-    {
-        printf("Vec[%d].size=%d\r\n", i, vecP[i].size());
+        printf("Pt[%d](Len=%d)\r\n", i, vecP[i].size());
+        CConsole::print(vecP[i]);
     }
 
     // 
@@ -297,18 +320,18 @@ int CParametricTemplateVectorApp::run(int argc, char const *argv[])
 
     printf("Matrix H\r\n");
     cout << H << endl;
-
     printf("Matrix H-invert\r\n");
     cout << Hinv << endl;
 
     if (src.rows > height && src.cols > width)
     {
-        res = Mat::zeros(src.rows - height, src.cols - width, CV_32FC1);
+        res = Mat::zeros(src.rows - height, src.cols - width, CV_64FC1);
+        res_scale.create(res.size(), res.type());
 
-        // printf("Res(%d,%d)\r\n", res.cols, res.rows);
-        for (int y=0; y < res.cols; ++y)
+        printf("Res(%d,%d)\r\n", res.cols, res.rows);
+        for (int y=0; y < res.rows; ++y)
         {
-            for (int x1 = 0; x1 < res.rows; ++x1)
+            for (int x1 = 0; x1 < res.cols; ++x1)
             {
                 // subImg = src(Rect(x, y, width, height));
                 subImg = src(Rect(x1, y, width, height));
@@ -320,10 +343,12 @@ int CParametricTemplateVectorApp::run(int argc, char const *argv[])
                 // 
                 ringProjectionTransform(R, &vRingOrder[0], vCountInRing[0], subImg, vRPV_O); // subImg
 
+                /*
                 if (x1 % 150 == 0)
                 {
                     printf("process: %d; ", x1);
                 }
+                */
 
                 for (int i=0; i<n; ++i)
                 {
@@ -345,7 +370,7 @@ int CParametricTemplateVectorApp::run(int argc, char const *argv[])
                 double sumW = 0;
                 w = Hinv * (G);
 
-
+                /*
                 if (y < 10 && x1==0)
                 {
                     printf("vector G at(%d,%d)\r\n", y, x1);
@@ -354,6 +379,7 @@ int CParametricTemplateVectorApp::run(int argc, char const *argv[])
                     printf("Vector w\r\n");
                     cout << w << endl;
                 }
+                */
 
 
                 for (int i=0; i<n; ++i)
@@ -362,6 +388,15 @@ int CParametricTemplateVectorApp::run(int argc, char const *argv[])
                 }
 
                 w = w/sumW;
+
+
+                /*
+                if (y < 10 && x1==0)
+                {
+                    printf("Normalized w Vector\r\n");
+                    cout << w << endl;
+                }
+                */
 
                 if ( x1 % 150 == 151 )
                 {
@@ -378,7 +413,9 @@ int CParametricTemplateVectorApp::run(int argc, char const *argv[])
                     printf("\r\n");
                     cv::Mat hTest = H * Hinv;
                     printf("I\r\n");
+                    // 
                     // CCVConsole::printMatrix<double>(hTest);
+                    // 
                     cout << hTest << endl;
                     printf("\r\n");
 
@@ -395,6 +432,7 @@ int CParametricTemplateVectorApp::run(int argc, char const *argv[])
                 // Reconstruct a PTV
                 //
                 double ptvLen=0;
+                double scale = 0;
                 for (int i=0; i<R; ++i)
                 {
                     ptv[i] = 0;
@@ -407,9 +445,10 @@ int CParametricTemplateVectorApp::run(int argc, char const *argv[])
                 }
 
                 ptvLen = sqrt(ptvLen);
-                for (int i=0; i<n; ++i)
+                for (int i=0; i<R; ++i)
                 {
-                    ptv[i] /= ptvLen;
+                    ptv[i] = ptv[i]/ptvLen;
+                    scale += w.at<double>(i,0) * vratio[i];
                 }
 
                 if (x1 % 150 == 0 && y == 0)
@@ -420,11 +459,22 @@ int CParametricTemplateVectorApp::run(int argc, char const *argv[])
 
                 double NC = NC_double(R, ptv, vRPV_O);
                 res.at<double>(y,x1)  = NC;
+                res_scale.at<double>(y,x1) = scale;
+
+                if (y == 0)
+                {
+                    printf("NC at(%d,%d)=%f; ", y,x1, NC);
+                }
             }
             
-            printf("ONE %d\r\n", y);
+            // if (y  % 100 == 0)
+            {
+                printf("ONE-BATCH %d\r\n", y);
+            }
         }
     }
+
+    printf("HERE\r\n");
 
     const char* szSource = "Source";
     const char* szRes = "Result";
@@ -438,14 +488,44 @@ int CParametricTemplateVectorApp::run(int argc, char const *argv[])
     double maxVal; 
     Point minLoc; 
     Point maxLoc;
-    minMaxLoc(res_norm, &minVal, &maxVal, &minLoc, &maxLoc, Mat());
+    double threshold_res_range = 1.005;
+    minMaxLoc(res, &minVal, &maxVal, &minLoc, &maxLoc, Mat());
 
-    rectangle(src, maxLoc, cv::Point( maxLoc.x + width, maxLoc.y + height), Scalar(0,255,255));
+    // cout << "Result=" << res << endl;
 
+
+    double nc_hig = res.at<double>(maxLoc.y, maxLoc.x);
+    double nc_low = nc_hig / threshold_res_range;
+    vector<Point> vMatch;
+    vector<double> vEScale;
+    for (int y=0; y<res.rows; ++y)
+    {
+        for (int x=0; x<res.cols;++x)
+        {
+            
+            if (res.at<double>(y,x) >= nc_low && res.at<double>(y,x) <= nc_hig)
+            {
+                vMatch.push_back(Point(x,y));
+                vEScale.push_back(res_scale.at<double>(y,x));
+            }
+        }
+    }
+    
     printf("Fit-location (%d,%d); valNorm=%f; valRaw=%f\r\n", 
                             maxLoc.x, maxLoc.y, 
                             res_norm.at<double>(maxLoc.y, maxLoc.x), 
                             res.at<double>(maxLoc.y, maxLoc.x));
+
+    printf("Other fit\r\n");
+    for (int i=0;i<vMatch.size();++i)
+    {
+        printf("\t(x,y)=(%d,%d); e-scale=%f\r\n", vMatch[i].x, vMatch[i].y, vEScale[i]);
+
+        double dWidth = width * vEScale[i];
+        double dHeight = height * vEScale[i];
+
+        rectangle(src, vMatch[i], cv::Point( vMatch[i].x + dWidth, vMatch[i].y + dHeight), Scalar(0,255,255));
+    }
 
     namedWindow(szSource, WINDOW_AUTOSIZE);
     namedWindow(szRes, WINDOW_AUTOSIZE);
