@@ -71,7 +71,7 @@ int main(int argc, char const *argv[])
     // IApplication* p_App = new CShiTomasiApp();
     // IApplication* p_App = new COwnCornerDetectApp();
     // IApplication* p_App = new CCornerLocationSubpixelsApp();
-    // IApplication* p_App = new CFeatureDescApp();
+    IApplication* p_App = new CFeatureDescApp();
     // IApplication* p_App = new CImageSegmentationApp();
     // IApplication* p_App = new CImgResizingApp();
     // IApplication* p_App = new CSobelManualApp();
@@ -90,7 +90,7 @@ int main(int argc, char const *argv[])
     // IApplication* p_App = new CHoughLineApp();
     // IApplication* p_App = new CHoughCircleApp();
     // IApplication* p_App = new CContoursApp();
-    IApplication* p_App = new CParametricTemplateVectorApp();
+    // IApplication* p_App = new CParametricTemplateVectorApp();
     // IApplication* p_App = new CManualFundamentalApp();
     int n_Ret = p_App->run(argc, argv);
 

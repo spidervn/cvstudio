@@ -4,10 +4,10 @@
 #include <opencv2/imgproc.hpp>
 #include <opencv2/highgui.hpp>
 #include <opencv2/features2d.hpp>
-// #include <opencv2/xfeatures2d.hpp>
+#include <opencv2/xfeatures2d.hpp>
 
 using namespace cv;
-// using namespace cv::xfeatures2d;
+using namespace cv::xfeatures2d;
 using namespace std;
 //using std::cout;
 //using std::endl;
@@ -20,7 +20,6 @@ CFeatureDetectApp::~CFeatureDetectApp()
 
 int CFeatureDetectApp::run(int argc, char const *argv[])
 {
-    /*
     CommandLineParser parser( argc, argv, "{@input | ../data/box.png | input image}" );
     Mat src = imread( parser.get<String>( "@input" ), IMREAD_GRAYSCALE );
     if ( src.empty() )
@@ -43,7 +42,6 @@ int CFeatureDetectApp::run(int argc, char const *argv[])
     //-- Show detected (drawn) keypoints
     imshow("SURF Keypoints", img_keypoints);
     waitKey();
-    */
 
     return 0;
 }
