@@ -1630,3 +1630,73 @@ int CPoultryMonitorApp::run_video_seg(const char* szFile, const char* szFolderTe
     waitKey();
     return 0;
 }
+
+int CPoultryMonitorApp::grouping_flocks(std::vector<cv::Rect> vPoultry, std::vector<int>& vLabel)
+{
+    int mean_w;
+    int mean_h;
+    int sum_w;
+    int sum_h;
+    int n;
+
+    double eps_w;   // epsilon width
+    double eps_h;   // epsilon height
+
+    vector<Point> vCenter;
+
+    for (int i=0; i<vPoultry.size(); ++i)
+    {
+        sum_w += vPoultry[i].width;
+        sum_h += vPoultry[i].height;
+
+        vCenter.push_back(Point(vPoultry[i].x + vPoultry[i].width / 2,
+                                vPoultry[i].y + vPoultry[i].height / 2));
+    }
+
+    mean_w = sum_w / vPoultry.size();
+    mean_h = sum_h / vPoultry.size();
+    eps_w = sum_w * 1.1 / vPoultry.size();
+    eps_h = sum_h * 1.1 / vPoultry.size();
+
+    //
+    // Build a graph
+    //
+    vector<vector<int>> graph;
+    
+    // Building a graph
+    n = graph.size();
+    for (int i=0; i<n; ++i)
+    {
+        graph.push_back(vector<int>());
+        for (int j=0; j<n; ++j)
+        {
+            graph[i][j] = 0;
+        }
+    }   
+
+    for (int i=0; i<n; ++i)
+    {
+        for (int j=i+1; j<n; ++j)
+        {
+            if (abs(vCenter[i].x - vCenter[j].x) <= eps_w && 
+                abs(vCenter[i].y - vCenter[j].y) <= eps_h)
+            {
+                graph[i][j] = 1;
+                graph[j][i] = 1;
+            }
+        }
+    }
+
+    for (int i=0; i<n; ++i)
+    {
+        for (int j=0; j<n; ++j)
+        {
+            if(graph[i][j] = 1)
+            {
+                // Find connected components 
+            }
+        }
+    }
+
+    return 0;
+}

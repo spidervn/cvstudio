@@ -2,6 +2,8 @@
 #define EXTRACTTEXT_APP_IMPL_APPLICATION_CPOULTRYMONITORAPP_H_
 
 #include <app/interface/IApplication.h>
+#include <vector>
+#include <opencv2/core.hpp>
 
 class CPoultryMonitorApp: public IApplication
 {
@@ -21,6 +23,8 @@ public:
     int run_segmentation2(const char* szFile, const char* szIni);
     int examine_watershed(const char* szFile, const char* szIni);
     int run_video_seg(const char* szFile, const char* szFolderTemp);
+
+    int grouping_flocks(std::vector<cv::Rect> vPoultry, std::vector<int>& vLabel);
 };
 
 #endif

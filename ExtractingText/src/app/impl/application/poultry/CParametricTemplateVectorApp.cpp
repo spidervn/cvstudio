@@ -195,8 +195,8 @@ int CParametricTemplateVectorApp::run(int argc, char const *argv[])
 {
     printf("OK\r\n");
     int R;
-    // vector<double> vratio({ 1, 0.5, 0.3});          // Test Ratio
-    vector<double> vratio({ 1, 0.25 });          // Test Ratio
+    vector<double> vratio({ 1, 0.5, 0.3});          // Test Ratio
+    // vector<double> vratio({ 1, 0.25 });          // Test Ratio
     vector<double> ptv;                             // Parametric template vector
     vector<Mat> vTp;                                // Templates
     vector<vector<double>> vecP;
@@ -218,16 +218,16 @@ int CParametricTemplateVectorApp::run(int argc, char const *argv[])
     int numScale = vratio.size();
     int n = numScale;
 
-    /*
     vTp.push_back( imread("g_google_templ.png", IMREAD_GRAYSCALE));
     vTp.push_back( imread("g_google_templ_50percent.png", IMREAD_GRAYSCALE));
     vTp.push_back( imread("g_google_templ_30percent.png", IMREAD_GRAYSCALE));
     src = imread("google_multi_300.png", IMREAD_GRAYSCALE);
-    */
 
+    /*
     vTp.push_back( imread("type03_middle_template.png", IMREAD_GRAYSCALE));
     vTp.push_back( imread("type03_middle_template_half.png", IMREAD_GRAYSCALE));
     src = imread("frame_pinnacle_type3_007_00.png", IMREAD_GRAYSCALE);
+    */
 
     
 
@@ -488,7 +488,7 @@ int CParametricTemplateVectorApp::run(int argc, char const *argv[])
     double maxVal; 
     Point minLoc; 
     Point maxLoc;
-    double threshold_res_range = 1.005;
+    double threshold_res_range = 1.01;
     minMaxLoc(res, &minVal, &maxVal, &minLoc, &maxLoc, Mat());
 
     // cout << "Result=" << res << endl;
@@ -498,6 +498,10 @@ int CParametricTemplateVectorApp::run(int argc, char const *argv[])
     double nc_low = nc_hig / threshold_res_range;
     vector<Point> vMatch;
     vector<double> vEScale;
+
+    int templDx_Half = 03*width/04;
+    int templDy_Half = 03*height/04;
+
     for (int y=0; y<res.rows; ++y)
     {
         for (int x=0; x<res.cols;++x)
@@ -505,8 +509,23 @@ int CParametricTemplateVectorApp::run(int argc, char const *argv[])
             
             if (res.at<double>(y,x) >= nc_low && res.at<double>(y,x) <= nc_hig)
             {
-                vMatch.push_back(Point(x,y));
-                vEScale.push_back(res_scale.at<double>(y,x));
+                // Do not overlap with other
+                bool bOverlap = false;
+                for (int i=0; i<vMatch.size(); ++i)
+                {
+
+                    if (abs(x - vMatch[i].x) < templDx_Half && abs(y - vMatch[i].y) < templDy_Half)
+                    {
+                        bOverlap = true;
+                        break;
+                    }
+                }
+
+                if (!bOverlap)
+                {
+                    vMatch.push_back(Point(x,y));
+                    vEScale.push_back(res_scale.at<double>(y,x));
+                }
             }
         }
     }
@@ -534,6 +553,8 @@ int CParametricTemplateVectorApp::run(int argc, char const *argv[])
     imshow(szSource, src);    
     imshow(szRes, res_norm);
     imshow(szResRaw, res);
+
+    imwrite("out.png", src);
 
     waitKey();
     return 0;

@@ -17,6 +17,9 @@ find_package( OpenCV REQUIRED )
 
 include_directories(src/)
 include_directories(src/libs)
+include_directories($ENV{BOOST_171_DIR})
+link_directories($ENV{BOOST_171_DIR}/libs)
+
 file(GLOB SOURCES "src/*.cpp" 
                     "src/extract/*.cpp"
                     "src/app/impl/application/*.cpp"
