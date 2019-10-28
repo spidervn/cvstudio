@@ -32,22 +32,5 @@ int CManualFundamentalApp::run(int argc, char const *argv[])
     std::cout << c3 << std::endl;
 
 
-    Graph c(10);
-
-    boost::add_vertex(c);
-    boost::add_edge(0, 1, c);
-
-    std::vector<int> component (boost::num_vertices (c));
-    size_t num_components = boost::connected_components (c, &component[0]);
-
-    std::cout << "Vertices in the first component:" << std::endl;
-    for (size_t i = 0; i < boost::num_vertices(c); ++i)
-    {
-        if (component[i] == 0)
-        {
-            std::cout << i << " ";
-        }
-    }
-
     return 0;
 }
