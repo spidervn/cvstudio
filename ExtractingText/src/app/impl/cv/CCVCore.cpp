@@ -16,6 +16,39 @@ CCVCore::CCVCore()
 CCVCore::~CCVCore()
 {}
 
+int CCVCore::dodge(cv::Mat front, cv::Mat back, cv::Mat& res)
+{
+    // res.create(front.size(), CV_32FC1);
+    //res = front * 255 / (255 - back);
+    //res.setTo(255 , res > 255);
+    //res.setTo(255, back == 255);
+
+    res.create(front.size(), CV_8UC1);
+
+    for (int y=0; y<front.rows;++y)
+    {
+        for (int x=0; x<front.cols; ++x)
+        {
+            float f = front.at<uchar>(y,x) * 255 / (255 - back.at<uchar>(y,x));
+
+            if (f > 255)
+            {
+                res.at<uchar>(y,x) = 255;
+            }
+            else if (back.at<uchar>(y,x) == 255)
+            {
+                res.at<uchar>(y,x) = 255;
+            }
+            else
+            {
+                res.at<uchar>(y,x) = (uchar)f;
+            }
+        }
+    }
+
+    return 0;
+}
+
 int CCVCore::averageChange_ShiftingWindow(cv::Mat img,
                                                 int window_x,
                                                 int window_y,

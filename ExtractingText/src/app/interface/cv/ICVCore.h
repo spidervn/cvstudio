@@ -11,6 +11,8 @@ class ICVCore
 public:
     ~ICVCore() { }
 
+    virtual int dodge(cv::Mat img, cv::Mat img2, cv::Mat& res) = 0;
+
     virtual int HarrisCorner(cv::Mat& img) = 0;
 
     virtual int averageChange_ShiftingWindow(cv::Mat img,

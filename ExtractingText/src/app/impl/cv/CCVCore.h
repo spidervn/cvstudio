@@ -14,6 +14,8 @@ public:
     CCVCore();
     ~CCVCore();
 
+    int dodge(cv::Mat img, cv::Mat img2, cv::Mat& res);
+
     int averageChange_ShiftingWindow(cv::Mat img,
                                                 int window_x,
                                                 int window_y,

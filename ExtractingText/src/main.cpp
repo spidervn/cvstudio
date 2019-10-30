@@ -38,6 +38,7 @@
 #include "app/impl/application/CHoughLineApp.h"
 #include "app/impl/application/CHoughCircleApp.h"
 #include "app/impl/application/CContoursApp.h"
+#include "app/impl/application/CPencilingApp.h"
 #include "app/impl/application/poultry/CParametricTemplateVectorApp.h"
 #include "app/impl/application/poultry/CManualFundamentalApp.h"
 #include "app/examples/background/CDistanceTransformTest.h"
@@ -90,8 +91,9 @@ int main(int argc, char const *argv[])
     // IApplication* p_App = new CHoughLineApp();
     // IApplication* p_App = new CHoughCircleApp();
     // IApplication* p_App = new CContoursApp();
-    IApplication* p_App = new CParametricTemplateVectorApp();
+    // IApplication* p_App = new CParametricTemplateVectorApp();
     // IApplication* p_App = new CManualFundamentalApp();
+    IApplication* p_App = new CPencilingApp();
     int n_Ret = p_App->run(argc, argv);
 
     /*
