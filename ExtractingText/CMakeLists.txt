@@ -23,8 +23,10 @@ link_directories($ENV{BOOST_171_DIR}/libs)
 file(GLOB SOURCES "src/*.cpp" 
                     "src/extract/*.cpp"
                     "src/app/impl/application/*.cpp"
+                    "src/app/impl/application/background/*.cpp"
                     "src/app/impl/application/poultry/*.cpp"
                     "src/app/impl/background/*.cpp"
+                    "src/app/impl/background/probability/*.cpp"
                     "src/app/impl/cv/*.cpp"
                     "src/app/impl/general/*.cpp"
                     "src/app/examples/background/*.cpp")

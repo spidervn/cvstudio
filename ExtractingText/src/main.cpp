@@ -41,6 +41,7 @@
 #include "app/impl/application/CPencilingApp.h"
 #include "app/impl/application/poultry/CParametricTemplateVectorApp.h"
 #include "app/impl/application/poultry/CManualFundamentalApp.h"
+#include "app/impl/application/background/CProbabilityApp.h"
 #include "app/examples/background/CDistanceTransformTest.h"
 
 #include "app/impl/cv/CCVCore.h"
@@ -93,7 +94,8 @@ int main(int argc, char const *argv[])
     // IApplication* p_App = new CContoursApp();
     // IApplication* p_App = new CParametricTemplateVectorApp();
     // IApplication* p_App = new CManualFundamentalApp();
-    IApplication* p_App = new CPencilingApp();
+    // IApplication* p_App = new CPencilingApp();
+    IApplication* p_App = new CProbabilityApp();
     int n_Ret = p_App->run(argc, argv);
 
     /*
