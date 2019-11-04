@@ -11,8 +11,6 @@ public:
     CPencilingApp(/* args */);
     ~CPencilingApp();
     int run(int argc, char const *argv[]);
-
-
 };
 
 #endif // !EXTRACTTEXT_APP_INTERFACE_APPROACH_ITEMPLATEMATCHING_H_

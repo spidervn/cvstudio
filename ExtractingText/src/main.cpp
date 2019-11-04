@@ -42,6 +42,7 @@
 #include "app/impl/application/poultry/CParametricTemplateVectorApp.h"
 #include "app/impl/application/poultry/CManualFundamentalApp.h"
 #include "app/impl/application/background/CProbabilityApp.h"
+#include "app/impl/application/CSVMNonLinearApp.h"
 #include "app/examples/background/CDistanceTransformTest.h"
 
 #include "app/impl/cv/CCVCore.h"
@@ -95,23 +96,24 @@ int main(int argc, char const *argv[])
     // IApplication* p_App = new CParametricTemplateVectorApp();
     // IApplication* p_App = new CManualFundamentalApp();
     // IApplication* p_App = new CPencilingApp();
-    IApplication* p_App = new CProbabilityApp();
+    // IApplication* p_App = new CProbabilityApp();
+    IApplication* p_App = new CSVMNonLinearApp();
     int n_Ret = p_App->run(argc, argv);
 
     /*
-    int p = 6089;
-    std::vector<int> v;
-    ICVCorePtr ccp;
-    ccp = CCVCorePtrNew;
-    ccp->lehmerRNG(p, 100, 7, v);
-    CConsole::print<int>(v);
-    */
-
+        int p = 6089;
+        std::vector<int> v;
+        ICVCorePtr ccp;
+        ccp = CCVCorePtrNew;
+        ccp->lehmerRNG(p, 100, 7, v);
+        CConsole::print<int>(v);
+     */
     // CDistanceTransformTest tt;
     // int n_Ret;
     // tt.test_1D();
     // tt.bruteForce();
     // tt.test_2D("/home/jcm/Pictures/opencv/donald-trump.jpg");
+
     delete p_App;
     return 0;
 }
