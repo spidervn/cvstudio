@@ -20,7 +20,7 @@ int CCalculusApp::run(int, char const *[])
 {
     int margin = 10;
     int MAX_IMGX = 1900;
-    double R = 70;
+    double R = 150;
     double split = 500;
     double dXMax = 0;
 
@@ -32,21 +32,22 @@ int CCalculusApp::run(int, char const *[])
     for (double st=1;st<=split;++st)
     {
         double alpha = st * CV_2PI / split;
-        printf("alpha(%f)=%f;", st, alpha);
+        //printf("alpha(%f)=%f;", st, alpha);
 
         double mysin = sin(alpha/2);
-        printf("mysin=%f;", mysin);
+        //printf("mysin=%f;", mysin);
         double x = 2*R*mysin*cos(alpha/2);
         double y = 2*R*mysin*mysin;
 
-        printf("(x,y)=(%f,%f);", x, y);
+        x = (R*alpha - x);
+        //printf("(x,y)=(%f,%f);", x, y);
 
         vTraj.push_back(Point(x,y));
     }
 
     cv::Mat img;
     // img = Mat::zeros(2*R + 2 * margin, std::min(vTraj[vTraj.size()-1].x, MAX_IMGX) + 2*margin, CV_8UC3);
-    img = Mat::zeros(2*R + 2 * margin, 500, CV_8UC3);
+    img = Mat::zeros(2*R + 2 * margin, 1000, CV_8UC3);
 
     for (int st=0;st<=split;++st)
     {
