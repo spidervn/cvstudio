@@ -18,7 +18,9 @@ CCNNApp::~CCNNApp()
 
 int CCNNApp::run(int argc, char const *argv[])
 {
+    // Mask R-CNN here? 
     
+
 
     return 0;
 }
