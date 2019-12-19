@@ -1605,7 +1605,7 @@ int CPoultryMonitorApp::run_video_seg(const char* szFile, const char* szFolderTe
                 vRc.push_back(Rect(matchLoc.x, matchLoc.y, vTemp[i].cols, vTemp[i].rows));
                 
                 /*
-                rectangle(frame, matchLoc, 
+                    rectangle(frame, matchLoc, 
                                 Point(matchLoc.x + vTemp[i].cols, matchLoc.y + vTemp[i].rows),
                                 Scalar(0, 255, 255),
                                 // Scalar(0, (18 + i * 73) % 255, (65 + i * 39) % 255),

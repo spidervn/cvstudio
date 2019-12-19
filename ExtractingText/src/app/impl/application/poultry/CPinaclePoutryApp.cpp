@@ -32,6 +32,23 @@ int CPinaclePoutryApp::run(int argc, char const *argv[])
         return -1;
     }
 
+    // @Temp
+    ICVCorePtr ccp1 = CCVCorePtrNew;
+    cv::Mat src = imread(argv[1], IMREAD_COLOR);
+    cv::Mat src_eql;
+    cv::Mat src_buck;
+
+    cvtColor(src, src, CV_BGR2GRAY);
+    equalizeHist(src, src_eql);
+    ccp1->bucketingColor(src_eql, 30, src_buck);
+
+    imshow("src", src);
+    imshow("equal", src_eql);
+    imshow("buck", src_buck);
+
+    waitKey();
+    return 0;
+
     /* 
      * 1) Step 
      *  - Change contrast by bucketing

@@ -83,7 +83,7 @@ int main(int argc, char const *argv[])
     // IApplication* p_App = new CPyramidManualApp();
     // IApplication* p_App = new CColorizeApp();
     // IApplication* p_App = new CPoultryMonitorApp();
-    // IApplication* p_App = new CPinaclePoutryApp();
+    IApplication* p_App = new CPinaclePoutryApp();
     // IApplication* p_App = new CTemplateMatchingApp();
     // IApplication* p_App = new CCannyEdgeApp();
     // IApplication* p_App = new CHitOrMissApp();
@@ -99,7 +99,7 @@ int main(int argc, char const *argv[])
     // IApplication* p_App = new CPencilingApp();
     // IApplication* p_App = new CProbabilityApp();
     // IApplication* p_App = new CSVMNonLinearApp();
-    IApplication* p_App = new CCalculusApp();
+    // IApplication* p_App = new CCalculusApp();
     int n_Ret = p_App->run(argc, argv);
 
     /*
