@@ -31,6 +31,5 @@ int CManualFundamentalApp::run(int argc, char const *argv[])
     std::cout << c1 << std::endl;
     std::cout << c3 << std::endl;
 
-
     return 0;
 }
