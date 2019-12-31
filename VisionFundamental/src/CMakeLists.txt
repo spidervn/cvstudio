@@ -18,7 +18,8 @@ find_package( OpenCV REQUIRED )
 include_directories(VisionFundamental/)
 
 file(GLOB SOURCES "VisionFundamental/*.cpp" 
-                    "VisionFundamental/visionfund/impl/*.cpp")
+                    "VisionFundamental/visionfund/impl/*.cpp"
+                    "VisionFundamental/visionlab/impl/*.cpp")
 
 add_executable( visonfund ${SOURCES} )
 target_link_libraries( visonfund ${OpenCV_LIBS} )
