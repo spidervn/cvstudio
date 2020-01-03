@@ -4,12 +4,16 @@
 #include <opencv2/imgproc.hpp>
 #include <opencv2/highgui.hpp>
 #include "visionfund/impl/CImgProcess.h"
+#include "visionlab/impl/CLoadfontApp.h"
+#include "visionlab/impl/CPaintbox.h"
 
 using namespace cv;
+using namespace std;
 
 int main(int argc, char const *argv[])
 {
     /* code */
+    /*
     cv::Mat img = imread(argv[1], IMREAD_COLOR);
     cv::Mat img_gray;
     cv::Mat derivate;
@@ -32,6 +36,18 @@ int main(int argc, char const *argv[])
             sobel.cols, sobel.rows
     );
 
+    waitKey();
+    */
+
+    //CLoadfontApp app;
+    //app.run(argc, argv);
+
+    cv::Mat img = Mat::zeros(cv::Size(800,600), CV_8UC3);
+
+    IPaintboxPtr pbp = CPaintboxPtrNew;
+    pbp->paintBoard(img, cv::Rect(20,20, 500,500));
+
+    imshow("a", img);
     waitKey();
 
     return 0;
