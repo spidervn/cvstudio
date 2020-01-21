@@ -3,6 +3,7 @@
 
 #include "visionlab/interface/IPaintbox.h"
 #include <memory>
+#include <vector>
 
 class CPaintbox: public IPaintbox
 {
@@ -13,6 +14,7 @@ public:
     virtual ~CPaintbox();
 
     int paintBoard(cv::Mat img, cv::Rect rc);
+    // int paint_f(int n, std::vector<double> x, std::vector<double> y);
 };
 
 

@@ -42,6 +42,8 @@ public:
 
     int nextRNG();
     int lehmerRNG(int p, int n, int seed, std::vector<int>& v);
+
+    int convexHull(std::vector<std::vector<cv::Point>> contours, std::vector<cv::Point>& vhull);
 };
 
 #endif // !EXTRACTTEXT_APP_IMPL_CV_CCVCORE_H_

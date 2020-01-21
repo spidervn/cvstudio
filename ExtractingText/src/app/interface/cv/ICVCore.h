@@ -44,6 +44,8 @@ public:
     virtual int nextRNG() = 0;
 
     virtual int lehmerRNG(int p, int n, int seed, std::vector<int>& v) = 0;
+
+    virtual int convexHull(std::vector<std::vector<cv::Point>> contours, std::vector<cv::Point>& vhull) = 0;
 };
 
 typedef std::shared_ptr<ICVCore> ICVCorePtr;

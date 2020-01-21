@@ -1,5 +1,6 @@
 #include "CCVCore.h"
 
+#include <vector>
 #include <opencv2/core.hpp>
 #include <opencv2/imgproc.hpp>
 
@@ -9,6 +10,7 @@
 #define VFREE_2D(v, type, row, col) for (int yyyyy000=0;yyyyy000<row;yyyyy000++) { free(v[yyyyy000]); } free(v);
 
 using namespace cv;
+using namespace std;
 
 CCVCore::CCVCore()
 {}
@@ -688,5 +690,23 @@ int CCVCore::lehmerRNG(int p, int n, int seed, std::vector<int>& v)
         v.push_back(nNW);
     }
 
+    return 0;
+}
+
+int CCVCore::convexHull(std::vector<std::vector<cv::Point>> contours, std::vector<cv::Point>& vhull)
+{
+    vector<Point> v1;
+    
+    for (int i=0; i<contours.size();++i)
+    {
+        for (int j=0; j<contours[i].size(); ++j)
+        {
+            v1.push_back(contours[i][j]);
+        }
+    }
+
+    vhull.clear();
+    cv::convexHull(v1, vhull, true);
+    
     return 0;
 }

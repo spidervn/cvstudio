@@ -34,6 +34,7 @@ int CPinaclePoutryApp::run(int argc, char const *argv[])
 
     // @Temp
     ICVCorePtr ccp1 = CCVCorePtrNew;
+    /*
     cv::Mat src = imread(argv[1], IMREAD_COLOR);
     cv::Mat src_eql;
     cv::Mat src_buck;
@@ -48,6 +49,7 @@ int CPinaclePoutryApp::run(int argc, char const *argv[])
 
     waitKey();
     return 0;
+    */
 
     /* 
      * 1) Step 
@@ -116,6 +118,9 @@ int CPinaclePoutryApp::run(int argc, char const *argv[])
     Mat frameBuck1;
     Mat frameCanny;
     RNG rng(12345);
+    vector<vector<Point>> vhulls;
+
+    vhulls.push_back(vector<Point>());
 
     namedWindow(szWin, WINDOW_AUTOSIZE);
     namedWindow(szHSL, WINDOW_AUTOSIZE);
@@ -140,7 +145,7 @@ int CPinaclePoutryApp::run(int argc, char const *argv[])
         }
 
         ccp->bucketingColor(frame, bucket, frameBuck);
-        cvtColor(frame, frameHSL, COLOR_BGR2HLS);
+        cvtColor(frameBuck, frameHSL, COLOR_BGR2HLS);
         cvtColor(frameBuck, frameBuck1, COLOR_BGR2GRAY);
 
         Mat drawing = Mat::zeros( frame.size(), CV_8UC3 );
@@ -183,6 +188,9 @@ int CPinaclePoutryApp::run(int argc, char const *argv[])
                 Scalar color = Scalar( rng.uniform(0, 256), rng.uniform(0,256), rng.uniform(0,256) );
                 drawContours( drawing, contours, (int)i, color, 2, LINE_8, hierarchy, 0 );
             }
+
+            ccp->convexHull(contours, vhulls[0]);
+            drawContours(drawing, vhulls, 0, Scalar(0,0,255), 1);
         }
         else
         {
@@ -197,6 +205,9 @@ int CPinaclePoutryApp::run(int argc, char const *argv[])
                 Scalar color = Scalar( rng.uniform(0, 256), rng.uniform(0,256), rng.uniform(0,256) );
                 drawContours( drawing, contours, (int)i, color, 2, LINE_8, hierarchy, 0 );
             }
+
+            ccp->convexHull(contours, vhulls[0]);
+            drawContours(drawing, vhulls, 0, Scalar(0,0,255), 1);
         }
 
         videoOut << frame;
