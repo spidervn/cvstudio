@@ -17,6 +17,10 @@ public:
                             std::vector<double>& vPrior,
                             std::vector<double>& vLikeLiHood,
                             std::vector<double>& vPost);
+
+    double gaussianFunction(double mean,
+                            double standard_deviation,    // s^2 
+                            double x);
 };
 
 

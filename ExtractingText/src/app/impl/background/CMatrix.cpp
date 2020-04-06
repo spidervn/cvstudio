@@ -56,3 +56,23 @@ int CMatrix::MatrixProduct(Matrix<double> m1, Matrix<double> m2, Matrix<double>&
 // {
 //     return 0;
 // }
+
+double CMatrix::det(Matrix<double> m) 
+{
+    return 0;
+}
+
+double CMatrix::det(const cv::Mat& m) 
+{
+    assert(m.rows == m.cols);
+    assert(m.channels() == 1);
+
+    if (m.rows == 2)
+    {
+        return 
+            m.at<double>(0,0) * m.at<double>(1,1) - 
+            m.at<double>(0,1) * m.at<double>(1,0);
+    }
+
+    return -1.0;
+}

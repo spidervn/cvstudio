@@ -119,3 +119,41 @@ int CSVMNonLinearApp::run(int argc, char const *argv[])
 
     return 0;
 }
+
+int CSVMNonLinearApp::run2(int argc, char const *argv[])
+{
+    const int NTRAINING_SAMPLES = 100;
+    const float FRAC_LINEAR_SEP = 0.9f;
+    const int WIDTH = 512;
+    const int HEIGHT = 512;
+
+    Mat I = Mat::zeros(HEIGHT, WIDTH, CV_8UC3);
+
+    //-------------------- 1. Setup ---------------------
+    Mat trainData(2 * NTRAINING_SAMPLES, 2, CV_32F);
+    Mat labels(2* NTRAINING_SAMPLES, 1, CV_32S);
+    RNG rng(100);
+
+    int nLinearSamples = (int) (FRAC_LINEAR_SEP * NTRAINING_SAMPLES);
+    Mat trainClass = trainData.rowRange(0, nLinearSamples);
+
+    Mat c = trainClass.colRange(0, 1);                  // The x coordinate of points is in [0, 0.4)
+    rng.fill(c, RNG::UNIFORM, Scalar(0), Scalar(0.4 * WIDTH));
+
+    c = trainClass.colRange(1, 2);
+    rng.fill(c, RNG::UNIFORM, Scalar(0), Scalar(HEIGHT));
+
+    // Generate random points for the class 2
+    trainClass = trainData.rowRange(2*NTRAINING_SAMPLES - nLinearSamples, 2*NTRAINING_SAMPLES);
+    c = trainClass.colRange(0, 1);
+    rng.fill(c, RNG::UNIFORM, Scalar(0.6*WIDTH), Scalar(HEIGHT));
+
+    // -------------- Setup up non-linearly separable part of the trainign data 
+    // Generate random points for the class 2
+    trainClass = trainData.rowRange(nLinearSamples, 2*NTRAINING_SAMPLES - nLinearSamples);
+    c = trainClass.colRange(0, 1);  // 
+
+
+
+    return 0;
+}

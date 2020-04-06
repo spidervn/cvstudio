@@ -1,4 +1,5 @@
 #include "CProbabilityUtil.h"
+#include <bits/stdc++.h>
 
 CProbabilityUtil::CProbabilityUtil(/* args */)
 {
@@ -30,4 +31,16 @@ int CProbabilityUtil::bayesUpdateTable(int n,
     //  
 
     return 0;
+}
+
+double CProbabilityUtil::gaussianFunction(double mean,
+                                double standard_deviation,    // s^2 
+                                double x)
+{
+    double ret =  
+                exp( -(x - mean)*(x-mean)/standard_deviation/standard_deviation/2)
+                    / sqrt(2*M_PI) 
+                    / standard_deviation;
+
+    return ret;
 }

@@ -1,5 +1,6 @@
 #include <stdio.h>
 #include <stdlib.h>
+#include <iostream>
 #include <memory.h>
 #include "opencv2/imgproc.hpp"
 #include "opencv2/imgcodecs.hpp"
@@ -56,6 +57,11 @@ int main(int argc, char const *argv[])
     printf("Extracting text data\r\n");
     srand(time(NULL));
 
+    cout << "OpenCV version : " << CV_VERSION << endl;
+    cout << "Major version : " << CV_MAJOR_VERSION << endl;
+    cout << "Minor version : " << CV_MINOR_VERSION << endl;
+    cout << "Subminor version : " << CV_SUBMINOR_VERSION << endl;
+
     // if (argc <= 1)
     // {
     //     printf("Usage: %s <<image_file>>\r\n", argv[0]);
@@ -83,7 +89,7 @@ int main(int argc, char const *argv[])
     // IApplication* p_App = new CPyramidManualApp();
     // IApplication* p_App = new CColorizeApp();
     // IApplication* p_App = new CPoultryMonitorApp();
-    IApplication* p_App = new CPinaclePoutryApp();
+    // IApplication* p_App = new CPinaclePoutryApp();
     // IApplication* p_App = new CTemplateMatchingApp();
     // IApplication* p_App = new CCannyEdgeApp();
     // IApplication* p_App = new CHitOrMissApp();
@@ -98,7 +104,7 @@ int main(int argc, char const *argv[])
     // IApplication* p_App = new CManualFundamentalApp();
     // IApplication* p_App = new CPencilingApp();
     // IApplication* p_App = new CProbabilityApp();
-    // IApplication* p_App = new CSVMNonLinearApp();
+    IApplication* p_App = new CSVMNonLinearApp();
     // IApplication* p_App = new CCalculusApp();
     int n_Ret = p_App->run(argc, argv);
 
@@ -110,11 +116,13 @@ int main(int argc, char const *argv[])
         ccp->lehmerRNG(p, 100, 7, v);
         CConsole::print<int>(v);
      */
+    // 
     // CDistanceTransformTest tt;
     // int n_Ret;
     // tt.test_1D();
     // tt.bruteForce();
     // tt.test_2D("/home/jcm/Pictures/opencv/donald-trump.jpg");
+    // 
 
     delete p_App;
     return 0;

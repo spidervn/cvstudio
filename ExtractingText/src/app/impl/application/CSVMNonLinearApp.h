@@ -11,6 +11,7 @@ public:
     CSVMNonLinearApp(/* args */);
     ~CSVMNonLinearApp();
     int run(int argc, char const *argv[]);
+    int run2(int argc, char const *argv[]);
 };
 
 

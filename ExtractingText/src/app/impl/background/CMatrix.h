@@ -18,6 +18,9 @@ public:
                                 int step_v2=1);
 
     int  MatrixProduct(Matrix<double> m1, Matrix<double> m2, Matrix<double>& m_out);
+
+    virtual double det(Matrix<double> m) = 0;  // Det of a Matrix?
+    virtual double det(const cv::Mat& m) = 0;    
 };
 
 #endif // !EXTRACTTEXT_APP_INTERFACE_APPROACH_ITEMPLATEMATCHING_H_

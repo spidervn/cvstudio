@@ -1,6 +1,7 @@
 #ifndef EXTRACTTEXT_APP_INTERFACE_BACKGROUND_IMATRIX_H_
 #define EXTRACTTEXT_APP_INTERFACE_BACKGROUND_IMATRIX_H_
 
+#include <opencv2/core.hpp>
 #include <vector>
 #include <stdio.h>
 #include <stdlib.h>
@@ -115,6 +116,11 @@ public:
     }
 
     virtual int  MatrixProduct(Matrix<double> m1, Matrix<double> m2, Matrix<double>& m_out) = 0;
+
+    virtual double det(Matrix<double> m) = 0;  // Det of a Matrix?
+    
+    virtual double det(const cv::Mat& m) = 0;
+
 };
 
 #endif

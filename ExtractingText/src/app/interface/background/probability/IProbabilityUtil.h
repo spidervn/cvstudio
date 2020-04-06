@@ -13,6 +13,14 @@ public:
                             std::vector<double>& vPrior,
                             std::vector<double>& vLikeLiHood,
                             std::vector<double>& vPost) = 0;
+
+    virtual double gaussianFunction(
+            double mean,
+            double standard_deviation,    // s^2 
+            double x
+    ) = 0;
+
+    
 };
 
 typedef std::shared_ptr<IProbabilityUtil> IProbabilityUtilPtr;
