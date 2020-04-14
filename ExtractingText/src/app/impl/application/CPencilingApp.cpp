@@ -48,7 +48,9 @@ int CPencilingApp::run(int argc, char const *argv[])
     printf("----- Penciling\r\n");
 
     ICVCorePtr cvp = CCVCorePtrNew;
+    printf("HERE00\r\n");
     cvp->dodge(imgBlur, imgIvt, imgDodge);
+    printf("HERE\r\n");
     img2 = 255 - imgDodge;
 
     imshow(szImg, img);

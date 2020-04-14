@@ -25,28 +25,42 @@ int CCVCore::dodge(cv::Mat front, cv::Mat back, cv::Mat& res)
     //res.setTo(255 , res > 255);
     //res.setTo(255, back == 255);
 
+    //@Temp code
+    printf("Dodge [%d,%d]\r\n", front.rows, front.cols);
+
     res.create(front.size(), CV_8UC1);
 
     for (int y=0; y<front.rows;++y)
     {
         for (int x=0; x<front.cols; ++x)
         {
-            float f = front.at<uchar>(y,x) * 255 / (255 - back.at<uchar>(y,x));
+            if (255 - back.at<uchar>(y,x) == 0)
+            {
+                res.at<uchar>(y,x) = 255;
+            }
+            else 
+            {
+                float f = front.at<uchar>(y,x) * 255 / (255 - back.at<uchar>(y,x));
 
-            if (f > 255)
-            {
-                res.at<uchar>(y,x) = 255;
+                if (f > 255)
+                {
+                    res.at<uchar>(y,x) = 255;
+                }
+                else if (back.at<uchar>(y,x) == 255)
+                {
+                    res.at<uchar>(y,x) = 255;
+                }
+                else
+                {
+                    res.at<uchar>(y,x) = (uchar)f;
+                }
             }
-            else if (back.at<uchar>(y,x) == 255)
-            {
-                res.at<uchar>(y,x) = 255;
-            }
-            else
-            {
-                res.at<uchar>(y,x) = (uchar)f;
-            }
+
+            
         }
+        printf("oneline %d\r\n", y);
     }
+    printf("Dodge\r\n");
 
     return 0;
 }

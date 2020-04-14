@@ -12,6 +12,9 @@ public:
     int run2();
     int run3();
     int run4();
+
+
+    int extract_every_characters(const char* szImgFile);
 };
 
 #endif // !EXTRACTTEXT_APP_INTERFACE_APPROACH_ITEMPLATEMATCHING_H_
