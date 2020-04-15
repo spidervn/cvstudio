@@ -2,6 +2,8 @@
 #define EXTRACTTEXT_APP_IMPL_APPLICATION_CSVMAPP_H_
 
 #include <app/interface/IApplication.h>
+#include <vector>
+#include <opencv2/core.hpp>
 
 class CSVMApp: public IApplication
 {
@@ -14,7 +16,16 @@ public:
     int run4();
 
 
+protected:
     int extract_every_characters(const char* szImgFile);
+    int homogeneous_geometry();
+
+
+    int find_continuous_zero(
+        const cv::Mat& sumVector,   // n x 1 matrix 
+        std::vector<cv::Vec2i>& res, // Array of Vec2i(startlocation, endlocation) 
+        int min_continous_len = 3
+    );
 };
 
 #endif // !EXTRACTTEXT_APP_INTERFACE_APPROACH_ITEMPLATEMATCHING_H_

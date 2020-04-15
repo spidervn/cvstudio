@@ -85,6 +85,10 @@ public:
     ~CSlamTest();
 
     int run(int argc, char const *argv[]);
+
+protected:
+    int test_transformation();
+    int random_matrix(cv::Mat& m, cv::RNG& rng);
 };
 
 #endif

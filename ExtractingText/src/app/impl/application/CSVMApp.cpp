@@ -6,9 +6,11 @@
 #include <opencv2/ml.hpp>
 #include <app/impl/background/CMatrix.h>
 #include "app/interface/general/stdex.h"
+#include <vector>
 
 using namespace cv;
 using namespace cv::ml;
+using namespace std;
 
 CSVMApp::CSVMApp()
 {}
@@ -236,6 +238,29 @@ int CSVMApp::extract_every_characters(const char* szImgFile)
     cv::Mat colSum;
 
 
+    cv::Mat mTest;
+
+    mTest.create(2, 2, CV_64FC1);
+    for (int y=0; y < mTest.rows; ++y)
+    {
+        for (int x=0; x<mTest.cols; ++x)
+        {
+            mTest.at<double>(y,x) = y * x * 1.1;
+        }
+    }
+
+    printf("Matrix: \r\n");
+    for (int y=0; y < mTest.rows; ++y)
+    {
+        for (int x=0; x<mTest.cols; ++x)
+        {
+            printf("%f; ", 
+                (*(mTest.ptr<double>(0) + y * mTest.cols + x))
+            );
+        }
+        printf("\r\n");
+    }
+    printf("\r\n");
 
     if (!img.empty())
     {
@@ -304,13 +329,24 @@ int CSVMApp::extract_every_characters(const char* szImgFile)
 
         for (int row=0; row<img.rows;++row)
         {
-            printf("%f; ", (*rowSum.ptr<double>(0) + row));
+            printf("%f; ", (*(rowSum.ptr<double>(0) + row)));
         }
         printf("\r\n");
         printf("Colsum:\r\n");
         for (int col=0;col<img.cols;++col)
         {
-            printf("%f; ", (*colSum.ptr<double>(0) + col));
+            printf("%f; ", (*(colSum.ptr<double>(0) + col)));
+        }
+        printf("\r\n");
+
+
+        vector<Vec2i> vi;
+        find_continuous_zero(rowSum, vi, 10);
+
+        printf("Found %d ranges\r\n", vi.size());
+        for (int i=0; i<vi.size(); ++i)
+        {
+            printf("(%d,%d); ", vi[i][0],vi[i][1]);
         }
         printf("\r\n");
     }
@@ -320,3 +356,127 @@ int CSVMApp::extract_every_characters(const char* szImgFile)
     }
     return 0;
 }
+
+int CSVMApp::homogeneous_geometry()
+{
+    // Homogeneouss
+
+    // 
+    // Eucliean => Homogeneuos
+    // 
+    cv::Mat P_Euclid;
+    cv::Mat P_Homo;
+
+    P_Euclid.create(2, 1, CV_64FC1);
+    P_Homo.create(P_Euclid.rows + 1, 1, CV_64FC1);
+
+    P_Euclid.at<double>(0,0) = 3.0;
+    P_Euclid.at<double>(1,0) = 4.0;
+
+    P_Homo.at<double>(0,0) = P_Euclid.at<double>(0,0);
+    P_Homo.at<double>(1,0) = P_Euclid.at<double>(1,0);
+    P_Homo.at<double>(2,0) = 1;
+
+    // 
+    // Homogeneous comparision (P_Homo01 == P_Homo02)
+    // 
+    cv::Mat P_Homo01;
+    cv::Mat P_Homo02;
+    double u;
+    double v;
+    double w;
+    double scale = 2.2;
+
+    P_Homo01.at<double>(0,0) = u;
+    P_Homo01.at<double>(1,0) = v;
+    P_Homo01.at<double>(2,0) = w;
+
+    P_Homo02.at<double>(0,0) = u*scale;
+    P_Homo02.at<double>(1,0) = v*scale;
+    P_Homo02.at<double>(2,0) = w*scale;
+
+    // 
+    // Projective transformation
+    // 
+    return 0;
+}
+
+int CSVMApp::find_continuous_zero(
+        const cv::Mat& sumVector,   // n x 1 matrix 
+        std::vector<cv::Vec2i>& res, // Array of Vec2i(startlocation, endlocation) 
+        int min_continous_len)
+{
+    if (sumVector.type() == CV_32SC1)
+    {
+        int s = -1; // Start location
+
+        for (int i=0; i<=sumVector.rows; ++i)
+        {
+            if (i == sumVector.rows)
+            {
+                if (s >= 0 && i - s >= min_continous_len)
+                {
+                    // Yield result
+                    res.push_back(Vec2i(s, i));
+                }
+            }
+            else if (sumVector.at<int>(i,0) == 0)
+            {
+                if (s == -1)
+                {
+                    s = i;      // Start marking
+                }
+            }
+            else  // (sumVector.at<double>(i,0) > 0)
+            {
+                if (s >= 0)
+                {
+                    if (i - s >= min_continous_len)
+                    {
+                        res.push_back(Vec2i(s, i));
+                    }
+                    s = -1;
+                }
+            }
+        }
+    }
+    else if (sumVector.type() == CV_64FC1)
+    {
+        int s = -1; // Start location
+
+        for (int i=0; i<=sumVector.rows; ++i)
+        {
+            if (i == sumVector.rows)
+            {
+                if (s >= 0 && i - s >= min_continous_len)
+                {
+                    // Yield result
+                    res.push_back(Vec2i(s, i));
+                }
+            }
+            else if (sumVector.at<double>(i,0) == 0)
+            {
+                if (s == -1)
+                {
+                    s = i;      // Start marking
+                }
+            }
+            else  // (sumVector.at<double>(i,0) > 0)
+            {
+                if (s >= 0)
+                {
+                    if (i - s >= min_continous_len)
+                    {
+                        res.push_back(Vec2i(s, i));
+                    }
+                    s = -1;
+                }
+            }
+        }
+    }
+    else 
+    {
+        throw "unsupported format. Please set vector to Int or double element.";
+    }
+    return 0;
+}        
