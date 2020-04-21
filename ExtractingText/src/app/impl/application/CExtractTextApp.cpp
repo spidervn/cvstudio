@@ -106,6 +106,12 @@ int CExtractTextApp::run(int argc, char const *argv[])
         imwrite(file, imgChar);
     }
 
+    // 
+    //@@ Collects characters
+    // 
+    
+
+
     waitKey();
     return 0;
 }

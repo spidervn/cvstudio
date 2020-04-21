@@ -1,4 +1,8 @@
 #include "CSVMApp.h"
+
+#include <boost/filesystem.hpp>
+#include <boost/regex.hpp>
+
 #include <opencv2/core.hpp>
 #include <opencv2/imgproc.hpp>
 #include <opencv2/imgcodecs.hpp>
@@ -20,7 +24,8 @@ CSVMApp::~CSVMApp()
 
 int CSVMApp::run(int argc, char const *argv[])
 {
-    return extract_every_characters(argv[1]);
+    return vertically_extract("data/in", "data/out");
+    // return extract_every_characters(argv[1]);
 
     // Set up training data
     int labels[4] = {1, -1, -1, -1};
@@ -233,10 +238,17 @@ int CSVMApp::run4()
 
 int CSVMApp::extract_every_characters(const char* szImgFile)
 {
-    cv::Mat img =  imread(szImgFile, IMREAD_GRAYSCALE);
+
+    cv::Mat img_src =  imread(szImgFile, IMREAD_GRAYSCALE);
+    cv::Mat img;
+
+    cv::threshold(img_src, img, 150, 255, CV_THRESH_BINARY_INV);
     cv::Mat rowSum;
     cv::Mat colSum;
 
+    imshow("img_src", img_src);
+    imshow("img", img);
+    waitKey();
 
     cv::Mat mTest;
 
@@ -341,7 +353,7 @@ int CSVMApp::extract_every_characters(const char* szImgFile)
 
 
         vector<Vec2i> vi;
-        find_continuous_zero(rowSum, vi, 10);
+        find_continuous_nonzero(rowSum, vi, 10);
 
         printf("Found %d ranges\r\n", vi.size());
         for (int i=0; i<vi.size(); ++i)
@@ -349,6 +361,15 @@ int CSVMApp::extract_every_characters(const char* szImgFile)
             printf("(%d,%d); ", vi[i][0],vi[i][1]);
         }
         printf("\r\n");
+
+        for (int i=0;i<vi.size();++i)
+        {
+            cv::Mat img_extract = cv::Mat(img_src, cv::Rect(0, vi[i][0], img_src.cols, vi[i][1] - vi[i][0]));
+            char szBuff[255];
+            sprintf(szBuff, "extract_%02d.png", i);
+
+            imwrite(szBuff, img_extract);
+        }
     }
     else 
     {
@@ -480,3 +501,210 @@ int CSVMApp::find_continuous_zero(
     }
     return 0;
 }        
+
+int CSVMApp::find_continuous_nonzero(
+        const cv::Mat& sumVector,   // n x 1 matrix 
+        std::vector<cv::Vec2i>& res, // Array of Vec2i(startlocation, endlocation) 
+        int min_continous_len)
+{
+    if (sumVector.type() == CV_32SC1)
+    {
+        int s = -1; // Start location
+
+        for (int i=0; i<=sumVector.rows; ++i)
+        {
+            if (i == sumVector.rows)
+            {
+                if (s >= 0 && i - s >= min_continous_len)
+                {
+                    // Yield result
+                    res.push_back(Vec2i(s, i));
+                }
+            }
+            else if (sumVector.at<int>(i,0) > 0)
+            {
+                if (s == -1)
+                {
+                    s = i;      // Start marking
+                }
+            }
+            else  // (sumVector.at<double>(i,0) > 0)
+            {
+                if (s >= 0)
+                {
+                    if (i - s >= min_continous_len)
+                    {
+                        res.push_back(Vec2i(s, i));
+                    }
+                    s = -1;
+                }
+            }
+        }
+    }
+    else if (sumVector.type() == CV_64FC1)
+    {
+        int s = -1; // Start location
+
+        for (int i=0; i<=sumVector.rows; ++i)
+        {
+            if (i == sumVector.rows)
+            {
+                if (s >= 0 && i - s >= min_continous_len)
+                {
+                    // Yield result
+                    res.push_back(Vec2i(s, i));
+                }
+            }
+            else if (sumVector.at<double>(i,0) > 0)
+            {
+                if (s == -1)
+                {
+                    s = i;      // Start marking
+                }
+            }
+            else  // (sumVector.at<double>(i,0) > 0)
+            {
+                if (s >= 0)
+                {
+                    if (i - s >= min_continous_len)
+                    {
+                        res.push_back(Vec2i(s, i));
+                    }
+                    s = -1;
+                }
+            }
+        }
+    }
+    else 
+    {
+        throw "unsupported format. Please set vector to Int or double element.";
+    }
+    return 0;
+}
+
+int CSVMApp::vertically_extract(const char* szFolderIn, const char* szFolderOut)
+{
+    /*
+     * @List of work
+     *  W01. Get all images
+     *  W02. For each image: process one.
+     *  W03. For each image.
+     *  
+     */
+    std::vector<std::string> v;
+
+    boost::filesystem::path p1(szFolderIn);
+
+    if (boost::filesystem::is_directory(p1))
+    {
+        for (boost::filesystem::directory_entry& x: boost::filesystem::directory_iterator(p1))
+        {
+            if (boost::filesystem::is_regular_file(x))
+            {
+                cout << x << endl;
+                cout << "\t" <<  x.path().filename().root_path() << endl;
+
+                // Here 
+                // vertically_extract_a_file(x.path().c_str(), x.path().filename().c_str() ,szFolderOut);
+            }
+        }
+    }
+
+
+    return 0;
+}
+
+int CSVMApp::vertically_extract_a_file(const char* szFile, const char* prefix, const char* szFolderOut)
+{
+    printf("Process %s, %s\r\n", szFile, szFolderOut);
+    cv::Mat img_src =  imread(szFile, IMREAD_GRAYSCALE);
+    cv::Mat img;
+
+    cv::threshold(img_src, img, 150, 255, CV_THRESH_BINARY_INV);
+    cv::Mat rowSum;
+    cv::Mat colSum;
+
+    if (!img.empty())
+    {
+        rowSum.create(img.rows, 1, CV_64FC1);   // double; Mat::create are always continuous
+        colSum.create(img.cols, 1, CV_64FC1);   // double; Mat::create are always continuous
+
+        int size_in_bytes = img.rows * img.cols;
+        
+        if (img.isContinuous())
+        {
+            uchar* p = img.ptr<uchar>(0);
+            for (int row=0;row<img.rows;++row)
+            {
+                // 
+                // rowSum is continous 
+                // rowSum.at(row,0) = value
+                (*(rowSum.ptr<double>(0) + row)) = 
+                    std::accumulate(
+                        p + img.cols * row,
+                        p + img.cols * (row + 1),
+                        0.0);
+            }
+
+            for (int col=0;col<img.cols;++col)
+            {
+                // 
+                // colSum is continous
+                // 
+                (*(colSum.ptr<double>(0) + col)) = 
+                    stdex::accumulate(
+                        p + col,
+                        p + col + size_in_bytes,
+                        0.0,
+                        img.cols    // Jump step
+                    );
+            }
+        }
+        else
+        {
+            for (int row=0;row<img.rows;++row)
+            {
+                (*(rowSum.ptr<double>(0) + row)) = 
+                    std::accumulate(
+                        img.ptr<uchar>(row),
+                        img.ptr<uchar>(row) + img.cols,
+                        0.0
+                    );
+            }
+
+            for (int col=0;col<img.cols;++col)
+            {
+                double sum = 0;
+                for (int row=0;row < img.cols; ++row)
+                {
+                    sum += *(img.ptr<uchar>(row) + col);
+                }
+
+                (*(colSum.ptr<double>(0) + col)) = sum;
+            }
+        }
+
+        vector<Vec2i> vi;
+        find_continuous_nonzero(colSum, vi, 10);
+
+        printf("Found %d ranges\r\n", vi.size());
+        for (int i=0; i<vi.size(); ++i)
+        {
+            printf("(%d,%d); ", vi[i][0],vi[i][1]);
+        }
+        printf("\r\n");
+
+        for (int i=0;i<vi.size();++i)
+        {
+            cv::Mat img_extract = cv::Mat(img_src, cv::Rect(vi[i][0], 0, vi[i][1] - vi[i][0], img_src.rows));
+            char szBuff[255];
+            sprintf(szBuff, "%s/%s_extract_vertical_%03d.png", szFolderOut, prefix, i);
+            imwrite(szBuff, img_extract);
+        }
+    }
+    else 
+    {
+        printf("Empty image\r\n");
+    }
+    return 0;
+}

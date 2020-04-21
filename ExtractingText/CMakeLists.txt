@@ -14,11 +14,13 @@ use_cxx11()
 set (CMAKE_CXX_STANDARD 11)
 project( extract_text  )
 find_package( OpenCV REQUIRED )
+find_package(Boost COMPONENTS filesystem regex)
 
 include_directories(src/)
 include_directories(src/libs)
 include_directories($ENV{BOOST_171_DIR})
 link_directories($ENV{BOOST_171_DIR}/libs)
+
 
 file(GLOB SOURCES "src/*.cpp" 
                     "src/extract/*.cpp"
@@ -33,4 +35,4 @@ file(GLOB SOURCES "src/*.cpp"
                     "src/app/examples/background/*.cpp")
 
 add_executable( extract_text ${SOURCES} )
-target_link_libraries( extract_text ${OpenCV_LIBS} )
+target_link_libraries( extract_text ${OpenCV_LIBS} ${Boost_LIBRARIES})
