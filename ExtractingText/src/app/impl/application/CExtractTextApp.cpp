@@ -107,8 +107,19 @@ int CExtractTextApp::run(int argc, char const *argv[])
     }
 
     // 
-    //@@ Collects characters
+    // @Flow of an Extracting text from a picture
+    //  * Pre-requisite: Create classifier based on training data
+    //      Create train data
+    //  * Process each image
+    //      P00: Thresholding the image
+    //      P01: Lines = Extract every lines
+    //          Foreach l in lines:
+    //              Cols = extract_vertical(l)            
+    //      P02:  
+    //          Recognize every characters 
+    //  
     // 
+
     
 
 

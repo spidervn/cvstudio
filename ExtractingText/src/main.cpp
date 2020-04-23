@@ -72,7 +72,7 @@ int main(int argc, char const *argv[])
     // IApplication* p_App = new CRemappingApp();
     // IApplication* p_App = new CAffineTransform();
     // IApplication* p_App = new CLaplaceApp();
-    IApplication* p_App = new CSVMApp();
+    // IApplication* p_App = new CSVMApp();
     // int n_Ret = p_App->run(argc, argv);
     // IApplication* p_App = new CFourierApp();
     // IApplication* p_App = new CHistogramEqApp();
@@ -103,7 +103,7 @@ int main(int argc, char const *argv[])
     // IApplication* p_App = new CContoursApp();
     // IApplication* p_App = new CParametricTemplateVectorApp();
     // IApplication* p_App = new CManualFundamentalApp();
-    // IApplication* p_App = new CPencilingApp();
+    IApplication* p_App = new CPencilingApp();
     // IApplication* p_App = new CProbabilityApp();
     // IApplication* p_App = new CSVMNonLinearApp();
     // IApplication* p_App = new CCalculusApp();
