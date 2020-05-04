@@ -16,6 +16,9 @@ CSlamTest::~CSlamTest()
 
 int CSlamTest::run(int argc, char const *argv[])
 {
+    return rotate2D();
+    return rigid3d_transformation();
+
     cv::Mat C = (Mat_<double>(1, 3) << 1, 2, 1);
     cv::Mat D = (Mat_<double>(3, 1) << 1, 2, 1);
     cv::Mat D1 = (Mat_<double>(3, 3) << 1, 2, 1, 2, 3, 2, 3, 4, 3);
@@ -127,5 +130,137 @@ int CSlamTest::test_transformation()
 
     // Rotation 
     mm.at<double>(1, 0) = 1.1;
+    return 0;
+}
+
+int CSlamTest::rigid3d_transformation()
+{
+    // G in SE(3)
+
+    // Rotation and translation
+    cv::Mat g = (
+        cv::Mat_<double>(4,4) <<
+            0, 0, 0, 10,
+            0, 0, 0, 2,
+            0, 0, 0, 3,
+            0, 0, 0, 1
+    );
+
+    cv::Mat g1 = g.colRange(3,4);
+
+    cv::Mat x = (
+        cv::Mat_<double>(4,1) << 
+            1, 1, 1, 1
+    );
+
+    cv::Mat dest;
+    cv::Mat dest1;
+
+    dest =  g * x;
+    dest1 = x + g1;
+    
+    // cv::sum(dest!=dest1) == cv::Scalar(0,0,0,0)
+    // MYASSERT((MATRIX_EQUAL(dest, dest1)), "MOVE OK", "MOVE FAILED");
+    if (MATRIX_EQUAL(dest,dest1))
+    {
+        printf("Movement OK\r\n");
+    }
+    else
+    {
+        printf("Movement failed\r\n");
+        cout << dest << endl;
+        cout << dest1 << endl;
+    }
+
+    std::cout << "Matrix = " <<  g << endl;
+    std::cout << "Matrix col = " << g1 << endl;
+
+    //
+    // 3D rigid body transformations 
+    // 
+    // Projective transformation
+
+    return 0;
+}
+
+int CSlamTest::translation_pos(cv::Mat m, cv::Mat m_trans)
+{
+    int N = m.rows;
+
+    assert(m.cols == 1);
+    assert(m.rows == m_trans.rows);
+    assert(m.cols == m_trans.cols);
+
+
+    cv::Mat result = m + m_trans;
+    cout << result << endl;
+
+    return 0;
+}
+
+int CSlamTest::rotate2D()
+{
+    double theta = CV_PI/2;
+    cv::Mat point = (cv::Mat_<double>(2,1) << 2, 1);
+    cv::Mat m = (cv::Mat_<double>(2, 2) << 1, 1, 1, 1);
+
+    m*point;
+    cv::RNG rng = cv::RNG(1234);
+    
+    //
+    // Dot product 
+    //  v1 dot v2 = 
+    // 
+    cv::Mat v1;
+    cv::Mat v2;
+    cv::Mat v3_dot;
+    int N = 2;
+
+    v1.create(cv::Size(N,1), CV_64FC1);
+    v2.create(v1.size(), v1.type());
+
+    for (int i=0;i<N;++i)
+    {
+        v1.at<double>(i,0) = rng.next() % 10;
+        v2.at<double>(i,0) = rng.next() % 10;
+    }
+
+    v3_dot = v1.mul(v2);
+    cout << "Dot product" << endl;
+    cout << v1 << endl;
+    cout << v2 << endl;
+    cout << v3_dot << endl;
+
+
+    // Theta rotation Anti-clockwise
+    cv::Point2d p1;
+    cv::Point2d p2;
+
+    // Rotation fact
+    //  F01. Same len
+    //  
+    double angle_origin;
+    double len;
+
+    double x = len * cos(angle_origin);
+    double y = len * sin(angle_origin);
+
+    double x1 = len* cos(angle_origin + theta);
+    double y1 = len* sin(angle_origin + theta);
+
+    // 
+    theta = CV_PI/2;
+    cv::Mat R = (
+        cv::Mat_<double>(2,2) << 
+            cos(theta), -sin(theta),
+            sin(theta), cos(theta)
+    );
+
+
+    Mat tv1 = (Mat_<double>(2,1) << 5, 4);
+    Mat tv2 = R * tv1;
+
+    cout << tv1 << endl;
+    cout << tv2 << endl;
     return 0;
 }

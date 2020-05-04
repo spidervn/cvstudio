@@ -13,6 +13,9 @@
 // Data structure for SLAM 
 // 
 
+#define MATRIX_EQUAL(m1,m2) (cv::sum(m1 != m2) == cv::Scalar(0,0,0,0))
+#define MYASSERT(b,strTrue,strFalse) { if (b) { std::cout << strTrue << std::endl;} else { std::cout << strFalse << std::end; } }
+
 struct keyframe;
 struct map_database {};
 
@@ -75,6 +78,21 @@ struct keypoint
 
 };
 
+struct KeyFrameSLAM
+{
+    double camera_image;
+    double inverse_depth_map;
+    double variance_inverse_depth;
+
+    // Depth map & variance are only defined 
+    
+};
+
+struct MapSLAM
+{
+
+};
+
 //==================================
 class CSlamTest: public IApplication
 {
@@ -86,9 +104,15 @@ public:
 
     int run(int argc, char const *argv[]);
 
+    
 protected:
     int test_transformation();
     int random_matrix(cv::Mat& m, cv::RNG& rng);
+
+    int rigid3d_transformation();
+    int translation_pos(cv::Mat m, cv::Mat m_trans);
+
+    int rotate2D();
 };
 
 #endif

@@ -3,6 +3,9 @@
 
 #include <string>
 #include "IAnything.h"
+#include <memory>
+
+#define ISetPtr std::shared_ptr<ISet>
 
 class ISet
 {
@@ -22,7 +25,6 @@ public:
     /* Operations */
     virtual ISet* product(ISet* B) = 0;
     virtual int count() = 0;
-
 };
 
 #endif

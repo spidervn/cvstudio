@@ -103,11 +103,11 @@ int main(int argc, char const *argv[])
     // IApplication* p_App = new CContoursApp();
     // IApplication* p_App = new CParametricTemplateVectorApp();
     // IApplication* p_App = new CManualFundamentalApp();
-    IApplication* p_App = new CPencilingApp();
+    // IApplication* p_App = new CPencilingApp();
     // IApplication* p_App = new CProbabilityApp();
     // IApplication* p_App = new CSVMNonLinearApp();
     // IApplication* p_App = new CCalculusApp();
-    // IApplication* p_App = new CSlamTest();
+    IApplication* p_App = new CSlamTest();
     
     int n_Ret = p_App->run(argc, argv);
 

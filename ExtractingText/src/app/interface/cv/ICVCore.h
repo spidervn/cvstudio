@@ -9,7 +9,7 @@
 class ICVCore
 {
 public:
-    ~ICVCore() { }
+    virtual ~ICVCore() { }
 
     virtual int dodge(cv::Mat img, cv::Mat img2, cv::Mat& res) = 0;
 
@@ -32,6 +32,8 @@ public:
     virtual int contourRect(const std::vector<cv::Point>& v, cv::Rect& r) = 0;
 
     virtual int sobel(cv::Mat img, cv::Mat&dst) = 0;
+
+    // virtual int laplace(cv::Mat img, cv::Mat& dst) = 0;
 
     virtual int gaussianPyramid(cv::Mat img, cv::Mat& dst) = 0;
 

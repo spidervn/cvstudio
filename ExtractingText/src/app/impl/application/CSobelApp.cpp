@@ -2,6 +2,7 @@
 #include "opencv2/imgproc.hpp"
 #include "opencv2/imgcodecs.hpp"
 #include "opencv2/highgui.hpp"
+#include "app/impl/cv/CCVCore.h"
 #include <iostream>
 using namespace cv;
 using namespace std;
@@ -28,6 +29,8 @@ int CSobelApp::run(int argc, char const *argv[])
   // First we declare the variables we are going to use
   Mat image,src, src_gray;
   Mat grad;
+  ICVCorePtr cvcp = CCVCorePtrNew;
+
   const String window_name = "Sobel Demo - Simple Edge Detector";
   int ksize = parser.get<int>("ksize");
   int scale = parser.get<int>("scale");
@@ -42,23 +45,29 @@ int CSobelApp::run(int argc, char const *argv[])
     printf("Error opening image: %s\n", imageName.c_str());
     return 1;
   }
+
+
   for (;;)
   {
     // Remove noise by blurring with a Gaussian filter ( kernel size = 3 )
     GaussianBlur(image, src, Size(3, 3), 0, 0, BORDER_DEFAULT);
     // Convert the image to grayscale
     cvtColor(src, src_gray, COLOR_BGR2GRAY);
+
     Mat grad_x, grad_y;
     Mat abs_grad_x, abs_grad_y;
     Sobel(src_gray, grad_x, ddepth, 1, 0, ksize, scale, delta, BORDER_DEFAULT);
     Sobel(src_gray, grad_y, ddepth, 0, 1, ksize, scale, delta, BORDER_DEFAULT);
     // converting back to CV_8U
+    imshow("grad_x", grad_x);
+    imshow("grad_y", grad_y);
+
     convertScaleAbs(grad_x, abs_grad_x);
     convertScaleAbs(grad_y, abs_grad_y);
     addWeighted(abs_grad_x, 0.5, abs_grad_y, 0.5, 0, grad);
     
     Mat grad_invert = 255 - grad;
-    
+
     imshow(window_name, grad_invert);
     grad_invert = grad_invert / 5;
 
