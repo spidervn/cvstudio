@@ -6,6 +6,8 @@
 #include <memory>
 #include <vector>
 
+#define ARRAYSIZE(a) (sizeof(a)/sizeof(a[0]))
+
 class ICVCore
 {
 public:

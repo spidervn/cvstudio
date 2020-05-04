@@ -12,6 +12,8 @@
 #include <vtkPen.h>
 #include <opencv2/core.hpp>
 #include <opencv2/imgproc.hpp>
+
+#include "app/interface/cv/ICVCore.h"
  
 using namespace cv;
 
@@ -162,14 +164,19 @@ int CVTKTest::run2()
     double x0 = 100;
     double y0 = 100;
 
+    double arrx[] = { 100, 120, 70};
+    double arry[] = { 85, 76, 170};
+
     double theta = 0.0;
     double numPoints = 100;
     double step_theta = 2 * CV_PI / numPoints;    
 
+    int n = ARRAYSIZE(arrx);
+
     {
         vtkSmartPointer<vtkTable> table; 
         vtkSmartPointer<vtkFloatArray> arrX; 
-        vtkSmartPointer<vtkFloatArray> arrC; 
+        vtkSmartPointer<vtkFloatArray> arrC;
         vtkSmartPointer<vtkFloatArray> arrS;
 
         table = vtkSmartPointer<vtkTable>::New();
@@ -178,21 +185,36 @@ int CVTKTest::run2()
         arrS = vtkSmartPointer<vtkFloatArray>::New();
 
         arrX->SetName("Theta");
-        arrC->SetName("R");
-        arrS->SetName("Sine");
-
+        //arrC->SetName("R");
+        //arrS->SetName("Sine");
         table->AddColumn(arrX);
-        table->AddColumn(arrC);
-        table->AddColumn(arrS);
+
+        for (int i=0; i<n; ++i)
+        {
+            char szBuff[100];
+            sprintf(szBuff, "R_%02d", i);           
+
+            vtkSmartPointer<vtkFloatArray> arrVal;
+            arrVal = vtkSmartPointer<vtkFloatArray>::New();
+            arrVal->SetName(szBuff);
+            table->AddColumn(arrVal);
+
+        }
+        //table->AddColumn(arrC);
+        //table->AddColumn(arrS);
 
         int i = 0;
         table->SetNumberOfRows((int)numPoints);
         for (;theta < 2 * CV_PI; theta += step_theta)
         {
-            double r = x0 * cos(theta) + y0 * sin(theta);
-
             table->SetValue(i, 0, theta);
-            table->SetValue(i++, 1, r);
+
+            for (int j=0; j<n; ++j)
+            {
+                double r = arrx[j] * cos(theta) + arry[j] * sin(theta);
+                table->SetValue(i, 1+j, r);
+            }
+            i++;
         }
 
         // Set up the view
@@ -206,11 +228,14 @@ int CVTKTest::run2()
         chart = vtkSmartPointer<vtkChartXY>::New();
         view->GetScene()->AddItem(chart);
 
-        vtkPlot *line = chart->AddPlot(vtkChart::LINE);
-        line->SetInputData(table, 0, 1);
-        line->SetColor(0, 255, 0, 255);
-        line->SetWidth(2.0);
-
+        for (int j=0; j<n; ++j)
+        {
+            vtkPlot *line = chart->AddPlot(vtkChart::LINE);
+            line->SetInputData(table, 0, 1+j);
+            line->SetColor(0, 255, 0, 255);
+            line->SetWidth(1.0);
+        }
+        
         view->GetRenderWindow()->Render();
         view->GetInteractor()->Initialize();
         view->GetInteractor()->Start();
