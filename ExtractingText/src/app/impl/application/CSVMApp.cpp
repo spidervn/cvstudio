@@ -10,6 +10,7 @@
 #include <opencv2/ml.hpp>
 #include <app/impl/background/CMatrix.h>
 #include "app/interface/general/stdex.h"
+#include <numeric>
 #include <vector>
 
 using namespace cv;

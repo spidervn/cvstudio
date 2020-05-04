@@ -14,6 +14,10 @@ int CCitizenIDApp::run(int argc, char const* argv[])
 {
     // 1st 
     //   * Align the Image
+    //   * Implement HoughLine first
+    //  * Then Alignment The text (Anti Rotation)  
+    //
+    
 
 
     return 0;

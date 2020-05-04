@@ -13,6 +13,7 @@
 #include "app/impl/cv/CCVCore.h"
 #include "inih-master/INIReader.h"
 #include <sys/stat.h>
+#include <numeric>
 using namespace cv;
 using namespace std;
 

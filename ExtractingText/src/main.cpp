@@ -6,6 +6,7 @@
 #include "opencv2/imgcodecs.hpp"
 #include "opencv2/highgui.hpp"
 #include "app/impl/general/CConsole.h"
+#include "app/impl/application/CSmoothImgApp.h"
 #include "app/impl/application/CSobelApp.h"
 #include "app/impl/application/CRemappingApp.h"
 #include "app/impl/application/CAffineTransform.h"
@@ -46,6 +47,8 @@
 #include "app/impl/application/CSVMNonLinearApp.h"
 #include "app/impl/application/calculus/CCalculusApp.h"
 #include "app/examples/background/CDistanceTransformTest.h"
+#include "app/examples/background/CHoughLineTest.h"
+#include "app/examples/background/CVTKTest.h"
 
 #include "app/examples/background/CSlamTest.h"
 #include "app/impl/cv/CCVCore.h"
@@ -67,7 +70,7 @@ int main(int argc, char const *argv[])
     // {
     //     printf("Usage: %s <<image_file>>\r\n", argv[0]);
     //     return 0;
-    // }
+    // }    
     // IApplication* p_App = new CSobelApp();
     // IApplication* p_App = new CRemappingApp();
     // IApplication* p_App = new CAffineTransform();
@@ -107,8 +110,11 @@ int main(int argc, char const *argv[])
     // IApplication* p_App = new CProbabilityApp();
     // IApplication* p_App = new CSVMNonLinearApp();
     // IApplication* p_App = new CCalculusApp();
-    IApplication* p_App = new CSlamTest();
-    
+    // IApplication* p_App = new CSlamTest();
+    // IApplication* p_App = new CSmoothImgApp();
+    // IApplication* p_App = new CHoughLineTest();
+
+    IApplicationPtr p_App = CVTKTestPtrNew;
     int n_Ret = p_App->run(argc, argv);
 
     /*
@@ -127,6 +133,6 @@ int main(int argc, char const *argv[])
     // tt.test_2D("/home/jcm/Pictures/opencv/donald-trump.jpg");
     // 
 
-    delete p_App;
+    // delete p_App;
     return 0;
 }
