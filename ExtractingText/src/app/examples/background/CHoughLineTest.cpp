@@ -24,12 +24,14 @@ CHoughLineTest::~CHoughLineTest()
 
 int CHoughLineTest::run(int argc, char const* argv[])
 {
+    cv::Mat img_color;
     cv::Mat img;
     cv::Mat img_blur;
     cv::Mat img_detect;
     cv::Mat mat_accumulator;
 
     img = imread(argv[1], IMREAD_GRAYSCALE);
+    img_color = imread(argv[1], IMREAD_COLOR);
 
     if (img.empty())
     {
@@ -118,13 +120,54 @@ int CHoughLineTest::run(int argc, char const* argv[])
 
 
     // Find 05 top most 
+    double max = 0;
+    int rrow;
+    int rcol;
     for (int y=0; y<img_detect.rows;++y)
     {
         for(int x=0; x<img_detect.cols;++x)
         {
-            
+            if (mat_accumulator.at<double>(y,x) > max)
+            {
+                max = mat_accumulator.at<double>(y,x);
+                rrow = y;
+                rcol = x;
+
+            }
         }
     }
+
+    // 
+    // Print ()
+    // 
+    if (rcol == 0)
+    {
+        cv::line(
+            img_color,
+            cv::Point(0,(int)rrow),
+            cv::Point(img_color.rows-1,(int)rrow),
+            Scalar(0,255,255),
+            1,
+            LINE_8);
+    }
+    else
+    {
+        double theta = rcol * CV_PI/90;
+        double y0 = rrow/sin(theta);
+        double y1 = -(double)(img_color.cols)/tan(theta) + rrow/sin(theta);
+
+        cv::Point p0(y0, 0);
+        cv::Point p1(y1, img_color.cols);
+
+        cv::line(img_color,
+            p0,
+            p1,
+            Scalar(0,255,255),
+            1,
+            LINE_8);
+    }
+    imshow("line", img_color);
+
     waitKey(0);
     return 0;
 }
