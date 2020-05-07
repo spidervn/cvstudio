@@ -2,6 +2,9 @@
 #define EXTRACTTEXT_APP_IMPL_APPLICATION_CSVMNONLINEARAPP_H_
 
 #include <app/interface/IApplication.h>
+#include <memory>
+
+#define CSVMNonLinearAppPtrNew std::make_shared<CSVMNonLinearApp>()
 
 class CSVMNonLinearApp: public IApplication
 {

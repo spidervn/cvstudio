@@ -153,6 +153,15 @@ int CSVMNonLinearApp::run2(int argc, char const *argv[])
     trainClass = trainData.rowRange(nLinearSamples, 2*NTRAINING_SAMPLES - nLinearSamples);
     c = trainClass.colRange(0, 1);  // 
 
+    // -------------------------
+    //
+    Ptr<SVM> svm = SVM::create();
+    svm->setType(SVM::C_SVC);
+    svm->setC(0.1);
+    svm->setKernel(SVM::LINEAR);
+    svm->setTermCriteria(TermCriteria(TermCriteria::MAX_ITER, (int)1e7, 1e-6));
+
+    // svm->train();
 
 
     return 0;
