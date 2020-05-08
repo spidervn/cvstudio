@@ -12,6 +12,8 @@ endmacro(use_cxx11)
 
 use_cxx11()
 set (CMAKE_CXX_STANDARD 11)
+set(CMAKE_CXX_FLAGS_DEBUG "${CMAKE_CXX_FLAGS_DEBUG} -Wall")
+
 project( extract_text  )
 find_package( OpenCV REQUIRED )
 find_package(Boost COMPONENTS filesystem regex)

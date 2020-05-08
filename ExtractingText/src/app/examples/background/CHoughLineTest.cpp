@@ -68,6 +68,7 @@ int CHoughLineTest::run(int argc, char const* argv[])
     cv::Canny(img_blur, img_detect, lowThreshold, lowThreshold*3, kernel_size);
     imshow("canny", img_detect);
 
+
     /*
     for (int y=0;y<img.rows;++y)
     {
@@ -91,48 +92,52 @@ int CHoughLineTest::run(int argc, char const* argv[])
     // R = ?
     double R = sqrt(img_detect.rows * img_detect.rows + img_detect.cols + img_detect.cols);
     // mat_accumulator.create(cv::Size((int)R, 90), CV_64FC1);
-    mat_accumulator = Mat::zeros((int)R, 90, CV_64FC1);
-
     int threshold = 5;
+    double ANGLE_ACCURATE = 180;
 
-    for (int y=0; y<img_detect.rows;++y)
+    mat_accumulator = Mat::zeros((int)R, (int)ANGLE_ACCURATE, CV_64FC1);
+
+    for (double y=0; y<img_detect.rows;++y)
     {
-        for(int x=0; x<img_detect.cols;++x)
+        for(double x=0; x<img_detect.cols;++x)
         {
             if (img_detect.at<uchar>(y,x) == 255)
             {
                 // Detected lines
                 // Build Graph
 
-                double step = CV_PI / 90;
+                double step = CV_PI / ANGLE_ACCURATE;
                 double theta = 0;
-                for (int i=0; i<90; ++i)
+                for (int i=0; i<ANGLE_ACCURATE; ++i)
                 {
                     double theta = i * step;
-                    double r = (double)x * cos(theta) + (double)y*sin(theta);
+                    double r = x * cos(theta) + y*sin(theta);
 
-                    mat_accumulator.at<double>((int)r, i) = mat_accumulator.at<double>((int)r, i) + 1;
+                    if (r >= 0 && r < R)
+                    {
+                        mat_accumulator.at<double>((int)r, i) = mat_accumulator.at<double>((int)r, i) + 1;
+                    }
                 }
-
             }
         }
     }   
 
-
     // Find 05 top most 
     double max = 0;
-    int rrow;
-    int rcol;
-    for (int y=0; y<img_detect.rows;++y)
+    double rrow;
+    double rcol;
+    for (int y=0; y<mat_accumulator.rows;++y)
     {
-        for(int x=0; x<img_detect.cols;++x)
+        for(int x=0; x<mat_accumulator.cols;++x)
         {
             if (mat_accumulator.at<double>(y,x) > max)
             {
+                printf("FOUND\r\n");
                 max = mat_accumulator.at<double>(y,x);
                 rrow = y;
                 rcol = x;
 
+                printf("\tMax=%f; (y,x)=(%d,%d)\r\n", max, y, x);
             }
         }
     }
@@ -142,32 +147,40 @@ int CHoughLineTest::run(int argc, char const* argv[])
     // 
     if (rcol == 0)
     {
-        cv::line(
-            img_color,
-            cv::Point(0,(int)rrow),
-            cv::Point(img_color.rows-1,(int)rrow),
-            Scalar(0,255,255),
-            1,
-            LINE_8);
+        cv::Point p0 = cv::Point(0,(int)rrow);
+        cv::Point p1 = cv::Point(img_color.rows-1,(int)rrow);
+
+        std::cout << "Case01- " << p0 << " - " << p1 << endl;
+        cv::line(img_color,
+                    p0,
+                    p1,
+                    Scalar(0,145,255),
+                    4,
+                    LINE_8);
     }
     else
     {
-        double theta = rcol * CV_PI/90;
+        double theta = rcol * CV_PI/ANGLE_ACCURATE;
+        double x1 = std::min(img_color.cols, 30);
         double y0 = rrow/sin(theta);
-        double y1 = -(double)(img_color.cols)/tan(theta) + rrow/sin(theta);
+        double y1 = -(double)(x1)/tan(theta) + rrow/sin(theta);
 
         cv::Point p0(y0, 0);
-        cv::Point p1(y1, img_color.cols);
+        cv::Point p1(y1, x1);
+
+        std::cout << "Case02- " << p0 << " - " << p1 << endl;
 
         cv::line(img_color,
-            p0,
-            p1,
-            Scalar(0,255,255),
-            1,
-            LINE_8);
+                    p0,
+                    p1,
+                    Scalar(0,145,255),
+                    4,
+                    LINE_8);
     }
-    imshow("line", img_color);
 
+    imshow("line", img_color);
     waitKey(0);
     return 0;
 }
+
+
