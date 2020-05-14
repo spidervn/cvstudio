@@ -50,6 +50,9 @@
 #include "app/examples/background/CHoughLineTest.h"
 #include "app/examples/background/CVTKTest.h"
 
+#include "app/impl/application/realworld/FaceApp/CFaceApp.h"
+#include "app/impl/application/realworld/ExtractText/CExtractTextV1.h"
+
 #include "app/examples/background/CSlamTest.h"
 #include "app/impl/cv/CCVCore.h"
 
@@ -101,20 +104,22 @@ int main(int argc, char const *argv[])
     // IApplication* p_App = new CBackprojectApp2();
     // IApplication* p_App = new CAnisotropicSegmentation();
     // IApplication* p_App = new CContrastApp();
-    // IApplication* p_App = new CHoughLineApp();
+    // IApplicationPtr p_App = CHoughLineAppPtrNew();
     // IApplication* p_App = new CHoughCircleApp();
     // IApplication* p_App = new CContoursApp();
     // IApplication* p_App = new CParametricTemplateVectorApp();
-    // IApplication* p_App = new CManualFundamentalApp();
+    IApplicationPtr p_App = CManualFundamentalAppPtrNew();
     // IApplication* p_App = new CPencilingApp();
     // IApplication* p_App = new CProbabilityApp();
-    // IApplication* p_App = new CSVMNonLinearApp();
+    // IApplicationPtr p_App = CSVMNonLinearAppPtrNew;
     // IApplication* p_App = new CCalculusApp();
     // IApplication* p_App = new CSlamTest();
     // IApplication* p_App = new CSmoothImgApp();
-    // IApplication* p_App = new CHoughLineTest();
+    // IApplicationPtr p_App = CHoughLineTestPtrNew();
+    // IApplicationPtr p_App = CExtractTextV1PtrNew();
 
-    IApplicationPtr p_App = CVTKTestPtrNew;
+    // IApplicationPtr p_App = CVTKTestPtrNew;
+    // IApplicationPtr p_App = CFaceAppPtrNew();
     int n_Ret = p_App->run(argc, argv);
 
     /*

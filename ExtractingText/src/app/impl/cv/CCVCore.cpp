@@ -65,6 +65,54 @@ int CCVCore::calc_Gaussian1DKernel(int n, cv::Mat& out)
 
 int CCVCore::calc_Gaussian2DKernel(int n, cv::Mat& out)
 {
+    if (n<=0 || n > 1000000)
+    {
+        throw "Out of range";
+        return -1;
+    }
+
+
+    /*--------------------------------------------------
+        Variance:
+            VAR = E((x-mean)^2)
+    *--------------------------------------------------*/
+    //
+    double std_variantion;
+    double mean_x;
+    double mean_y;
+    double mean;
+    
+    mean_x = (n-1)/2;
+    mean_y = (n-1)/2;
+
+    // Calculates VARIANCES 
+    double sum = 0;
+    for (double y=0; y<=n-1; ++y)
+    {
+        for (double x=0; x<=n-1; ++x)
+        {
+            double diff = (x - mean_x) + (y - mean_y);
+            sum += diff * diff;
+        }
+    }
+
+    std_variantion = sqrt(sum);
+    out.create(cv::Size(n,n), CV_64FC1);
+
+    for (double y=0; y<=n-1; ++y)
+    {
+        for (double x=0; x<=n-1; ++x)
+        {
+            double e_pow = (x - mean_x + y - mean_y) / std_variantion;
+            out.at<double>(y,x) = 
+                1/sqrt(2*CV_PI)/std_variantion * 
+                exp(
+                    -e_pow*e_pow/2
+                );
+        }
+    }
+
+
     return 0;
 }
 

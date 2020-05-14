@@ -35,14 +35,21 @@ int CManualFundamentalApp::run(int argc, char const *argv[])
     std::cout << c3 << std::endl;
 
     Mat m_gaussKernel;
+    Mat m_gaussKernel2D;
 
     ICVCorePtr ccptr = CCVCorePtrNew();
     CCVCoreUnitTest cvtest;
 
-    ccptr->calc_Gaussian1DKernel(100, m_gaussKernel);
+    ccptr->calc_Gaussian1DKernel(10, m_gaussKernel);
+    ccptr->calc_Gaussian2DKernel(10, m_gaussKernel2D);
+    
     cout << "Gauss1DKernel " << m_gaussKernel << endl;
+    cout << "Gauss2DKernel " << m_gaussKernel2D << endl;
+
 
     cvtest.checkValid_gaussianKernel(m_gaussKernel);
+    cvtest.checkValid_gaussianKernel(m_gaussKernel2D);
 
     return 0;
 }
+
