@@ -2,6 +2,9 @@
 #define EXTRACTTEXT_APP_IMPL_APPLICATION_POULTRY_CMANUALFUNDAMENTALAPP_H_
 
 #include "app/interface/IApplication.h"
+#include <memory>
+
+#define CManualFundamentalAppPtrNew std::make_shared<CManualFundamentalApp>
 
 class CManualFundamentalApp: public IApplication
 {

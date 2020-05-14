@@ -15,6 +15,7 @@ CHoughLineApp::~CHoughLineApp()
 
 int CHoughLineApp::run(int argc, char const *argv[])
 {
+    int threshold = 10; // 150
     // Declare the output variables
     Mat dst, cdst, cdstP;
     const char* default_file = "../data/sudoku.png";
@@ -34,7 +35,7 @@ int CHoughLineApp::run(int argc, char const *argv[])
     cdstP = cdst.clone();
     // Standard Hough Line Transform
     vector<Vec2f> lines; // will hold the results of the detection
-    HoughLines(dst, lines, 1, CV_PI/180, 150, 0, 0 ); // runs the actual detection
+    HoughLines(dst, lines, 1, CV_PI/180, threshold, 0, 0 ); // runs the actual detection
     // Draw the lines
     for( size_t i = 0; i < lines.size(); i++ )
     {

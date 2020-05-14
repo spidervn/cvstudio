@@ -18,6 +18,56 @@ CCVCore::CCVCore()
 CCVCore::~CCVCore()
 {}
 
+int CCVCore::calc_Gaussian1DKernel(int n, cv::Mat& out)
+{
+    //
+    // Gaussian Function
+    //  GF(x) = 1/
+    //  GF(x)  =
+    //      1/(σ*√(2π)) * exp(-1/2 * ((x-μ)/σ)^2)
+
+    // 
+    // x = [0,1,...,n-1]
+    // 
+    // Var(X) = E((X-mean)^2).
+    // 
+    if (n<=0 || n > 1000000)
+    {
+        throw "Out of range";
+        return -1;
+    }
+
+
+    double std_variantion = 0;
+    double mean;
+    double SUM = 0;
+    mean = (n-1)/2;
+
+    // Calculates standard deviation and Mean
+    for (double i=0;i<= n-1;i++)
+    {
+        SUM += (i-mean)*(i-mean);
+    }
+    SUM = SUM / n;
+
+    std_variantion = sqrt(SUM);
+
+    out.create(cv::Size(1,n), CV_64FC1);
+
+    for (double i=0; i<=n-1; ++i)
+    {
+        double e_pow = (i - mean) / std_variantion;
+        out.at<double>(0,i) = 1/(std_variantion * sqrt(2*CV_PI)) * exp( -e_pow*e_pow/2);
+    }
+
+    return 0;
+}
+
+int CCVCore::calc_Gaussian2DKernel(int n, cv::Mat& out)
+{
+    return 0;
+}
+
 int CCVCore::dodge(cv::Mat front, cv::Mat back, cv::Mat& res)
 {
     // res.create(front.size(), CV_32FC1);

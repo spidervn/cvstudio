@@ -2,6 +2,9 @@
 #define EXTRACTTEXT_APP_IMPL_APPLICATION_CHOUGHLINEAPP_H_
 
 #include <app/interface/IApplication.h>
+#include <memory>
+
+#define CHoughLineAppPtrNew std::make_shared<CHoughLineApp>
 
 class CHoughLineApp: public IApplication
 {

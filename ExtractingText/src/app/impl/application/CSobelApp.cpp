@@ -29,7 +29,7 @@ int CSobelApp::run(int argc, char const *argv[])
   // First we declare the variables we are going to use
   Mat image,src, src_gray;
   Mat grad;
-  ICVCorePtr cvcp = CCVCorePtrNew;
+  ICVCorePtr cvcp = CCVCorePtrNew();
 
   const String window_name = "Sobel Demo - Simple Edge Detector";
   int ksize = parser.get<int>("ksize");

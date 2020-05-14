@@ -4,15 +4,19 @@
 // #include <app/interface/IApplication.h>
 #include <app/interface/cv/ICVCore.h>
 #include <vector>
+#include <memory>
 
 typedef std::vector<double> VECTOR;
-#define CCVCorePtrNew std::make_shared<CCVCore>()
+#define CCVCorePtrNew std::make_shared<CCVCore>
 
 class CCVCore : public ICVCore
 {
 public:
     CCVCore();
     ~CCVCore();
+
+    int calc_Gaussian1DKernel(int n, cv::Mat& out);
+    int calc_Gaussian2DKernel(int n, cv::Mat& out);
 
     int dodge(cv::Mat img, cv::Mat img2, cv::Mat& res);
 

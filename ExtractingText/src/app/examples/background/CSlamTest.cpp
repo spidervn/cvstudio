@@ -99,6 +99,12 @@ int CSlamTest::run(int argc, char const *argv[])
     return 0;
 }
 
+int CSlamTest::gaussian_filters_test()
+{
+    
+    return 0;
+}
+
 int CSlamTest::random_matrix(cv::Mat& m, cv::RNG& rng)
 {
     for (int y=0; y<m.rows;++y)

@@ -33,7 +33,7 @@ int CPinaclePoutryApp::run(int argc, char const *argv[])
     }
 
     // @Temp
-    ICVCorePtr ccp1 = CCVCorePtrNew;
+    ICVCorePtr ccp1 = CCVCorePtrNew();
     /*
     cv::Mat src = imread(argv[1], IMREAD_COLOR);
     cv::Mat src_eql;
@@ -76,7 +76,7 @@ int CPinaclePoutryApp::run(int argc, char const *argv[])
     const char* szWin = "Source";
     const char* szBuckwet = "High-contrast";
     const char* szHSL = "HSL";
-    ICVCorePtr ccp = CCVCorePtrNew;
+    ICVCorePtr ccp = CCVCorePtrNew();
     VideoCapture video(argv[1]);
     INIReader ini(argv[2]);
     VideoWriter videoOut;

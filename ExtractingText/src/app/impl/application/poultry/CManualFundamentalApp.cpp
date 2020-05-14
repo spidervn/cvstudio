@@ -8,6 +8,9 @@
 #include "boost/graph/adjacency_list.hpp"
 #include "boost/graph/connected_components.hpp"
 
+#include "app/impl/cv/CCVCore.h"
+#include "app/test/cv/CCVCoreUnitTest.h"
+
 using namespace cv;
 using namespace boost;
 using namespace std;
@@ -30,6 +33,16 @@ int CManualFundamentalApp::run(int argc, char const *argv[])
     std::cout << c << std::endl;
     std::cout << c1 << std::endl;
     std::cout << c3 << std::endl;
+
+    Mat m_gaussKernel;
+
+    ICVCorePtr ccptr = CCVCorePtrNew();
+    CCVCoreUnitTest cvtest;
+
+    ccptr->calc_Gaussian1DKernel(100, m_gaussKernel);
+    cout << "Gauss1DKernel " << m_gaussKernel << endl;
+
+    cvtest.checkValid_gaussianKernel(m_gaussKernel);
 
     return 0;
 }

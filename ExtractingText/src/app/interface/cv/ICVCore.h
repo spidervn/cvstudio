@@ -13,6 +13,9 @@ class ICVCore
 public:
     virtual ~ICVCore() { }
 
+    virtual int calc_Gaussian1DKernel(int n, cv::Mat& out) = 0;
+    virtual int calc_Gaussian2DKernel(int n, cv::Mat& out) = 0;
+
     virtual int dodge(cv::Mat img, cv::Mat img2, cv::Mat& res) = 0;
 
     virtual int HarrisCorner(cv::Mat& img) = 0;

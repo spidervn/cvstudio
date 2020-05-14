@@ -1020,7 +1020,7 @@ int CPoultryMonitorApp::run_video(const char* szFile, const char* szIni)
     namedWindow("Video-chick", WINDOW_AUTOSIZE);
     namedWindow("ConnectedComponents");
 
-    ICVCorePtr ccp = CCVCorePtrNew;
+    ICVCorePtr ccp = CCVCorePtrNew();
     int index=0;
     vector<Mat> vBlock;
     vector<Rect> vRect;
@@ -1196,7 +1196,7 @@ int CPoultryMonitorApp::run_morph(const char* szFile)
 
     imwrite("threshold.png", dst_Rng);
 
-    ICVCorePtr ccp = CCVCorePtrNew;
+    ICVCorePtr ccp = CCVCorePtrNew();
 
     ccp->bucketingColor(src, 50, dst_Rng);
     imshow("Bucket", dst_Rng);

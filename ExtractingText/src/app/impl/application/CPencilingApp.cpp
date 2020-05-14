@@ -56,7 +56,7 @@ int CPencilingApp::run(int argc, char const *argv[])
     cv::GaussianBlur(imgIvt, imgBlur, cv::Size(5,5), 5);
     printf("----- Penciling\r\n");
 
-    ICVCorePtr cvp = CCVCorePtrNew;
+    ICVCorePtr cvp = CCVCorePtrNew();
     printf("HERE00\r\n");
     cvp->dodge(imgBlur, imgIvt, imgDodge);
     printf("HERE\r\n");

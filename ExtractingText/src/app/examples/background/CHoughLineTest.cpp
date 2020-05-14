@@ -79,8 +79,6 @@ int CHoughLineTest::run(int argc, char const* argv[])
             // 
             // File system
             // 
-
-
         }
     }
     */

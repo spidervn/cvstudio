@@ -27,13 +27,12 @@ int CExtractTextApp::run(int argc, char const *argv[])
     // 
     // Extract every characters
     // Extract every characters
-    
-
     cv::Mat img;
     cv::Mat img_gray;
     cv::Mat img_inv;
     cv::Mat dst;
     cv::Mat df;
+    
     //1) Read
     img = imread(argv[1], IMREAD_COLOR);
     cvtColor(img, img_gray, COLOR_BGR2GRAY);

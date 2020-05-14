@@ -113,6 +113,8 @@ protected:
     int translation_pos(cv::Mat m, cv::Mat m_trans);
 
     int rotate2D();
+
+    int gaussian_filters_test();
 };
 
 #endif
