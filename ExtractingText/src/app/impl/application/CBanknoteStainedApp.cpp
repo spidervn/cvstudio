@@ -19,7 +19,7 @@ int CBanknoteStainedApp::run(int argc, char const *argv[])
     const char* szWin = "Window-gray";
 
     img = cv::imread(argv[1], IMREAD_COLOR);
-    cvtColor(img, img_Gray, CV_BGR2GRAY);
+    //cvtColor(img, img_Gray, CV_BGR2GRAY);
 
     /* Distance transform */
     /* */

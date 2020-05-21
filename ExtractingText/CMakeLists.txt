@@ -1,5 +1,6 @@
 cmake_minimum_required(VERSION 2.8)
 
+
 macro(use_cxx11)
   if (CMAKE_VERSION VERSION_LESS "3.1")
     if (CMAKE_CXX_COMPILER_ID STREQUAL "GNU")
@@ -17,6 +18,9 @@ set(OpenCV_DIR "/home/ducvd/setup/libraries/opencv/opencv430/opencv-4.3.0/instal
 set(VTK_DIR:PATH "/home/ducvd/setup/libraries/graph/VTK-8.2.0/Build")
 
 project( extract_text  )
+
+
+# set(OpenCV_DIR, /home/ducvd/setup/libraries/opencv/opencv430/opencv-4.3.0/Install)
 find_package( OpenCV REQUIRED )
 find_package(Boost COMPONENTS filesystem regex)
 
