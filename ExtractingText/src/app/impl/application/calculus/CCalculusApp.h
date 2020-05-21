@@ -11,6 +11,9 @@ public:
     CCalculusApp(/* args */);
     ~CCalculusApp();
     int run(int, char const *[]);
+
+protected:
+    int lagrange_multiplier();
 };
 
 #endif

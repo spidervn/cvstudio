@@ -21,6 +21,13 @@ public:
     double gaussianFunction(double mean,
                             double standard_deviation,    // s^2 
                             double x);
+
+    double covariance(
+                const cv::Mat& m,
+                const cv::Mat& m1);
+
+    //TODO: Implement
+    int covariance_matrix() { return 0; }
 };
 
 

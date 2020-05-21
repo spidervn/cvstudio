@@ -44,3 +44,66 @@ double CProbabilityUtil::gaussianFunction(double mean,
 
     return ret;
 }
+
+double CProbabilityUtil::covariance(const cv::Mat& m, const cv::Mat& m1)
+{
+    double d = 0.0;
+    double mean_X = 0.0;
+    double mean_Y = 0.0;
+    double E = 0.0;
+    int N;
+
+    assert(m.rows == m1.rows);
+    assert(m.cols == m1.cols);
+
+    // 1xN Matrix
+    if (m.rows == 1)
+    {
+        N = m.cols;
+        for (int x=0;x<N;++x)
+        {
+            mean_X += m.at<double>(1,x);
+            mean_Y += m1.at<double>(1,x);
+        }
+
+        mean_X /= N; 
+        mean_Y /= N; 
+
+        // 
+        // Expected
+        // 
+        for (int x=0;x<N;++x)
+        {
+            E += (m.at<double>(1,x) - mean_X) * 
+                    (m1.at<double>(1,x) - mean_Y);
+        }
+
+        E /= (N*N);
+    }
+    // Nx1 Matrix
+    else 
+    {
+        int N = m.rows;
+        for (int y=0;y<N;++y)
+        {
+            mean_X += m.at<double>(y,1);
+            mean_Y += m1.at<double>(y,1);
+        }
+
+        mean_X /= N; 
+        mean_Y /= N;
+
+        // 
+        // Expected
+        // 
+        for (int y=0;y<N;++y)
+        {
+            E += (m.at<double>(y,1) - mean_X)* 
+                    (m1.at<double>(y,1) - mean_Y);
+        }
+
+        E /= (N*N);        
+    }
+
+    return E;
+}

@@ -82,3 +82,28 @@ int CCalculusApp::run(int, char const *[])
     waitKey();
     return 0;
 }
+
+int CCalculusApp::lagrange_multiplier()
+{
+    // 
+    // g(x,y): x*y = 3
+    // f(x,y): x*x + y*y
+    // 
+
+    //
+    // Find the closet point of g to origin O(0,0).
+    // 
+    double x;
+    double y;
+
+    double dz_x; // = y;
+
+    // 
+    // What is the plane's fomular?
+    //  => Variables
+    // 
+    
+
+
+    return 0;
+}

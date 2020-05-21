@@ -23,7 +23,9 @@ int CExtractTextV1::run(int argc, char const* argv[])
     cv::Mat edge;
     cv::Mat cdst;
 
+    // 
     //@Labelling the Image
+    // 
     img = imread(argv[1], IMREAD_GRAYSCALE);
 
     if (img.empty())
@@ -46,7 +48,6 @@ int CExtractTextV1::run(int argc, char const* argv[])
     {
         float rho = vline[i][0];
         float theta = vline[i][1];
-
 
         Point pt1, pt2;
         double a,b,x0,y0;

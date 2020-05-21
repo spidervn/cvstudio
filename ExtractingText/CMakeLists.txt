@@ -13,6 +13,8 @@ endmacro(use_cxx11)
 use_cxx11()
 set (CMAKE_CXX_STANDARD 11)
 set(CMAKE_CXX_FLAGS_DEBUG "${CMAKE_CXX_FLAGS_DEBUG} -Wall")
+set(OpenCV_DIR "/home/ducvd/setup/libraries/opencv/opencv430/opencv-4.3.0/install")
+set(VTK_DIR:PATH "/home/ducvd/setup/libraries/graph/VTK-8.2.0/Build")
 
 project( extract_text  )
 find_package( OpenCV REQUIRED )

@@ -70,22 +70,18 @@ int CHoughLineTest::run(int argc, char const* argv[])
 
 
     /*
-    for (int y=0;y<img.rows;++y)
-    {
-        for (int x=0; x<img.cols;++x)
+        for (int y=0;y<img.rows;++y)
         {
-            img.at<uchar>(y,x);
+            for (int x=0; x<img.cols;++x)
+            {
+                img.at<uchar>(y,x);
 
-            // 
-            // File system
-            // 
+                // 
+                // File system
+                // 
+            }
         }
-    }
     */
-
-    //
-    // Min R = 
-    // 
     // mat_accumulator.create();   // 2R * 90
     // R = ?
     double R = sqrt(img_detect.rows * img_detect.rows + img_detect.cols + img_detect.cols);
