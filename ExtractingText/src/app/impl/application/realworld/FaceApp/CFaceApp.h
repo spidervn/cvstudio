@@ -32,6 +32,7 @@ public:
     int ex04(const char* file);
 
     int eigen_face(const char* file);
+    int eigen_vector(const cv::Mat& m, cv::Mat& vec_eigen, double& eigen_value);
 
     static bool myDetector(cv::InputArray img, cv::OutputArray faces, void* pconf);
 };

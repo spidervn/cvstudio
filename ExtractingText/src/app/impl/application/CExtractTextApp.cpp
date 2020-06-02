@@ -117,10 +117,8 @@ int CExtractTextApp::run(int argc, char const *argv[])
     //      P02:  
     //          Recognize every characters 
     //  
-    // 
-
-    
-
+    //    
+    // SVM => Classifying each characters.
 
     waitKey();
     return 0;

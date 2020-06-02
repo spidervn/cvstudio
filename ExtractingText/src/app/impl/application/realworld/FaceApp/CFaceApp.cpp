@@ -128,14 +128,6 @@ bool CFaceApp::myDetector(cv::InputArray img, cv::OutputArray faces, void* pconf
 
 int CFaceApp::eigen_face(const char* file)
 {
-    // 
-    // Covariance Matrix 
-    // 
-
-    //
-    // Eigen vector
-    // 
-
     // Image-analyzing.
     Mat m = imread(file, IMREAD_COLOR);
     int M;  // Dimensions on training image
@@ -144,16 +136,20 @@ int CFaceApp::eigen_face(const char* file)
     int h = m.rows;
     int w = m.cols;
 
+
+    int numTrain;
     vector<Mat> vF;     // Trainning face data
     Mat avgF;           // Average face
-    Mat cov;            // Co-variance matrix
+    Mat mat_Cov;            // Co-variance matrix
 
     bool bValidSize = true;
+    numTrain = vF.size();
     N = h*w;
 
     for (int i=1; i<vF.size();++i)
     {
-        if (vF[i].size() != vF[0].size())
+        //if (vF[i].size() != vF[0].size())
+        if (vF[i].size() != cv::Size(N,1))
         {
             bValidSize = false;
         }
@@ -164,7 +160,9 @@ int CFaceApp::eigen_face(const char* file)
     M = vF[0].rows * vF[0].cols;
     avgF = Mat::zeros(h, w, CV_64FC1);
 
-    // 
+    //
+    // numTrain
+    //
     for (int i=1; i<vF.size();++i)
     {
         for (int y=0; y<vF[i].rows;++y)
@@ -177,14 +175,47 @@ int CFaceApp::eigen_face(const char* file)
     }
 
     avgF = avgF / M;    // Average map
-
     // Covariance Matrix 
-    cov.create(N, N, CV_64FC1);
+    //cov.create(N, N, CV_64FC1);
+    //mat_Cov = Mat::zeros(N,N, CV_64FC1);
+
+    // Covariance Matrix
     for (int i=0; i<N; ++i)
     {
-        
+
+        Mat mTmp = vF[i] - avgF;
+        Mat mTmp_T;
+
+        cv::transpose(mTmp, mTmp_T);
+        mat_Cov += (mTmp * mTmp_T);
+
     }
 
+    //
+    // Covariance Matrix
+    // 
 
+    // 
+    // Eigen vector calculation
+    // 
+
+    // 
+    // Calculating Principal Component Analysis
+    // 
+
+
+    return 0;
+}
+
+int CFaceApp::eigen_vector(const cv::Mat& m, cv::Mat& vec_eigen, double& eigen_value)
+{
+    /*
+     * M*vec_eigen = eigen_value * vec_eigen
+     *  
+     * Given M, find eigen_value and vec_eigen.
+     *
+     */
+
+    cv::Mat v;  // Vector
     return 0;
 }

@@ -45,13 +45,16 @@
 #include "app/impl/application/poultry/CManualFundamentalApp.h"
 #include "app/impl/application/background/CProbabilityApp.h"
 #include "app/impl/application/CSVMNonLinearApp.h"
+#include "app/impl/application/CPCAApp.h"
 #include "app/impl/application/calculus/CCalculusApp.h"
 #include "app/examples/background/CDistanceTransformTest.h"
 #include "app/examples/background/CHoughLineTest.h"
 #include "app/examples/background/CVTKTest.h"
 
 #include "app/impl/application/realworld/FaceApp/CFaceApp.h"
+#include "app/impl/application/realworld/FaceApp/CHelenParser.h"
 #include "app/impl/application/realworld/ExtractText/CExtractTextV1.h"
+#include "app/impl/application/realworld/Camera/CCameraTechApp.h"
 
 #include "app/examples/background/CSlamTest.h"
 #include "app/impl/cv/CCVCore.h"
@@ -108,7 +111,7 @@ int main(int argc, char const *argv[])
     // IApplication* p_App = new CHoughCircleApp();
     // IApplication* p_App = new CContoursApp();
     // IApplication* p_App = new CParametricTemplateVectorApp();
-    IApplicationPtr p_App = CManualFundamentalAppPtrNew();
+    // IApplicationPtr p_App = CManualFundamentalAppPtrNew();
     // IApplication* p_App = new CPencilingApp();
     // IApplication* p_App = new CProbabilityApp();
     // IApplicationPtr p_App = CSVMNonLinearAppPtrNew;
@@ -117,9 +120,12 @@ int main(int argc, char const *argv[])
     // IApplication* p_App = new CSmoothImgApp();
     // IApplicationPtr p_App = CHoughLineTestPtrNew();
     // IApplicationPtr p_App = CExtractTextV1PtrNew();
-
     // IApplicationPtr p_App = CVTKTestPtrNew;
     // IApplicationPtr p_App = CFaceAppPtrNew();
+    // IApplicationPtr p_App = CHelenParserPtrNew();
+    // IApplicationPtr p_App = CCameraTechAppPtrNew();
+
+    IApplicationPtr p_App = CCameraTechAppPtrNew();    
     int n_Ret = p_App->run(argc, argv);
 
     /*
