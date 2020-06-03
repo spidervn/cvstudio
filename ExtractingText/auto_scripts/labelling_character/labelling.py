@@ -3,10 +3,7 @@ import cv2
 import os 
 import pytesseract
 from pathlib import Path
-
-path = "./"
-files = []
-sizes = []
+from shutil import copyfile
 
 # 
 # Interface for labelling
@@ -40,33 +37,39 @@ class LabellingDirectory(object):
         else:
             return ' '
 
-    def build_whole_pipe():
+    def build_whole_pipe(self):
         # Enum all files
-        files = [f for f in os.listdir(self.source_repo) if os.path.isfile(f)]
+        files = [os.path.join(self.source_repo, f) for f in os.listdir(str(self.source_repo)) if os.path.isfile(os.path.join(self.source_repo, f)) ]
+
+        print(self.source_repo)
+        print(files)
 
         transfer = [
-
         ]
 
         for file in files:
             if ('.png' in file) or ('.jpg' in file):
-                lb = label_of_file(file)
+                print("PROCESSING: ", file)
+                lb = self.label_of_file(file)
 
                 if lb != ' ':
                     # Success
-                        transfer.append(
-                            [ file
-                            ]
-                        )
+                    transfer.append([file, self.alter_file_name(file, lb)])
+        
+        for transfer1 in transfer:
+            # Copy from source to destination
+            print("Copy file from ", transfer1[0], " to ", transfer1[1])
+            copyfile(transfer1[0], transfer1[1])
 
         return
 
-    def alter_file_name(file, label):
-        path = pathlib.Path(file)
+    def alter_file_name(self, file, label):
+        path = Path(file)
+        myext = path.name[len(path.stem):]
+        new_file_name = path.stem + "_[LABEL_IS_" + label + "]" + myext
 
+        return os.path.join(path.parent, new_file_name)
 
-
-        return
 #
 # Build Pip labelling
 # 
@@ -77,9 +80,7 @@ mystr = pytesseract.image_to_string(img, config=custom_config)
 
 # print(mystr)
 
-path = Path(sys.argv[1])
-print(path.parent)
-print(path.name)
-print(path)
+ld = LabellingDirectory("/home/ducvd/work/2020/github/cvstudio/ExtractingText/auto_scripts/labelling_character/in/", "out")
+ld.build_whole_pipe()
 
 
