@@ -238,6 +238,7 @@ int CCVCore::HarrisCorner(cv::Mat& img)
     return 0;
 }
 
+/* <=> Convolves */
 int CCVCore::multiplyKernel(cv::Mat img, 
                                     cv::Mat& dst,
                                     Matrix<double>* kernel,
@@ -261,17 +262,12 @@ int CCVCore::multiplyKernel(cv::Mat img,
     {
         for(size_t i = 0; i < count; i++)
         {
-            
         }
     }
     */
-
     // 
     // Window: (u,v).
     // 
-
-
-
     return 0;
 }
 

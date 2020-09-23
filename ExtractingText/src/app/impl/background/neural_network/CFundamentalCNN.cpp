@@ -39,12 +39,15 @@ int CFundamentalCNN::linearClassfier()
     //      R(W) = 
     
     // Softmax classifier
-    
+    // F=3; S=2;
 
     return 0;
 }
 
+//
 // Calculate softMax function
+//      softmax(s,k) = e^(s[k]) / (sum{i}e^(s[i]))
+//
 double CFundamentalCNN::softMax(const vector<double>& s, int k)
 {
     double d;
@@ -60,4 +63,17 @@ double CFundamentalCNN::softMax(const vector<double>& s, int k)
     }
 
     return U/D;
+}
+
+int CFundamentalCNN::maxPooling(int w1, int h1, int d1, 
+                        int f, int stride,
+                        int& w2, int& h2, int& d2)
+{
+    // 
+    // Down sampling
+    // 
+    w2 = (w1-f)/stride + 1;
+    h2 = (h1-f)/stride + 1;
+    d2 = d1;
+    return 0;
 }

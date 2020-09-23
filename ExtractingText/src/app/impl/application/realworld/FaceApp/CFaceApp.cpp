@@ -31,6 +31,8 @@ int CFaceApp::run(int argc, char const* argv[])
 {
     return ex04(argv[1]);
     return ex02(argv[1]);
+    
+    // calcSQI(argv[1]);
     return 0;
 }
 
@@ -197,7 +199,7 @@ int CFaceApp::eigen_face(const char* file)
 
     // 
     // Eigen vector calculation
-    // 
+    //  
 
     // 
     // Calculating Principal Component Analysis
@@ -218,4 +220,30 @@ int CFaceApp::eigen_vector(const cv::Mat& m, cv::Mat& vec_eigen, double& eigen_v
 
     cv::Mat v;  // Vector
     return 0;
+}
+
+void CFaceApp::calcSQI(const char* szFile)
+{
+    cv::Mat mat = imread(szFile, IMREAD_COLOR);
+    cv::Mat gray;
+    cv::Mat dst;
+
+    cvtColor(mat, gray, COLOR_BGR2GRAY);
+
+    //cv::GaussianBlur(gray, dst, cv::Size(5, 5), 0, 0);
+    cv::blur(gray, dst, cv::Size(7, 7));
+    cv::Mat sqi = gray/dst;
+    cv::Mat sqi_norm;
+    normalize(sqi, sqi_norm, 0, 255, NORM_MINMAX);
+    
+
+    imshow("src", mat);
+    imshow("sqi", sqi_norm);
+
+    waitKey();
+}
+
+void CFaceApp::lambertianModel()
+{
+    
 }

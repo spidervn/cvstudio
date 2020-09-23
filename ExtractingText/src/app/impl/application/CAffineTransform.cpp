@@ -32,6 +32,9 @@ int CAffineTransform::run(int argc, char const *argv[])
     dstTri[1] = Point2f( src.cols*0.85f, src.rows*0.25f );
     dstTri[2] = Point2f( src.cols*0.15f, src.rows*0.7f );
     Mat warp_mat = getAffineTransform( srcTri, dstTri );
+    cout << "TransformationMatrix: " << warp_mat << endl;
+    cout << "\t" << warp_mat.rows << " x " << warp_mat.cols << endl;
+
     Mat warp_dst = Mat::zeros( src.rows, src.cols, src.type() );
     warpAffine( src, warp_dst, warp_mat, warp_dst.size() );
     Point center = Point( warp_dst.cols/2, warp_dst.rows/2 );

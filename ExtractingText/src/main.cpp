@@ -52,9 +52,12 @@
 #include "app/examples/background/CVTKTest.h"
 
 #include "app/impl/application/realworld/FaceApp/CFaceApp.h"
+#include "app/impl/application/realworld/CitizenID/CCitizenIDApp.h"
 #include "app/impl/application/realworld/FaceApp/CHelenParser.h"
 #include "app/impl/application/realworld/ExtractText/CExtractTextV1.h"
 #include "app/impl/application/realworld/Camera/CCameraTechApp.h"
+
+#include "app/impl/background/ocr/COrientedStrokeDetect.h"
 
 #include "app/examples/background/CSlamTest.h"
 #include "app/impl/cv/CCVCore.h"
@@ -79,7 +82,7 @@ int main(int argc, char const *argv[])
     // }    
     // IApplication* p_App = new CSobelApp();
     // IApplication* p_App = new CRemappingApp();
-    // IApplication* p_App = new CAffineTransform();
+    // IApplicationPtr p_App = CAffineTransformPtrNew();
     // IApplication* p_App = new CLaplaceApp();
     // IApplication* p_App = new CSVMApp();
     // int n_Ret = p_App->run(argc, argv);
@@ -125,8 +128,11 @@ int main(int argc, char const *argv[])
     // IApplicationPtr p_App = CHelenParserPtrNew();
     // IApplicationPtr p_App = CCameraTechAppPtrNew();
 
-    IApplicationPtr p_App = CCameraTechAppPtrNew();    
+    // IApplicationPtr p_App = CCameraTechAppPtrNew();    
+    IApplicationPtr p_App = CCitizenIDAppPtrNew();
     int n_Ret = p_App->run(argc, argv);
+    // COrientedStrokeDetect osd;
+    // osd.run(argc, argv);
 
     /*
         int p = 6089;

@@ -2,6 +2,9 @@
 #define EXTRACTTEXT_APP_IMPL_APPLICATION_CAFFINETRANSFORM_H_
 
 #include <app/interface/IApplication.h>
+#include <memory>
+
+#define CAffineTransformPtrNew std::make_shared<CAffineTransform>
 
 class CAffineTransform: public IApplication
 {

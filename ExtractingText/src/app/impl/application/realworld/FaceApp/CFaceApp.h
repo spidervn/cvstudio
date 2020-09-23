@@ -35,6 +35,10 @@ public:
     int eigen_vector(const cv::Mat& m, cv::Mat& vec_eigen, double& eigen_value);
 
     static bool myDetector(cv::InputArray img, cv::OutputArray faces, void* pconf);
+
+private:
+    void calcSQI(const char* szFile);
+    void lambertianModel();
 };
 
 #endif
