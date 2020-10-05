@@ -245,5 +245,5 @@ void CFaceApp::calcSQI(const char* szFile)
 
 void CFaceApp::lambertianModel()
 {
-    
+
 }

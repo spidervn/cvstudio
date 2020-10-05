@@ -2,12 +2,16 @@
 
 #include <opencv2/core.hpp>
 #include <opencv2/imgproc.hpp>
+#include <opencv2/imgcodecs.hpp>
 #include <opencv2/highgui.hpp>
+#include <opencv2/face.hpp>
+#include <opencv2/objdetect.hpp>
 #include "app/impl/cv/CCVCore.h"
 #include <iostream>
 
 using namespace cv;
 using namespace std;
+using namespace cv::face;
 
 CCitizenIDApp::CCitizenIDApp()
 {}
@@ -17,6 +21,7 @@ CCitizenIDApp::~CCitizenIDApp()
 
 int CCitizenIDApp::run(int argc, char const* argv[])
 {
+    return liveness_check();
     // 1st 
     //   * Align the Image
     //   * Implement HoughLine first
@@ -97,13 +102,27 @@ int CCitizenIDApp::run(int argc, char const* argv[])
 
     cout << "Gauss " << gauss << endl;
 
+    Mat grayorigin;
     Mat lowfreq;
-    calc_low_frequency_image(gray, lowfreq, 5);
+    Mat imgblur;
+    Mat sqi;
+    Mat sqi_norm;
+
+    cvtColor(src, grayorigin, CV_BGR2GRAY);
+
+    calc_low_frequency_image(grayorigin, lowfreq, 5);
+
+    // cv::GaussianBlur(grayorigin, imgblur, cv::Size(3, 3), 0.0);
+    cv::divide(gray, lowfreq, sqi);
+    // cv::divide(grayorigin, imgblur, sqi);
+    cv::normalize(sqi, sqi_norm, 0.0, 255.0, cv::NORM_MINMAX);
     
     printf("OK\r\n");
     imshow("input", src);
     imshow("rotated", dst);
+    // imshow("blur", imgblur);
     imshow("lowfreq", lowfreq);
+    imshow("SQI", sqi_norm);
     waitKey();
 
     // Face recognition
@@ -124,9 +143,12 @@ int CCitizenIDApp::calc_low_frequency_image(cv::Mat inp, cv::Mat& out, int ksize
     }
 
     out.create(inp.size(), inp.type());
-    Mat F = cv::Mat::zeros(cv::Size(ksize, ksize), CV_64FC1);
-    Mat W = cv::Mat::zeros(cv::Size(ksize, ksize), CV_64FC1);
+    Mat F; //  = cv::Mat::zeros(cv::Size(ksize, ksize), CV_64FC1);
+    Mat W; //  = cv::Mat::zeros(cv::Size(ksize, ksize), CV_64FC1);
     uchar depth = inp.type() & CV_MAT_DEPTH_MASK;
+
+    F.create(cv::Size(ksize, ksize), CV_64FC1);
+    W.create(cv::Size(ksize, ksize), CV_64FC1);
     
     printf("HERE\r\n");
     for (int y=0; y<inp.rows;++y)
@@ -142,8 +164,8 @@ int CCitizenIDApp::calc_low_frequency_image(cv::Mat inp, cv::Mat& out, int ksize
             {
                 for (int kx=0; kx<W.cols;++kx)
                 {
-                    W.at<double>(y,x) = inp.at<uchar>(y,x) < Ti ? 0 : 1;
-                    F.at<double>(y,x) = W.at<double>(y,x) * mgauss.at<double>(y,x);
+                    W.at<double>(ky,kx) = inp.at<uchar>(y,x) < Ti ? 0 : 1;
+                    F.at<double>(ky,kx) = W.at<double>(ky,kx) * mgauss.at<double>(ky,kx);
                 }
             }
 
@@ -168,10 +190,6 @@ int CCitizenIDApp::calc_low_frequency_image(cv::Mat inp, cv::Mat& out, int ksize
             }
         }
     }
-
-    printf("Finish\r\n");
-    imshow("lowf_out", out);
-    waitKey();
     return 0;
 }
 
@@ -228,3 +246,126 @@ double CCitizenIDApp::convolve_element(cv::Mat inp, cv::Mat kernel, int y, int x
 
     return ret;
 }
+
+int CCitizenIDApp::hamming_distance(cv::Mat img1, cv::Mat img2)
+{
+    assert(img1.size() == img2.size());
+    int score = 0;
+    
+    for (int y=0; y<img1.rows;++y)
+    {
+        for (int x=0; x<img1.cols;++x)
+        {
+            score += img1.at<uchar>(y,x) == img2.at<uchar>(y,x) ? 1 : 0;
+        }
+    }
+
+    return score;
+}
+
+bool CCitizenIDApp::MyDetector(InputArray image, OutputArray faces, CascadeClassifier *face_cascade)
+{
+    Mat gray;
+
+    if (image.channels() > 1)
+        cvtColor(image, gray, COLOR_BGR2GRAY);
+    else
+        gray = image.getMat().clone();
+
+    equalizeHist(gray, gray);
+
+    std::vector<Rect> faces_;
+    face_cascade->detectMultiScale(gray, faces_, 1.4, 2, CASCADE_SCALE_IMAGE, Size(30, 30));
+    Mat(faces_).copyTo(faces);
+
+    return true;
+}
+
+int CCitizenIDApp::liveness_check()
+{
+    /* 
+     * 
+     * Illumination invariant 
+     * 
+     * 
+     */
+    cv::CascadeClassifier face_cascade;
+    cv::Mat img;
+    std::string filename;
+    std::string cascade_name;
+    FacemarkKazemi::Params params;
+
+    face_cascade.load("lbpcascade_frontalface.xml");
+    Ptr<FacemarkKazemi> facemark = FacemarkKazemi::create(params);
+
+    facemark->setFaceDetector((FN_FaceDetector)CCitizenIDApp::MyDetector, &face_cascade);
+    facemark->loadModel("trained_model_may_26th.dat");
+
+    cv::VideoCapture video(0);  // Webcam 
+    std::vector<cv::Rect> faces;
+    std::vector<std::vector<Point2f>> shapes;
+    
+    if (!video.isOpened())
+    {
+        printf("Invalid\r\n");
+        return -1;
+    }
+
+    Mat frame;
+    for (;;)
+    {
+        video >> frame;
+
+        if (frame.empty())
+        {
+            break;
+        }
+
+        faces.clear();
+        shapes.clear();
+
+        // Face detection
+        facemark->getFaces(frame, faces);
+        
+        // Rotate 
+        if (faces.size() == 0)
+        {
+            // No face
+        }
+        else 
+        {
+            for( size_t i = 0; i < faces.size(); i++ )
+            {
+                cv::rectangle(img,faces[i],Scalar( 255, 0, 0 ));
+            }
+            //vector to store the landmarks of all the faces in the image
+            // if(facemark->fit(img,faces,shapes))
+            // {
+            //     for(unsigned long i=0;i<faces.size();i++){
+            //         for(unsigned long k=0;k<shapes[i].size();k++)
+            //             cv::circle(img,shapes[i][k],3,cv::Scalar(0,0,255),FILLED);
+            //     }
+            // }
+
+            // (shapes[i][k])
+            // Rotate images 
+
+            // 
+        }
+
+        imshow("video", frame);
+
+        if (waitKey(25) == 27)
+        {
+            break;
+        }
+
+        
+    }
+
+
+
+    video.release();
+    return 0;
+}
+
