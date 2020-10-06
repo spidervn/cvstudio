@@ -21,7 +21,7 @@ CCitizenIDApp::~CCitizenIDApp()
 
 int CCitizenIDApp::run(int argc, char const* argv[])
 {
-    return liveness_check();
+    // return liveness_check();
     // 1st 
     //   * Align the Image
     //   * Implement HoughLine first

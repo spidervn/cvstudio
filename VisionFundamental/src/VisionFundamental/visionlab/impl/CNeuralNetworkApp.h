@@ -1,7 +1,7 @@
 #ifndef VSIONFUND_VISIONLAB_IMPL_CNEURALNETWORKAPP_H_
 #define VSIONFUND_VISIONLAB_IMPL_CNEURALNETWORKAPP_H_
 
-#include "interface/IApplication.h"
+#include "visionlab/interface/IApplication.h"
 
 class CNeuralNetworkApp: public IApplication
 {
