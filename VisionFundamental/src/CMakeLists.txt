@@ -18,11 +18,13 @@ find_package( OpenCV REQUIRED )
 include_directories(VisionFundamental/)
 
 file(GLOB STATICLIBS "VisionFundamental/visionfund/impl/*.cpp"
-                    "VisionFundamental/visionlab/impl/*.cpp")
+                    "VisionFundamental/visionlab/impl/*.cpp"
+                    "VisionFundamental/visionlab/impl/realapp/*.cpp"
+                    "VisionFundamental/visionlab/impl/lab/*.cpp")
 
 file(GLOB SOURCES "VisionFundamental/main.cpp")
                     
 
 add_executable( visionfund ${SOURCES} )
 add_library(libvisionfund STATIC ${STATICLIBS})
-target_link_libraries(visionfund libvisionfund ${OpenCV_LIBS})
+target_link_libraries(visionfund libvisionfund ${OpenCV_LIBS} stdc++fs)

@@ -6,6 +6,7 @@
 #include "visionfund/impl/CImgProcess.h"
 #include "visionlab/impl/CLoadfontApp.h"
 #include "visionlab/impl/CPaintbox.h"
+#include "visionlab/impl/lab/CDeskewLab.h"
 
 using namespace cv;
 using namespace std;
@@ -42,6 +43,7 @@ int main(int argc, char const *argv[])
     //CLoadfontApp app;
     //app.run(argc, argv);
 
+    /*
     cv::Mat img = Mat::zeros(cv::Size(800,600), CV_8UC3);
 
     IPaintboxPtr pbp = CPaintboxPtrNew;
@@ -49,6 +51,10 @@ int main(int argc, char const *argv[])
 
     imshow("a", img);
     waitKey();
+    */
+
+    CDeskewLab lab;
+    lab.run(argc, argv);
 
     return 0;
 }

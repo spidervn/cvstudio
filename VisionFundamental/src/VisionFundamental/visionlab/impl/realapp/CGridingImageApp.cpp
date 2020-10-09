@@ -32,14 +32,13 @@ int CGridingImageApp::run(int argc, char const* argv[])
         int g_step = std::min(w_step, h_step); // General step
         g_step = std::max(g_step, 10);
 
-
         int wcount = ceil(w/g_step);
         int hcount = ceil(h/g_step);
 
         for (int i=1; i< wcount; ++i)
         {
             cv::line(img,
-                cv::Point(i*g_step, 0) ,
+                cv::Point(i*g_step, 0),
                 cv::Point(i*g_step, h),
                 cv::Scalar(192,192,192));
         }

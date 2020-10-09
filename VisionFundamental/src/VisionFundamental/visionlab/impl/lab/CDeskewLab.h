@@ -14,6 +14,10 @@ public:
     int run(int argc, char const* argv[]);
 
     int skewangle_est(const char* file);
+
+protected:
+    double _bp(double x);
+    double _bn(double x);
 };
 
 #endif
