@@ -177,6 +177,9 @@ int CDeskewLab::skewangle_est(const char* file)
         vDb[c] = r_min;
     }
 
+    //@Temp
+    printf("Finish calculating distance array\r\n");
+
     // Erosion
     for (int i=0; i<vDb.size();++i)
     {
@@ -199,6 +202,8 @@ int CDeskewLab::skewangle_est(const char* file)
             }
         }
     }
+    //@Temp
+    printf("Finish calculating erosion array\r\n");
 
     // Derivatives
     for (int i=h; i<vDtf.size()-h-1;++i)
@@ -216,8 +221,10 @@ int CDeskewLab::skewangle_est(const char* file)
     vector<double> vSbB; // Begin
     vector<double> vSbE; // End
 
-    // Find 
-    while (c <= vdDtf.size());        
+    //@Temp
+    printf("Start find %d\r\n", vdDtf.size());
+    // Find
+    while (c <= vdDtf.size())        
     {
         bool bYield = false;
         // End of array 
@@ -261,6 +268,10 @@ int CDeskewLab::skewangle_est(const char* file)
             st2 = -1;
         }
         c++;
+        if (c % 100 == 0)
+        {
+            printf("\tc=%d\r\n", c);
+        }
     }
 
     c = 0;
@@ -306,6 +317,7 @@ int CDeskewLab::skewangle_est(const char* file)
         c++;
     }
 
+    printf("Finish find straightlines (Topsize=%d)(BottomSize=%d)\r\n", vStB.size(), vSbB.size());
     int nB = vSbB.size();
     int nT = vStB.size();
     int N = nB + nT;
@@ -361,9 +373,10 @@ int CDeskewLab::skewangle_est(const char* file)
         vDy[j + nT] = (dsum1 - dsum2)/(2*z+1);            
     }
 
+    printf("HERE\r\n");
     for (int i=0; i<N;++i)        
     {
-        vAlpha.push_back( atan( (double)vDy[i]/(double)vDx[i]));
+        vAlpha.push_back(atan((double)vDy[i]/(double)vDx[i]));
     }
 
     // 
@@ -445,7 +458,7 @@ int CDeskewLab::skewangle_est(const char* file)
                 itdx++;
             }
         }
-        printf("\tAfter elimination\r\n", vAlpha.size());
+        printf("\tAfter elimination [%s]\r\n", vAlpha.size());
         int ch = getchar();
     }
     while (delta > 1 && vAlpha.size() > 0);
